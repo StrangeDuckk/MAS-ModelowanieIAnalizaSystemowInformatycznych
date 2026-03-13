@@ -1,4 +1,5 @@
 public class Adress {
+    //todo przetlumaczyc na ang nazwy
     private String ulica;
     private int numerDomu;
     private int numerMieszkania;//todo przesloniecie konstruktora bez nr mieszkania

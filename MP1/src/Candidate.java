@@ -5,13 +5,11 @@ public class Candidate {
     private static ArrayList<Candidate> Candidates = new ArrayList<>();
     //todo private, jedyna metoda modyfikujaca ekstensje to metoda usuwajaca obiekt z ekstensji
 
-    private int id;
-    private int ClassCurrentMaxId;
     private static double CompanyMinSalary;
 
     private String name;
     private String surname;
-    private Adress adress; //todo klasa Adress
+    private Adress adress;
     private String email; //todo regex
     private String phoneNumber;
     private Date dateOfBirth;
@@ -44,5 +42,6 @@ public class Candidate {
 
 
         Candidates.add(this);
+        //todo return
     }
 }
