@@ -1,90 +1,103 @@
+import java.util.ArrayList;
+
 public class Adress {
-    //todo przetlumaczyc na ang nazwy
-    private String ulica;
-    private int numerDomu;
-    private int numerMieszkania;//todo przesloniecie konstruktora bez nr mieszkania
-    private String kodPocztowy; //kody zaczynaja sie od 0 i maja "-" w srodku
-    private String miasto;
-    private String kraj;
+    private static ArrayList<Adress> Adresses = new ArrayList<>();
+    private String road;
+    private int houseNumber;
+    private int apartmentNumber;
+    private String postalCode;
+    private String town;
+    private String country;
 
     public Adress(
-            String ulica,
-            int numerDomu,
-            int numerMieszkania,
-            String kodPocztowy,
-            String miasto,
-            String kraj
+            String road,
+            int houseNumber,
+            int apartmentNumber,
+            String postalCode,
+            String town,
+            String country
     ){
-        setUlica(ulica);
-        setNumerDomu(numerDomu);
-        setNumerMieszkania(numerMieszkania);
-        setKodPocztowy(kodPocztowy);
-        setMiasto(miasto);
-        setKraj(kraj);
+        setRoad(road);
+        setHouseNumber(houseNumber);
+        setApartmentNumber(apartmentNumber);
+        setPostalCode(postalCode);
+        setTown(town);
+        setCountry(country);
+
+        Adresses.add(this);
+        //todo zapis do pliku binarnego nowej watosci
     }
 
     public Adress(
-            String ulica,
-            int numerDomu,
-            String kodPocztowy,
-            String miasto,
-            String kraj
+            String road,
+            int houseNumber,
+            String postalCode,
+            String town,
+            String country
     ){
-        setUlica(ulica);
-        setNumerDomu(numerDomu);
-        setNumerMieszkania(0); //dla braku nr mieszkania i poprawnego wypisywania w toString
-        setKodPocztowy(kodPocztowy);
-        setMiasto(miasto);
-        setKraj(kraj);
+        setRoad(road);
+        setHouseNumber(houseNumber);
+        setApartmentNumber(0); //dla braku nr mieszkania i poprawnego wypisywania w toString
+        setPostalCode(postalCode);
+        setTown(town);
+        setCountry(country);
+
+        Adresses.add(this);
+        //todo zapis do pliku binarnego nowej watosci
     }
 
-    public String getUlica() {
-        return ulica;
-    }
-    public void setUlica(String ulica) {
-        this.ulica = ulica;
-    }
-    public int getNumerDomu() {
-        return numerDomu;
-    }
-    public void setNumerDomu(int numerDomu) {
-        this.numerDomu = numerDomu;
-    }
-    public int getNumerMieszkania() {
-        return numerMieszkania;
-    }
-    public void setNumerMieszkania(int numerMieszkania) {
-        this.numerMieszkania = numerMieszkania;
-    }
-    public String getKodPocztowy() {
-        return kodPocztowy;
-    }
-    public void setKodPocztowy(String kodPocztowy) {
-        //todo regex
-        this.kodPocztowy = kodPocztowy;
-    }
-    public String getMiasto() {
-        return miasto;
-    }
-    public void setMiasto(String miasto) {
-        this.miasto = miasto;
-    }
-    public String getKraj() {
-        return kraj;
-    }
-    public void setKraj(String kraj) {
-        this.kraj = kraj;
+    public static ArrayList<Adress> getAdresses() {
+        return Adresses;
     }
 
+    public String getRoad() {
+        return road;
+    }
+    public void setRoad(String road) {
+        this.road = road;
+    }
+    public int getHouseNumber() {
+        return houseNumber;
+    }
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+    public int getApartmentNumber() {
+        return apartmentNumber;
+    }
+    public void setApartmentNumber(int apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+    public String getPostalCode() {
+        return postalCode;
+    }
+    public void setPostalCode(String postalCode) {
+        if (postalCode.matches("\\d{2}-\\d{3}")) {
+            System.out.println("Invalid postal code, expected: XX-XXX");
+        }
+        this.postalCode = postalCode;
+    }
+    public void setTown(String town) {
+        this.town = town;
+    }
+    public String getTown() {
+        return town;
+    }
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
     @Override
     public String toString() {
-        String temp = this.ulica+" " + this.numerDomu;
+        String temp = "Adress:" + this.road+" " + this.houseNumber;
 
-        if(this.numerMieszkania > 0){
-            temp +="/"+this.numerMieszkania;
+        if(this.apartmentNumber > 0){
+            temp +="/"+this.apartmentNumber;
         }
 
-        temp += ", "+this.kodPocztowy+" "+this.miasto+", "+this.kraj;
+        temp += ", "+this.postalCode+" "+this.town+", "+this.country;
 
         return temp;
     }

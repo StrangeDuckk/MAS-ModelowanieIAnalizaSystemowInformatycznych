@@ -24,4 +24,6 @@ public class Main {
 // atrybut klasowy
 // atrybut pochodny
 // metoda klasowa
-// przeciazenie, przesloniecie
+// przeciazenie, przesloniecie +
+
+//todo zapis wszystkiego z ekstensji do pliku bin

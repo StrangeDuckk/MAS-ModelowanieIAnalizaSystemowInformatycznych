@@ -4,6 +4,7 @@ import java.util.Date;
 public class Candidate {
     private static ArrayList<Candidate> Candidates = new ArrayList<>();
     //todo private, jedyna metoda modyfikujaca ekstensje to metoda usuwajaca obiekt z ekstensji
+    //+ wtedy usuniecie z pliku bin
 
     private static double CompanyMinSalary;
 
@@ -13,9 +14,9 @@ public class Candidate {
     private String email; //todo regex
     private String phoneNumber;
     private Date dateOfBirth;
-    private Job jobinfo; //nr + name + short info
+    private Job jobinfo;
     private ArrayList<Integer> cvNumber;
-    private ArrayList<Experience> experience; //todo klasa Experience
+    private ArrayList<Experience> experience;
 
     //todo przy nullowalnych trzeba z duzej czyli Integer a nie int, zeby mogl przyjac null
 
@@ -28,7 +29,7 @@ public class Candidate {
             Date dateOfBirth,
             Job jobinfo,
             ArrayList<Integer> cvNumber,
-            ArrayList<Expeience> experience) {
+            ArrayList<Experience> experience) {
 
         //todo wszystko dodawac przez metody setter i getter
 
@@ -42,6 +43,6 @@ public class Candidate {
 
 
         Candidates.add(this);
-        //todo return
+        //todo zapis do pliku binarnego
     }
 }
