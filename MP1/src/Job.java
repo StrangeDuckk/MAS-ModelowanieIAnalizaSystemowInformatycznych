@@ -6,7 +6,7 @@ public class Job {
     private String jobTitle;
     private String department;//It, accounting, hr, itp
     private String shortInfo;
-    private String degree; //mid/senior/junior//todo czy to jako klasa slownikowa
+    private String degree; //mid/senior/junior
 
     public Job(
             String jobTitle,
@@ -20,7 +20,6 @@ public class Job {
         setDegree(degree);
 
         jobs.add(this);
-        //todo zapis do pliku bin
     }
     public Job(
             String jobTitle,
@@ -30,10 +29,9 @@ public class Job {
         setJobTitle(jobTitle);
         setDepartment(department);
         setShortInfo(shortInfo);
-        setDegree("NONE");
+        setDegree(null);
 
         jobs.add(this);
-        //todo zapis do pliku bin
     }
 
     public static ArrayList<Job> getJobs() {

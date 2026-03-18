@@ -25,10 +25,9 @@ public class Adress {
         setCountry(country);
 
         Adresses.add(this);
-        //todo zapis do pliku binarnego nowej watosci
     }
 
-    public Adress(
+    public Adress(//bez apartmentNumber
             String road,
             int houseNumber,
             String postalCode,
@@ -43,7 +42,6 @@ public class Adress {
         setCountry(country);
 
         Adresses.add(this);
-        //todo zapis do pliku binarnego nowej watosci
     }
 
     public static ArrayList<Adress> getAdresses() {
@@ -72,7 +70,7 @@ public class Adress {
         return postalCode;
     }
     public void setPostalCode(String postalCode) {
-        if (postalCode.matches("\\d{2}-\\d{3}")) {
+        if (!postalCode.matches("\\d{2}-\\d{3}")) {
             System.out.println("Invalid postal code, expected: XX-XXX");
         }
         this.postalCode = postalCode;
