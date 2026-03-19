@@ -1,8 +1,8 @@
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.List;
 
 public class Candidate {
     private static ArrayList<Candidate> Candidates = new ArrayList<>();
@@ -367,5 +367,9 @@ public class Candidate {
     }
     public void setExperience(ArrayList<String> experience) {
         this.experience = experience;
+    }
+
+    public static List<Candidate> getCandidates() {
+        return Collections.unmodifiableList(Candidates);//todo zobaczyc czy gut czy zwrocenie kopii
     }
 }
