@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Adress {
     private static ArrayList<Adress> Adresses = new ArrayList<>();
@@ -44,10 +46,6 @@ public class Adress {
         Adresses.add(this);
     }
 
-    public static ArrayList<Adress> getAdresses() {
-        return Adresses;
-    }
-
     public String getRoad() {
         return road;
     }
@@ -86,6 +84,10 @@ public class Adress {
     }
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public static List<Adress> getAdresses() {
+        return Collections.unmodifiableList(Adresses);//todo zobaczyc czy gut czy zwrocenie kopii
     }
     @Override
     public String toString() {

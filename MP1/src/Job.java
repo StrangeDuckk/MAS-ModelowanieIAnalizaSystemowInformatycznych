@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Job {
     private static ArrayList<Job> jobs = new ArrayList<>();
@@ -34,10 +36,6 @@ public class Job {
         jobs.add(this);
     }
 
-    public static ArrayList<Job> getJobs() {
-        return jobs;
-    }
-
     public String getJobTitle() {
         return jobTitle;
     }
@@ -61,6 +59,9 @@ public class Job {
     }
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+    public static List<Job> getJobs() {
+        return Collections.unmodifiableList(jobs);//todo zobaczyc czy gut czy zwrocenie kopii
     }
 
     @Override
