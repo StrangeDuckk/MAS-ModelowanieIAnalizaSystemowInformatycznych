@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Adress {
-    private static ArrayList<Adress> Addresses = new ArrayList<>();
+    private static List<Adress> Addresses = new ArrayList<>();
     private String road;
     private int houseNumber;
     private int apartmentNumber;
@@ -103,7 +103,7 @@ public class Adress {
     }
 
     public static List<Adress> getAddresses() {
-        return Collections.unmodifiableList(Addresses);//todo zobaczyc czy gut czy zwrocenie kopii
+        return Collections.unmodifiableList(Addresses);
     }
     @Override
     public String toString() {

@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Job {
-    private static ArrayList<Job> jobs = new ArrayList<>();
+    private static List<Job> jobs = new ArrayList<>();
 
     private String jobTitle;
     private String department;//It, accounting, hr, itp

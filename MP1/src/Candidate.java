@@ -7,7 +7,7 @@ import java.util.List;
 //todo serializacja
 
 public class Candidate {
-    private static ArrayList<Candidate> Candidates = new ArrayList<>();
+    private static List<Candidate> Candidates = new ArrayList<>();
 
     private static double CompanyMinSalary;
 
@@ -18,8 +18,8 @@ public class Candidate {
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private Job jobinfo;//info like jobTitle, department
-    private ArrayList<Integer> cvNumber;//list of just cv numbers, from 1 to max 3
-    private ArrayList<String> experience; //list of experiences, from 0 to *, info like companyName, Occupation, Level, Years
+    private List<Integer> cvNumber;//list of just cv numbers, from 1 to max 3
+    private List<String> experience; //list of experiences, from 0 to *, info like companyName, Occupation, Level, Years
 
     // ====================== Konstruktory ======================
     public Candidate(
