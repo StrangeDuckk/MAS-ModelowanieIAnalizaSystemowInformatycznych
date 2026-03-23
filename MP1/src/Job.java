@@ -71,9 +71,6 @@ public class Job implements Serializable {
         return degree;
     }
     public void setDegree(String degree) {
-        if (degree.isEmpty()){
-            throw new IllegalArgumentException("Argument can not be empty (don't add it at all)");
-        }
         this.degree = degree;
     }
     public static List<Job> getJobs() {

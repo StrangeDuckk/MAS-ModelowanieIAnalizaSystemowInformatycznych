@@ -73,8 +73,8 @@ public class Adress implements Serializable {
         return apartmentNumber;
     }
     public void setApartmentNumber(int apartmentNumber) {
-        if(apartmentNumber <=0 ){
-            throw new IllegalArgumentException("Argument has to be >0 or do not add it at all");
+        if(apartmentNumber <0 ){
+            throw new IllegalArgumentException("Argument has to be >0");
         }
         this.apartmentNumber = apartmentNumber;
     }

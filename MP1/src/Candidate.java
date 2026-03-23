@@ -15,15 +15,15 @@ public class Candidate implements Serializable {
 
     private static double CompanyMinSalary;
 
-    private ArrayList<String> name;//list of names, from 1 to max 2 names per candidate
+    private ArrayList<String> name = new ArrayList<>();//list of names, from 1 to max 2 names per candidate
     private String surname;
     private Adress adress;//info like road, house number
     private String email;
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private Job jobinfo;//info like jobTitle, department
-    private List<Integer> cvNumber;//list of just cv numbers, from 1 to max 3
-    private List<String> experience; //list of experiences, from 0 to *, info like companyName, Occupation, Level, Years
+    private List<Integer> cvNumber = new ArrayList<>();//list of just cv numbers, from 1 to max 3
+    private List<String> experience = new ArrayList<>(); //list of experiences, from 0 to *, info like companyName, Occupation, Level, Years
 
     // ====================== Konstruktory ======================
     public Candidate(
@@ -268,7 +268,7 @@ public class Candidate implements Serializable {
 
     @Override
     public String toString() {
-        String temp = this.name.toString();
+        String temp = "\n----------------------\n"+this.name.toString();
         temp += " " +this.surname + ", living in " + this.adress.toString();
         temp += "\nemail: " + this.email + "\nphone: " + this.phoneNumber+ "\nborn " + this.dateOfBirth.toString()+ " ("+this.getAge()+")";
         temp += "\nApplyes for job: " + this.jobinfo.toString() + "\nCv's numbers: " + this.cvNumber.toString();
@@ -301,11 +301,11 @@ public class Candidate implements Serializable {
         this.name.remove(index);
     }
     public void addName(String aname){
-        if(this.name.size()>=2){
-            throw new IllegalArgumentException("Table is full (length:"+this.name.size()+")");
-        }
         if(aname == null || aname.isEmpty()){
             throw new IllegalArgumentException("Argument has to have any value");
+        }
+        if(this.name.size()>=2){
+            throw new IllegalArgumentException("Table is full (length:"+this.name.size()+")");
         }
         this.name.add(aname);
     }
@@ -369,11 +369,11 @@ public class Candidate implements Serializable {
         return dateOfBirth;
     }
     public void setDateOfBirth(LocalDate dateOfBirth) {
-        if (dateOfBirth.isAfter(LocalDate.now())){
-            throw new IllegalArgumentException("Candidate has to be outside his mother :)");
-        }
         if(dateOfBirth == null){
             throw new IllegalArgumentException("Candidate has to have any birth date");
+        }
+        if (dateOfBirth.isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("Candidate has to be outside his mother :)");
         }
         this.dateOfBirth = dateOfBirth;
     }
