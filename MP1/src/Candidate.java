@@ -4,11 +4,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-//todo serializacja
 
 public class Candidate implements Serializable {
     private static List<Candidate> Candidates = new ArrayList<>();

@@ -179,28 +179,3 @@ public class Main {
         return new ArrayList<>(List.of(args));
     }
 }
-
-//todo zapis do pliku BINARNEGO na koniec i wczytanie na poczatku wszystkich informacji przez funkcje klasowe
-//todo try with resources
-
-
-
-//zapis do pliku w jednym miejscu, nie w konstrukturach, tylko jak sie wszystko utworzy to wtedy
-//bez zadnego menu w konsoli
-//sprawdzenie czy plik binarny juz istnieje czy nie, jesli istnieje to wtedy jest odczyt
-
-//wysylanie projektu w zip na gakko, dodac diagram uml
-
-
-
-//todo zapis do pliku bin w main inputstreama przekazujemy do kazdej klasy tak jak na wykladzie
-//wyklad 4 implementacja serializable (35/50) (jako zapisujacy stream lecacy po kazdej klasie)
-//w atrybucie zlozonym nie mozna zrobic obiektu w ktorym bedzie asocjacja, w klasie atrybutu zlozonego uzywac tylko prymitywow (mam)
-//localdate jest zlozonym
-
-//todo wymagania
-
-// todo ekstensja zabezpieczenie i trwalosc
-
-
-//todo zapis wszystkiego z ekstensji do pliku bin
