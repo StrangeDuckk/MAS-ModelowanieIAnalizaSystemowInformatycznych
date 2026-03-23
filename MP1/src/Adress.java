@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Adress {
-    private static ArrayList<Adress> Adresses = new ArrayList<>();
+    private static ArrayList<Adress> Addresses = new ArrayList<>();
     private String road;
     private int houseNumber;
     private int apartmentNumber;
@@ -26,7 +26,7 @@ public class Adress {
         setTown(town);
         setCountry(country);
 
-        Adresses.add(this);
+        Addresses.add(this);
     }
 
     public Adress(//bez apartmentNumber
@@ -39,29 +39,39 @@ public class Adress {
         setRoad(road);
         setHouseNumber(houseNumber);
         setApartmentNumber(0); //dla braku nr mieszkania i poprawnego wypisywania w toString
+        //Integer to typ zlozony (nei spelnia wymagan MP1 ale przetrzymuje null)
         setPostalCode(postalCode);
         setTown(town);
         setCountry(country);
 
-        Adresses.add(this);
+        Addresses.add(this);
     }
 
     public String getRoad() {
         return road;
     }
     public void setRoad(String road) {
+        if(road == null || road.isEmpty()){
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
         this.road = road;
     }
     public int getHouseNumber() {
         return houseNumber;
     }
     public void setHouseNumber(int houseNumber) {
+        if(houseNumber <=0 ){
+            throw new IllegalArgumentException("Argument has to be >0");
+        }
         this.houseNumber = houseNumber;
     }
     public int getApartmentNumber() {
         return apartmentNumber;
     }
     public void setApartmentNumber(int apartmentNumber) {
+        if(apartmentNumber <=0 ){
+            throw new IllegalArgumentException("Argument has to be >0 or do not add it at all");
+        }
         this.apartmentNumber = apartmentNumber;
     }
     public String getPostalCode() {
@@ -69,29 +79,35 @@ public class Adress {
     }
     public void setPostalCode(String postalCode) {
         if (!postalCode.matches("\\d{2}-\\d{3}")) {
-            System.out.println("Invalid postal code, expected: XX-XXX");
+            throw new IllegalArgumentException("Invalid postal code, expected: XX-XXX");
         }
         this.postalCode = postalCode;
     }
     public void setTown(String town) {
+        if(town == null || town.isEmpty()){
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
         this.town = town;
     }
     public String getTown() {
         return town;
     }
+    public void setCountry(String country) {
+        if(country == null || country.isEmpty()){
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
+        this.country = country;
+    }
     public String getCountry() {
         return country;
     }
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
-    public static List<Adress> getAdresses() {
-        return Collections.unmodifiableList(Adresses);//todo zobaczyc czy gut czy zwrocenie kopii
+    public static List<Adress> getAddresses() {
+        return Collections.unmodifiableList(Addresses);//todo zobaczyc czy gut czy zwrocenie kopii
     }
     @Override
     public String toString() {
-        String temp = "Adress:" + this.road+" " + this.houseNumber;
+        String temp = "Address:" + this.road+" " + this.houseNumber;
 
         if(this.apartmentNumber > 0){
             temp +="/"+this.apartmentNumber;

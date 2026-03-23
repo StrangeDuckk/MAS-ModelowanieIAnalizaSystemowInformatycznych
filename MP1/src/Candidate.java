@@ -1,23 +1,25 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+//todo serializacja
 
 public class Candidate {
     private static ArrayList<Candidate> Candidates = new ArrayList<>();
 
     private static double CompanyMinSalary;
 
-    private ArrayList<String> name;
+    private ArrayList<String> name;//list of names, from 1 to max 2 names per candidate
     private String surname;
-    private Adress adress;
+    private Adress adress;//info like road, house number
     private String email;
     private String phoneNumber;
     private LocalDate dateOfBirth;
-    private Job jobinfo;
-    private ArrayList<Integer> cvNumber;
-    private ArrayList<String> experience; //companyName, Occupation, Level, Years
+    private Job jobinfo;//info like jobTitle, department
+    private ArrayList<Integer> cvNumber;//list of just cv numbers, from 1 to max 3
+    private ArrayList<String> experience; //list of experiences, from 0 to *, info like companyName, Occupation, Level, Years
 
     // ====================== Konstruktory ======================
     public Candidate(
@@ -289,7 +291,7 @@ public class Candidate {
     public void removeName(int index){
         if(this.name.size() == 1){
             throw new IllegalArgumentException("Available length for Candidate's names table is [1..2]");
-        } else if (index <= 0 || index >= name.size()) {
+        } else if (index < 0 || index >= name.size()) {
             throw  new IllegalArgumentException("Available indexes for Candidate's names table is 0 or 1");
         }
         this.name.remove(index);
@@ -298,7 +300,7 @@ public class Candidate {
         if(this.name.size()>=2){
             throw new IllegalArgumentException("Table is full (length:"+this.name.size()+")");
         }
-        if(aname.isEmpty() || aname == null){
+        if(aname == null || aname.isEmpty()){
             throw new IllegalArgumentException("Argument has to have any value");
         }
         this.name.add(aname);
@@ -307,6 +309,9 @@ public class Candidate {
         return surname;
     }
     public void setSurname(String surname) {
+        if(surname == null || surname.isEmpty()) {
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
         this.surname = surname;
     }
     public Adress getAdress() {
@@ -351,12 +356,21 @@ public class Candidate {
         return CompanyMinSalary;
     }
     public static void setCompanyMinSalary(double companyMinSalary) {
+        if(companyMinSalary <= 0){
+            throw new IllegalArgumentException("Minimum salary has to be >0");
+        }
         CompanyMinSalary = companyMinSalary;
     }
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
     public void setDateOfBirth(LocalDate dateOfBirth) {
+        if (dateOfBirth.isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("Candidate has to be outside his mother :)");
+        }
+        if(dateOfBirth == null){
+            throw new IllegalArgumentException("Candidate has to have any birth date");
+        }
         this.dateOfBirth = dateOfBirth;
     }
     public Job getJobinfo() {
@@ -382,16 +396,16 @@ public class Candidate {
         if(AcvNumber == null || AcvNumber.isEmpty()){
             throw new IllegalArgumentException("Array can't be null or empty");
         }
-        if (cvNumber.size() >3){
+        if (AcvNumber.size() >3){
             throw new IllegalArgumentException("Maximum length for CvNumbers table is 3");
         }
-        for(int i = 0; i <= AcvNumber.size(); i++)
-            addCvNumber(AcvNumber.get(i));
+        for (Integer i : AcvNumber)
+            addCvNumber(i);
     }
     public void removeCvNumber(int index){
         if(this.cvNumber.size() == 1){
             throw new IllegalArgumentException("Available lenght for Candidates CvNumber table is [1..3]");
-        } else if (index<=0 || index >= this.cvNumber.size()) {
+        } else if (index<0 || index >= this.cvNumber.size()) {
             throw new IllegalArgumentException("Available indexes for Candidates CvNumber table is 0.."+(this.cvNumber.size()-1));
         }
         this.cvNumber.remove(index);
@@ -403,7 +417,7 @@ public class Candidate {
         if(this.cvNumber.contains(number)){
             throw new IllegalArgumentException("This table already has number "+number);
         }
-        if(number <0) {
+        if(number <= 0) {
             throw new IllegalArgumentException("Number has to be >0");
         }
         this.cvNumber.add(number);
@@ -412,6 +426,9 @@ public class Candidate {
         return Collections.unmodifiableList(this.experience);
     }
     public void setExperience(ArrayList<String> aexperience) {
+        if(aexperience == null || aexperience.isEmpty()){
+            throw new IllegalArgumentException("Table has to have any argument or not have any at all");
+        }
         for (String s : aexperience) {
             addExperience(s);
         }
@@ -420,7 +437,7 @@ public class Candidate {
         if(!this.hasAnyExperience()){
             throw new IllegalArgumentException("You can't remove argument from empty table");
         }
-        if(index<0 || this.experience.size()<index){
+        if(index<0 || index>this.experience.size()){
             throw new IllegalArgumentException("You can't remove "+index+" index from table size "+this.experience.size());
         }
         this.experience.remove(index);
@@ -434,9 +451,7 @@ public class Candidate {
         }
         this.experience.add(exp);
     }
-    //todo dopytac czy jest ok
-
     public static List<Candidate> getCandidates() {
-        return Collections.unmodifiableList(Candidates);//todo zobaczyc czy gut czy zwrocenie kopii
+        return Collections.unmodifiableList(Candidates);
     }
 }

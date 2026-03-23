@@ -8,7 +8,7 @@ public class Job {
     private String jobTitle;
     private String department;//It, accounting, hr, itp
     private String shortInfo;
-    private String degree; //mid/senior/junior
+    private String degree; //example: mid/senior/junior
 
     public Job(
             String jobTitle,
@@ -40,28 +40,40 @@ public class Job {
         return jobTitle;
     }
     public void setJobTitle(String jobTitle) {
+        if (jobTitle == null || jobTitle.isEmpty()){
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
         this.jobTitle = jobTitle;
     }
     public String getDepartment() {
         return department;
     }
     public void setDepartment(String department) {
+        if (department == null || department.isEmpty()){
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
         this.department = department;
     }
     public String getShortInfo() {
         return shortInfo;
     }
     public void setShortInfo(String shortInfo) {
+        if (shortInfo == null || shortInfo.isEmpty()){
+            throw new IllegalArgumentException("Argument has to have any value");
+        }
         this.shortInfo = shortInfo;
     }
     public String getDegree() {
         return degree;
     }
     public void setDegree(String degree) {
+        if (degree.isEmpty()){
+            throw new IllegalArgumentException("Argument can not be empty (don't add it at all)");
+        }
         this.degree = degree;
     }
     public static List<Job> getJobs() {
-        return Collections.unmodifiableList(jobs);//todo zobaczyc czy gut czy zwrocenie kopii
+        return Collections.unmodifiableList(jobs);
     }
 
     @Override
@@ -69,6 +81,6 @@ public class Job {
         return "Job:" + jobTitle
                 + ", at department:" + department
                 + ", " + shortInfo
-                + (!this.degree.equals("NONE")?", degree='" + degree +'.':".");
+                + ((this.degree != null) ?", degree='" + degree +'.':".");
     }
 }
