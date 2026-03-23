@@ -1,8 +1,12 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Job {
+public class Job implements Serializable {
     private static List<Job> jobs = new ArrayList<>();
 
     private String jobTitle;
@@ -82,5 +86,12 @@ public class Job {
                 + ", at department:" + department
                 + ", " + shortInfo
                 + ((this.degree != null) ?", degree='" + degree +'.':".");
+    }
+    // ------------------ Serializacja -------------------
+    public static void writeExtentJobs(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(jobs);
+    }
+    public static void readExtentJobs(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        jobs = (ArrayList<Job>) stream.readObject();
     }
 }

@@ -1,8 +1,12 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Adress {
+public class Adress implements Serializable {
     private static List<Adress> Addresses = new ArrayList<>();
     private String road;
     private int houseNumber;
@@ -116,5 +120,13 @@ public class Adress {
         temp += ", "+this.postalCode+" "+this.town+", "+this.country;
 
         return temp;
+    }
+
+    // ------------------ Serializacja -------------------
+    public static void writeExtentAddresses(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(Addresses);
+    }
+    public static void readExtentAddresses(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        Addresses = (ArrayList<Adress>) stream.readObject();
     }
 }

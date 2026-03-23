@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.chrono.ChronoLocalDate;
@@ -6,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 //todo serializacja
 
-public class Candidate {
+public class Candidate implements Serializable {
     private static List<Candidate> Candidates = new ArrayList<>();
 
     private static double CompanyMinSalary;
@@ -453,5 +457,13 @@ public class Candidate {
     }
     public static List<Candidate> getCandidates() {
         return Collections.unmodifiableList(Candidates);
+    }
+
+    // ------------------ Serializacja -------------------
+    public static void writeExtentCandidates(ObjectOutputStream stream) throws IOException{
+        stream.writeObject(Candidates);
+    }
+    public static void readExtentCandidates(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        Candidates = (ArrayList<Candidate>) stream.readObject();
     }
 }
