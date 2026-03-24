@@ -33,24 +33,6 @@ public class Adress implements Serializable {
         Addresses.add(this);
     }
 
-    public Adress(//bez apartmentNumber
-            String road,
-            int houseNumber,
-            String postalCode,
-            String town,
-            String country
-    ){
-        setRoad(road);
-        setHouseNumber(houseNumber);
-        setApartmentNumber(0); //dla braku nr mieszkania i poprawnego wypisywania w toString
-        //Integer to typ zlozony (nei spelnia wymagan MP1 ale przetrzymuje null)
-        setPostalCode(postalCode);
-        setTown(town);
-        setCountry(country);
-
-        Addresses.add(this);
-    }
-
     public String getRoad() {
         return road;
     }
@@ -74,7 +56,7 @@ public class Adress implements Serializable {
     }
     public void setApartmentNumber(int apartmentNumber) {
         if(apartmentNumber <0 ){
-            throw new IllegalArgumentException("Argument has to be >0");
+            throw new IllegalArgumentException("Argument has to be >=0");
         }
         this.apartmentNumber = apartmentNumber;
     }

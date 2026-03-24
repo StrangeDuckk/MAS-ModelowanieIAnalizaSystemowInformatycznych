@@ -17,7 +17,7 @@ public class Candidate implements Serializable {
     private String surname;
     private Adress adress;//info like road, house number
     private String email;
-    private String phoneNumber;
+    private String phoneNumber;//atrybut opcjonalny
     private LocalDate dateOfBirth;
     private Job jobinfo;//info like jobTitle, department
     private List<Integer> cvNumber = new ArrayList<>();//list of just cv numbers, from 1 to max 3
@@ -54,8 +54,7 @@ public class Candidate implements Serializable {
 
         Candidates.add(this);
     }
-
-    public Candidate( //bez experience
+    public Candidate(//bez experience
             ArrayList<String> name,
             String surname,
             String road,
@@ -79,175 +78,6 @@ public class Candidate implements Serializable {
         setPhoneNumber(phoneNumber);
         setDateOfBirth(dateOfBirth);
         setJobinfo(jobTitle, department, shortInfo, degree);
-        setCvNumber(cvNumber);
-
-        Candidates.add(this);
-    }
-
-    public Candidate(//bez adress apartmentNumber
-            ArrayList<String> name,
-            String surname,
-            String road,
-            int houseNumber,
-            String postalCode,
-            String town,
-            String country,
-            String email,
-            String phoneNumber,
-            LocalDate dateOfBirth,
-            String jobTitle,
-            String department,
-            String shortInfo,
-            String degree,
-            ArrayList<Integer> cvNumber,
-            ArrayList<String> experience) {
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setAdress(road,houseNumber,postalCode,town,country);
-        setPhoneNumber(phoneNumber);
-        setDateOfBirth(dateOfBirth);
-        setJobinfo(jobTitle, department, shortInfo, degree);
-        setCvNumber(cvNumber);
-        setExperience(experience);
-
-        Candidates.add(this);
-    }
-    public Candidate(//bez adress apartmentNumber i experience
-                     ArrayList<String> name,
-                     String surname,
-                     String road,
-                     int houseNumber,
-                     String postalCode,
-                     String town,
-                     String country,
-                     String email,
-                     String phoneNumber,
-                     LocalDate dateOfBirth,
-                     String jobTitle,
-                     String department,
-                     String shortInfo,
-                     String degree,
-                     ArrayList<Integer> cvNumber) {
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setAdress(road,houseNumber,postalCode,town,country);
-        setPhoneNumber(phoneNumber);
-        setDateOfBirth(dateOfBirth);
-        setJobinfo(jobTitle, department, shortInfo, degree);
-        setCvNumber(cvNumber);
-
-        Candidates.add(this);
-    }
-
-    public Candidate(//bez job degree
-            ArrayList<String> name,
-            String surname,
-            String road,
-            int houseNumber,
-            int apartamentNumber,
-            String postalCode,
-            String town,
-            String country,
-            String email,
-            String phoneNumber,
-            LocalDate dateOfBirth,
-            String jobTitle,
-            String department,
-            String shortInfo,
-            ArrayList<Integer> cvNumber,
-            ArrayList<String> experience) {
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setAdress(road,houseNumber,apartamentNumber,postalCode,town,country);
-        setPhoneNumber(phoneNumber);
-        setDateOfBirth(dateOfBirth);
-        setJobinfo(jobTitle, department, shortInfo);
-        setCvNumber(cvNumber);
-        setExperience(experience);
-
-        Candidates.add(this);
-    }
-    public Candidate(//bez job degree i experience
-                     ArrayList<String> name,
-                     String surname,
-                     String road,
-                     int houseNumber,
-                     int apartamentNumber,
-                     String postalCode,
-                     String town,
-                     String country,
-                     String email,
-                     String phoneNumber,
-                     LocalDate dateOfBirth,
-                     String jobTitle,
-                     String department,
-                     String shortInfo,
-                     ArrayList<Integer> cvNumber) {
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setAdress(road,houseNumber,apartamentNumber,postalCode,town,country);
-        setPhoneNumber(phoneNumber);
-        setDateOfBirth(dateOfBirth);
-        setJobinfo(jobTitle, department, shortInfo);
-        setCvNumber(cvNumber);
-
-        Candidates.add(this);
-    }
-
-    public Candidate(//bez job degree i apartmentNumber
-                     ArrayList<String> name,
-                     String surname,
-                     String road,
-                     int houseNumber,
-                     String postalCode,
-                     String town,
-                     String country,
-                     String email,
-                     String phoneNumber,
-                     LocalDate dateOfBirth,
-                     String jobTitle,
-                     String department,
-                     String shortInfo,
-                     ArrayList<Integer> cvNumber,
-                     ArrayList<String> experience) {
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setAdress(road,houseNumber,postalCode,town,country);
-        setPhoneNumber(phoneNumber);
-        setDateOfBirth(dateOfBirth);
-        setJobinfo(jobTitle, department, shortInfo);
-        setCvNumber(cvNumber);
-        setExperience(experience);
-
-        Candidates.add(this);
-    }
-    public Candidate(//bez job degree i apartmentNumber i experience
-                     ArrayList<String> name,
-                     String surname,
-                     String road,
-                     int houseNumber,
-                     String postalCode,
-                     String town,
-                     String country,
-                     String email,
-                     String phoneNumber,
-                     LocalDate dateOfBirth,
-                     String jobTitle,
-                     String department,
-                     String shortInfo,
-                     ArrayList<Integer> cvNumber) {
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setAdress(road,houseNumber,postalCode,town,country);
-        setPhoneNumber(phoneNumber);
-        setDateOfBirth(dateOfBirth);
-        setJobinfo(jobTitle, department, shortInfo);
         setCvNumber(cvNumber);
 
         Candidates.add(this);
@@ -328,14 +158,6 @@ public class Candidate implements Serializable {
             String country) {
         this.adress = new Adress(road, houseNumber, apartamentNumber, postalCode, town, country);
     }
-    public void setAdress(
-            String road,
-            int houseNumber,
-            String postalCode,
-            String town,
-            String country) {
-        this.adress = new Adress(road, houseNumber, postalCode, town, country);
-    }
     public String getEmail() {
         return email;
     }
@@ -349,7 +171,11 @@ public class Candidate implements Serializable {
         return phoneNumber;
     }
     public void setPhoneNumber(String phoneNumber) {
-        if(!phoneNumber.matches("\\+48 ?\\d{3}-\\d{3}-\\d{3}")){
+        //opcjonalny - pozwolenie na null ale nie na blank
+        if(phoneNumber!= null && phoneNumber.isBlank()){
+            throw new IllegalArgumentException("Argument can not be blank");
+        }
+        if (phoneNumber != null && !phoneNumber.matches("\\+48 ?\\d{3}-\\d{3}-\\d{3}")) {
             throw new IllegalArgumentException("Invalid Phone number Format, expected +48 XXX-XXX-XXX");
         }
         this.phoneNumber = phoneNumber;
@@ -384,12 +210,6 @@ public class Candidate implements Serializable {
             String shortInfo,
             String degree) {
         this.jobinfo = new Job(jobTitle,department,shortInfo,degree);
-    }
-    public void setJobinfo(
-            String jobTitle,
-            String department,
-            String shortInfo) {
-        this.jobinfo = new Job(jobTitle,department,shortInfo);
     }
     public List<Integer> getCvNumber() {
         return Collections.unmodifiableList(this.cvNumber);

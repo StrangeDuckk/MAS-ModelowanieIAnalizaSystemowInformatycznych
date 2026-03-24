@@ -27,18 +27,6 @@ public class Job implements Serializable {
 
         jobs.add(this);
     }
-    public Job(
-            String jobTitle,
-            String department,
-            String shortInfo
-    ){
-        setJobTitle(jobTitle);
-        setDepartment(department);
-        setShortInfo(shortInfo);
-        setDegree(null);
-
-        jobs.add(this);
-    }
 
     public String getJobTitle() {
         return jobTitle;
@@ -62,7 +50,7 @@ public class Job implements Serializable {
         return shortInfo;
     }
     public void setShortInfo(String shortInfo) {
-        if (shortInfo == null || shortInfo.isEmpty()){
+        if (shortInfo == null || shortInfo.isBlank()){
             throw new IllegalArgumentException("Argument has to have any value");
         }
         this.shortInfo = shortInfo;
@@ -71,6 +59,9 @@ public class Job implements Serializable {
         return degree;
     }
     public void setDegree(String degree) {
+        if(degree == null || degree.isBlank()){
+            throw new IllegalArgumentException("Argument can't be blank");
+        }
         this.degree = degree;
     }
     public static List<Job> getJobs() {
