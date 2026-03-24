@@ -1,5 +1,4 @@
 import java.io.*;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -159,10 +158,3 @@ public class Main {
         return new ArrayList<>(List.of(args));
     }
 }
-
-//zamiast build system intelij to maven
-
-//testy jednostkowe
-//prawym> generate> test JUnit to testy jednostkowe
-// maly test i na koniec assertEquals(arg1:czego oczekujemy w danej sytuacji, arg2:co nam zwroci ktora metoda)
-//assertthrows
