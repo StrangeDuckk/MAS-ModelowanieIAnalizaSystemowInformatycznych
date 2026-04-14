@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Adress implements Serializable {
-    private List<Departments> Departments = new ArrayList<>();
+    private List<ComAdr> ComAdr = new ArrayList<>();
 
     private static List<Adress> Addresses = new ArrayList<>();
     private String road;

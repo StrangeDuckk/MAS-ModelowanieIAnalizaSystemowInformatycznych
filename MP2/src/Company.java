@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-    private List<Departments> Departments = new ArrayList<>();
+    private List<ComAdr> ComAdr = new ArrayList<>();
 
     private static List<Adress> Companies = new ArrayList<>();
     private String name;

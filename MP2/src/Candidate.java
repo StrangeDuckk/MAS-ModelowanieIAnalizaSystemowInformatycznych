@@ -4,13 +4,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Candidate implements Serializable {
     //todo polaczenia
-    private Adress adress;//info like road, house number
+    private Adress Adress;//info like road, house number
+    private Map<String, CV> Cvs = new HashMap<>();//Name_Surname_number
     private static List<Candidate> Candidates = new ArrayList<>();
 
 
@@ -50,7 +49,7 @@ public class Candidate implements Serializable {
     @Override
     public String toString() {
         String temp = "\n----------------------\n"+this.name.toString();
-        temp += " " +this.surname + ", living in " + this.adress.toString();
+        temp += " " +this.surname + ", living in " + this.Adress.toString();
         temp += "\nemail: " + this.email + "\nphone: " + this.phoneNumber+ "\nborn " + this.dateOfBirth.toString()+ " ("+
                 Period.between(
                         this.dateOfBirth,
@@ -103,7 +102,7 @@ public class Candidate implements Serializable {
         this.surname = surname;
     }
     public Adress getAdress() {
-        return adress;
+        return Adress;
     }
     public void setAdress(
             String road,
@@ -113,7 +112,7 @@ public class Candidate implements Serializable {
             String town,
             String country) {
         //todo zrobic to poprawnie z relacja
-        this.adress = new Adress(road, houseNumber, apartamentNumber, postalCode, town, country);
+        this.Adress = new Adress(road, houseNumber, apartamentNumber, postalCode, town, country);
     }
     public String getEmail() {
         return email;

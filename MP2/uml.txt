@@ -1,0 +1,110 @@
+CLASSES
+-------
+
+JobOffer
+- jobInfo : String
+- salary : Double
+- experienceInYears : Integer
+
+Company
+- companyName : String
+- shortInfo : String
+
+ComAdr
+- from : LocalDate
+- to : LocalDate
+
+Candidate
+- name [1..2] : List<String>
+- surname : String
+- email : String
+- phoneNumber [0..1] : String
+- dateOfBirth : LocalDate
+
++ getDataFromFile() : void
++ saveToFile() : void
+
+Address
+- road : String
+- houseNumber : int
+- apartmentNumber : int
+- postalCode : String
+- town : String
+- country : String
+
+CV
+- education [0..*] : List<String>
+- experience [0..*] : List<String>
+
+
+ASSOCIATIONS
+------------
+
+1. Company --- JobOffer
+   type: Composition
+   role: "Announces"
+   multiplicity:
+     Company: 1
+     JobOffer: 0..*
+
+   meaning:
+     Company announces JobOffers.
+     JobOffer cannot exist without Company.
+
+
+2. Company --- ComAdr
+   role: "Located in"
+   multiplicity:
+     Company: 1
+     ComAdr: 0..*
+
+   meaning:
+     Company was at ComAdr from x till y time.
+
+
+3. ComAdr --- Address
+   multiplicity:
+     ComAdr: 0..*
+     Address: 1
+
+   meaning:
+     ComAdr is assigned to exactly one Address at a time.
+
+
+
+4. Candidate --- Address
+   role: "Lives"
+   multiplicity:
+     Candidate: 1..*
+     Address: 1
+
+   type: normal association
+
+   meaning:
+     Candidate lives at one or more Addresses.
+     Each Address belongs to exactly one Candidate.
+
+
+5. Candidate --- CV
+   type: qualified association
+   multiplicity:
+     Candidate: 1
+     CV: 1..*
+
+   qualifier:
+     CV number (Name_Surname_number)
+
+   meaning:
+     Candidate has multiple CVs identified by a qualifier.
+
+
+ADDITIONAL NOTES
+----------------
+
+- Automatic creation of reverse references required for each association.
+- Allowed multiplicities: 1-* or *-*.
+- Types of associations used:
+  * normal association (Candidate-Address)
+  * association with attribute (Company-(ComAdr)-Address) [implicit]
+  * qualified association (CV-Candidate)
+  * composition (Company-JobOffer)

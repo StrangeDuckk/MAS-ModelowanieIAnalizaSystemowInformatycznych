@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-
-public class Departments {
+//todo doppytac czy wszystko jako private
+public class ComAdr {
     private Company company;
     private Adress adress;
 
@@ -10,7 +10,7 @@ public class Departments {
     private int numberOfEmployees;
     private String fields;//ex: It, Logistic, Accountancy, ...
 
-    private Departments(String name, int numberOfEmployees, String fields){
+    private ComAdr(String name, int numberOfEmployees, String fields){
         //todo konstruktor z setterow
         this.name = name;
         this.numberOfEmployees = numberOfEmployees;
