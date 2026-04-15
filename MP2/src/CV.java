@@ -8,8 +8,8 @@ public class CV {
 
     private static List<CV> Cvs = new ArrayList<>();
     private String cvNumber; //Name_Surname_number
-    private List<String> education; //only names
-    private List<String> experience;//short info
+    private List<String> education = new ArrayList<>(); //only names
+    private List<String> experience = new ArrayList<>();//short info
 
     // ================= konstruktor =======================
     public CV(String cvNumber, List<String> education, List<String> experience, Candidate candidate){
@@ -17,11 +17,39 @@ public class CV {
         setEducation(education);
         setExperience(experience);
 
-        //todo polaczenie przez metode
-        this.candidate = candidate;
+        setCandidate(candidate);
     }
     // ================= relacje =================
+    public Candidate getCandidate() {
+        return candidate;
+    }
+    public void setCandidate(Candidate candidate) {//todo zapytac/sprawdzic czy tak jest ok
+        if(this.candidate == candidate){
+            return; // zakonczenie relacji zwrotnej
+        }
 
+        //usuniecie starej relacji manualnie zeby nie strigerowac wyjatku
+        if(this.candidate!= null){//todo czemu to usuwanei nie moze byc przez removeCandidate()
+            Candidate old = this.candidate;
+            this.candidate = null;
+            old.removeCv(this);
+        }
+
+        //nowa relacja
+        this.candidate = candidate;
+
+        if(candidate != null && !candidate.getCvs().containsValue(this)){
+            candidate.addCv(this);
+        }
+    }
+    public void removeCandidate(Candidate candidate){
+        if(this.candidate == null){
+            throw new IllegalArgumentException("Candidate to remove cannot be null");
+        }
+        Candidate old = this.candidate;
+        this.candidate = null;
+        old.removeCv(this);//usuniecie polaczenia
+    }
 
     // ================= gettery i settery ==============
     public void setCvNumber(String cvNumber) {

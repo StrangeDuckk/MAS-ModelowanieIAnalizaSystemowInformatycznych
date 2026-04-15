@@ -9,7 +9,7 @@ import java.util.*;
 public class Candidate implements Serializable {
     //todo polaczenia do CV
     private List<Adress> adresses = new ArrayList<>();//Candidate -> wiele Adresses, Adress -> 1 Candidate
-    private Map<String, CV> Cvs = new HashMap<>();//Name_Surname_number
+    private Map<String, CV> cvs = new HashMap<>();//Name_Surname_number
     private static List<Candidate> Candidates = new ArrayList<>();
 
 
@@ -96,6 +96,58 @@ public class Candidate implements Serializable {
         }
         removeAdress(oldAdr);
         addAdress(newAdr);
+    }
+
+    public Map<String, CV> getCvs() {
+        return Collections.unmodifiableMap(cvs);
+    }
+    public CV getByCvNumber(String cvNumber){
+        if (cvNumber == null || cvNumber.isBlank()){
+            throw new IllegalArgumentException("CvNumber cannot be null or blank");
+        }
+        if(!this.cvs.containsKey(cvNumber)){
+            throw new IllegalArgumentException("CV table doesn't contain this CvNumber");
+        }
+
+        return cvs.get(cvNumber);
+    }
+    public void addCv(CV cv){
+        if(cv == null){
+            throw new IllegalArgumentException("cv to add cannot be null");
+        }
+        if(this.cvs.containsKey(cv.getCvNumber())){
+            throw new IllegalArgumentException("this cv number already exists");
+        }
+        this.cvs.put(cv.getCvNumber(), cv);
+        cv.setCandidate(this); //referencja
+    }
+    public void removeCv(CV cv){
+        if(cv==null) {
+            throw new IllegalArgumentException("Cv cannot be null");
+        }
+        if(!this.cvs.containsKey(cv.getCvNumber())){
+            return; //dla zakonczenia referencji
+        }
+
+        cvs.remove(cv.getCvNumber());
+        if(cv.getCandidate() == this){
+            cv.setCandidate(null); // zamkniecie polaczenia
+        }
+    }
+    public void updateCvKey(String oldKey, String newKey){
+        if(oldKey.equals(newKey)){
+            throw new IllegalArgumentException("Old key and new key are the same");
+        }
+        if(!this.cvs.containsKey(oldKey)){
+            throw new IllegalArgumentException("Cv doesnt have old key");
+        }
+        if(this.cvs.containsKey(newKey)){
+            throw new IllegalArgumentException("Cv already contains new key");
+        }
+
+        CV cv = cvs.remove(oldKey);
+        cv.setCvNumber(newKey);
+        cvs.put(newKey,cv);
     }
 
     // ====================== Gettery i Settery ======================
