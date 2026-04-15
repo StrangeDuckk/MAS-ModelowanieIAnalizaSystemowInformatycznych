@@ -7,8 +7,8 @@ import java.time.Period;
 import java.util.*;
 
 public class Candidate implements Serializable {
-    //todo polaczenia
-    private Adress Adress;//info like road, house number
+    //todo polaczenia do CV
+    private List<Adress> adresses = new ArrayList<>();//Candidate -> wiele Adresses, Adress -> 1 Candidate
     private Map<String, CV> Cvs = new HashMap<>();//Name_Surname_number
     private static List<Candidate> Candidates = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class Candidate implements Serializable {
         setName(name);
         setSurname(surname);
         setEmail(email);
-        setAdress(road,houseNumber,apartamentNumber,postalCode,town,country);
+        addAdress(new Adress(road,houseNumber,apartamentNumber,postalCode,town,country));
         setPhoneNumber(phoneNumber);
         setDateOfBirth(dateOfBirth);
 
@@ -49,7 +49,7 @@ public class Candidate implements Serializable {
     @Override
     public String toString() {
         String temp = "\n----------------------\n"+this.name.toString();
-        temp += " " +this.surname + ", living in " + this.Adress.toString();
+        temp += " " +this.surname + ", living in " + this.adresses.get(0).toString();
         temp += "\nemail: " + this.email + "\nphone: " + this.phoneNumber+ "\nborn " + this.dateOfBirth.toString()+ " ("+
                 Period.between(
                         this.dateOfBirth,
@@ -58,6 +58,44 @@ public class Candidate implements Serializable {
 //        temp += "\nCv's numbers: " + this.cvNumber.toString();
 
         return temp;
+    }
+    // ======================    relacje    ==========================
+    public List<Adress> getAdresses() {
+        return Collections.unmodifiableList(adresses);
+    }
+    public void addAdress(Adress adress) {
+        if(adress == null){
+            throw new IllegalArgumentException("Adress cannot be null");
+        }
+        if(adress.getCandidate() != null && adress.getCandidate() != this){
+            throw new IllegalArgumentException("Adress already belongs to another Candidate");
+        }
+        if(adresses.contains(adress))
+            return;//do zatrzymania referencji zwrotnej
+
+        adresses.add(adress);
+        adress.addCandidate(this);//referencja zwrotna
+    }
+    public void removeAdress(Adress adress){
+        if(adress == null){
+            throw new IllegalArgumentException("Adress cannot be null");
+        }
+        if(!adresses.contains(adress)){
+            throw new IllegalArgumentException("You cannot remove adress that isn't in Adresses");//sprawdzic dla referencji zwrotnej
+        }
+
+        adresses.remove(adress);
+
+        if(adress.getCandidate() == this) {//nie dopuszczenie do zapetlenia usuwania
+            adress.removeCandidate(this);//referencja zwrotna
+        }
+    }
+    public void replaceAdress(Adress oldAdr, Adress newAdr){
+        if(oldAdr.equals(newAdr)){
+            throw new IllegalArgumentException("You cannot replace adress by the same adress");
+        }
+        removeAdress(oldAdr);
+        addAdress(newAdr);
     }
 
     // ====================== Gettery i Settery ======================
@@ -101,19 +139,7 @@ public class Candidate implements Serializable {
         }
         this.surname = surname;
     }
-    public Adress getAdress() {
-        return Adress;
-    }
-    public void setAdress(
-            String road,
-            int houseNumber,
-            int apartamentNumber,
-            String postalCode,
-            String town,
-            String country) {
-        //todo zrobic to poprawnie z relacja
-        this.Adress = new Adress(road, houseNumber, apartamentNumber, postalCode, town, country);
-    }
+
     public String getEmail() {
         return email;
     }

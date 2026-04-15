@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Adress implements Serializable {
+    //todo zrobic zeby firma nie mogla byc w tym samym adresie co candidate
+    private Candidate Candidate;
     private List<ComAdr> ComAdr = new ArrayList<>();
 
     private static List<Adress> Addresses = new ArrayList<>();
@@ -14,6 +16,7 @@ public class Adress implements Serializable {
     private String town;
     private String country;
 
+    // =============== konstruktor ===============
     public Adress(
             String road,
             int houseNumber,
@@ -31,6 +34,38 @@ public class Adress implements Serializable {
 
         Addresses.add(this);
     }
+
+    // ============== relacje =================
+    public Candidate getCandidate(){
+        return Candidate;
+    }
+    public void addCandidate(Candidate candidate) {
+        if(candidate == null){
+            throw new IllegalArgumentException("Candidate cannot be null");
+        }
+        if(this.Candidate != null && this.Candidate != candidate){
+            throw new IllegalArgumentException("Adress already assigned to another Candidate");
+        }
+        if(this.Candidate != null){
+            return;//zatrzymanie referencji zwrotnej
+        }
+
+        this.Candidate = candidate;
+        candidate.addAdress(this);//referencja zwrotna
+    }
+
+    public void removeCandidate(Candidate candidate) {
+        if(this.Candidate != candidate){
+            throw new IllegalArgumentException("This adress isn't assigned for this candidate");
+        }
+
+        this.Candidate = null;
+        if(candidate.getAdresses().contains(this)){ //nie dopuszczenie do zapetlenia usuwania
+            candidate.removeAdress(this);//referencja zwrotna
+        }
+    }
+    // ================= gettery i settery =================
+
 
     public String getRoad() {
         return road;
@@ -102,6 +137,7 @@ public class Adress implements Serializable {
 
         return temp;
     }
+
 }
 /*
 6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:
