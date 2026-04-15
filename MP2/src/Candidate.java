@@ -174,39 +174,7 @@ public class Candidate implements Serializable {
         }
         this.dateOfBirth = dateOfBirth;
     }
-//    public List<Integer> getCvNumber() {
-//        return Collections.unmodifiableList(this.cvNumber);
-//    }
-//    public void setCvNumber(ArrayList<Integer> AcvNumber) {
-//        if(AcvNumber == null || AcvNumber.isEmpty()){
-//            throw new IllegalArgumentException("Array can't be null or empty");
-//        }
-//        if (AcvNumber.size() >3){
-//            throw new IllegalArgumentException("Maximum length for CvNumbers table is 3");
-//        }
-//        for (Integer i : AcvNumber)
-//            addCvNumber(i);
-//    }
-//    public void removeCvNumber(int index){
-//        if(this.cvNumber.size() == 1){
-//            throw new IllegalArgumentException("Available lenght for Candidates CvNumber table is [1..3]");
-//        } else if (index<0 || index >= this.cvNumber.size()) {
-//            throw new IllegalArgumentException("Available indexes for Candidates CvNumber table is 0.."+(this.cvNumber.size()-1));
-//        }
-//        this.cvNumber.remove(index);
-//    }
-//    public void addCvNumber(int number){
-//        if(this.cvNumber.size()>=3){
-//            throw new IllegalArgumentException("Table is full (length:"+this.cvNumber.size()+")");
-//        }
-//        if(this.cvNumber.contains(number)){
-//            throw new IllegalArgumentException("This table already has number "+number);
-//        }
-//        if(number <= 0) {
-//            throw new IllegalArgumentException("Number has to be >0");
-//        }
-//        this.cvNumber.add(number);
-//    }
+
     public static List<Candidate> getCandidates() {
         return Collections.unmodifiableList(Candidates);
     }
