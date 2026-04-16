@@ -118,6 +118,10 @@ public class Candidate implements Serializable {
         if(this.cvs.containsKey(cv.getCvNumber())){
             throw new IllegalArgumentException("this cv number already exists");
         }
+        if(!cv.getCvNumber().matches("^[^@\\s]+_[^@\\s]+_[0-9]+$")){
+            throw new IllegalArgumentException("Invalid CvNumber format, expected: Name_Surname_Number");
+        }
+
         this.cvs.put(cv.getCvNumber(), cv);
         cv.setCandidate(this); //referencja
     }
@@ -131,13 +135,21 @@ public class Candidate implements Serializable {
 
         cvs.remove(cv.getCvNumber());
         if(cv.getCandidate() == this){
-            cv.setCandidate(null); // zamkniecie polaczenia
+            cv.removeCandidate(this); // zamkniecie polaczenia
         }
     }
     public void updateCvKey(String oldKey, String newKey){
+        if(oldKey == null || oldKey.isBlank()){
+            throw new IllegalArgumentException("Old cvKey cannot be null or blank");
+        }
+        if(newKey == null || newKey.isBlank()){
+            throw new IllegalArgumentException("New cvKey cannot be null or blank");
+        }
+
         if(oldKey.equals(newKey)){
             throw new IllegalArgumentException("Old key and new key are the same");
         }
+
         if(!this.cvs.containsKey(oldKey)){
             throw new IllegalArgumentException("Cv doesnt have old key");
         }
@@ -145,7 +157,8 @@ public class Candidate implements Serializable {
             throw new IllegalArgumentException("Cv already contains new key");
         }
 
-        CV cv = cvs.remove(oldKey);
+        CV cv = cvs.get(oldKey);
+        cvs.remove(oldKey);
         cv.setCvNumber(newKey);
         cvs.put(newKey,cv);
     }

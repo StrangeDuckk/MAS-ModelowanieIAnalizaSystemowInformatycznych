@@ -42,10 +42,16 @@ public class CV {
             candidate.addCv(this);
         }
     }
+
     public void removeCandidate(Candidate candidate){
-        if(this.candidate == null){
-            throw new IllegalArgumentException("Candidate to remove cannot be null");
+        if(this.candidate != candidate){
+            throw new IllegalArgumentException("Cannot remove candidate. Candidates doesn't match");
         }
+
+        if(this.candidate == null){
+            return; // zakonczenie referencji
+        }
+
         Candidate old = this.candidate;
         this.candidate = null;
         old.removeCv(this);//usuniecie polaczenia
@@ -59,7 +65,13 @@ public class CV {
         if(!cvNumber.matches("^[^@\\s]+_[^@\\s]+_[0-9]+$")){//Name_Surname_number
             throw new IllegalArgumentException("Invalid CvNumber format, expected: Name_Surname_Number");
         }
+        if(this.cvNumber.equals(cvNumber)){
+            return; // zakonczenie referencji zwrotnej
+        }
 
+        if(candidate!= null) {
+            candidate.updateCvKey(this.cvNumber,cvNumber);
+        }
         this.cvNumber = cvNumber;
     }
     public String getCvNumber() {
