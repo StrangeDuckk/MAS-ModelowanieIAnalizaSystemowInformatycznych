@@ -1,5 +1,3 @@
-import jdk.jfr.Experimental;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +5,7 @@ public class CV {
     private Candidate candidate;//1 candidate can have multiple cv's, 1 cv can have 1 candidate
 
     private static List<CV> Cvs = new ArrayList<>();
-    private String cvNumber; //Name_Surname_number
+    private String cvNumber; //Name_Surname_number // 9.1
     private List<String> education = new ArrayList<>(); //only names
     private List<String> experience = new ArrayList<>();//short info
 
@@ -20,16 +18,21 @@ public class CV {
         setCandidate(candidate);
     }
     // ================= relacje =================
-    public Candidate getCandidate() {
+    public Candidate getCandidate() {// 6.1
         return candidate;
     }
-    public void setCandidate(Candidate candidate) {//todo zapytac/sprawdzic czy tak jest ok
+    public void setCandidate(Candidate candidate) {//6.2 i 6.4
+        if(candidate == null){
+            throw new IllegalArgumentException("Cannot add null candidate to CV");
+        }
+
         if(this.candidate == candidate){
             return; // zakonczenie relacji zwrotnej
         }
 
         //usuniecie starej relacji manualnie zeby nie strigerowac wyjatku
-        if(this.candidate!= null){//todo czemu to usuwanei nie moze byc przez removeCandidate()
+        //spelnienei 6.4
+        if(this.candidate!= null){
             Candidate old = this.candidate;
             this.candidate = null;
             old.removeCv(this);
@@ -38,12 +41,11 @@ public class CV {
         //nowa relacja
         this.candidate = candidate;
 
-        if(candidate != null && !candidate.getCvs().containsValue(this)){
+        if(!candidate.getCvs().containsValue(this)){
             candidate.addCv(this);
         }
     }
-
-    public void removeCandidate(Candidate candidate){
+    public void removeCandidate(Candidate candidate){//6.3
         if(this.candidate != candidate){
             throw new IllegalArgumentException("Cannot remove candidate. Candidates doesn't match");
         }
@@ -69,8 +71,8 @@ public class CV {
             return; // zakonczenie referencji zwrotnej
         }
 
-        if(candidate!= null) {
-            candidate.updateCvKey(this.cvNumber,cvNumber);
+        if(candidate!= null) {//9.3
+            this.candidate.updateCvKey(this.cvNumber,cvNumber);
         }
         this.cvNumber = cvNumber;
     }
@@ -79,7 +81,11 @@ public class CV {
     }
 
     public void setEducation(List<String> education) {
-        if(education == null || education.isEmpty()){
+        if(education == null){
+            this.education = null;
+            return;
+        }
+        if(education.isEmpty()){//can be null
             throw new IllegalArgumentException("Education list cannot be empty");
         }
         for (String e: education)
@@ -95,8 +101,11 @@ public class CV {
         this.education.remove(e);
     }
     private void addEducation(String e) {
-        if(e == null || e.isBlank()){
-            throw new IllegalArgumentException("Education cannot be null or blank");
+        if(e == null){//it can be null, but wont add it
+            return;
+        }
+        if(e.isBlank()){
+            throw new IllegalArgumentException("Education cannot be blank");
         }
         if(this.education.contains(e)){
             throw new IllegalArgumentException("Education already contains this education record");
@@ -104,7 +113,11 @@ public class CV {
         this.education.add(e);
     }
     public void setExperience(List<String> experience) {
-        if(experience == null || experience.isEmpty()){
+        if(experience == null){
+            this.experience=null;
+            return;
+        }
+        if(experience.isEmpty()){
             throw new IllegalArgumentException("Experience list cannot be empty");
         }
         for (String e: experience)
@@ -121,7 +134,10 @@ public class CV {
     }
 
     private void addExperience(String e) {
-        if(e == null || e.isBlank()){
+        if(e == null){ //can be null but wont add it
+            return;
+        }
+        if(e.isBlank()){
             throw new IllegalArgumentException("Experience cannot be null or blank");
         }
         if(this.experience.contains(e)){
@@ -129,25 +145,25 @@ public class CV {
         }
         this.experience.add(e);
     }
-}
-/*
-6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:
-todo 6.1. Pobranie powiązanego obiektu lub obiektów (getter). W przypadku kolekcji należy
-zapewnić, że nie będzie ona modyfikowana poza klasą, podobnie jak w przypadku ekstensji
-lub atrybutu powtarzalnego.
-todo 6.2. Utworzenie nowego powiązania. Metoda ta powinna automatycznie ustawić referencję
-zwrotną.
-todo 6.3. Usunięcie istniejącego powiązania. Metoda ta powinna automatycznie usunąć referencję
-zwrotną.
-todo 6.4. Jeżeli istnieje metoda do zastąpienia istniejącego powiązania z na inny obiekt, należy
-upewnić się, że obie referencje ze starego powiązania zostaną usunięte przed utworzeniem
-nowej relacji.
 
-9. Asocjacja kwalifikowana
-todo 9.1. Umożliwia “szybki” dostęp do powiązanego obiektu za pomocą kwalifikatora. Najczęściej
-jest nim wymagany i unikalny atrybut powiązanej klasy.
-todo 9.2. Zamiast zbioru referencji do powiązanych obiektów należy zastosować mapę (słownik),
-której kluczem jest kwalifikator a wartością referencja do powiązanego obiektu.
-todo 9.3. Jeżeli zmiana atrybutu będącego kwalifikatorem jest możliwa, to należy automatycznie
-uaktualnić powiązanie wykorzystujące ten kwalifikator.
- */
+    // ================= funkcje ====================
+
+    @Override
+    public String toString() {
+        String temp = "\nCvNumber: "+this.cvNumber+"\n";
+        if (this.experience != null){
+            temp += "Experience: ";
+            for (String e: this.experience) {
+                temp += e+"\n";
+            }
+        }
+        if(this.education != null){
+            temp += "Education: ";
+            for(String e: this.education){
+                temp += e+"\n";
+            }
+        }
+
+        return temp;
+    }
+}

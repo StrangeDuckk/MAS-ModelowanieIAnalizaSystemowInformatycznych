@@ -1,17 +1,12 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
 public class Candidate implements Serializable {
-    //todo polaczenia do CV
     private List<Adress> adresses = new ArrayList<>();//Candidate -> wiele Adresses, Adress -> 1 Candidate
-    private Map<String, CV> cvs = new HashMap<>();//Name_Surname_number
+    private Map<String, CV> cvs = new HashMap<>();//Name_Surname_number // 6.2
     private static List<Candidate> Candidates = new ArrayList<>();
-
 
     private ArrayList<String> name = new ArrayList<>();//list of names, from 1 to max 2 names per candidate
     private String surname;
@@ -31,14 +26,18 @@ public class Candidate implements Serializable {
             String country,
             String email,
             String phoneNumber,
-            LocalDate dateOfBirth) {
+            LocalDate dateOfBirth,
+            List<String> education,
+            List<String> experience
+    ) {
         setName(name);
         setSurname(surname);
         setEmail(email);
         addAdress(new Adress(road,houseNumber,apartamentNumber,postalCode,town,country));
         setPhoneNumber(phoneNumber);
         setDateOfBirth(dateOfBirth);
-
+        String cvNumber = this.name.get(0)+"_"+this.surname+"_"+this.cvs.size();
+        addCv(new CV(cvNumber, education, experience,this));
 
         Candidates.add(this);
     }
@@ -55,15 +54,19 @@ public class Candidate implements Serializable {
                         this.dateOfBirth,
                         LocalDate.now())
                 .getYears()+")";
-//        temp += "\nCv's numbers: " + this.cvNumber.toString();
+        if(this.cvs != null){
+            for (int i = 0; i < this.cvs.size(); i++) {
+                temp += this.cvs.get(this.name+"_"+this.surname+"_"+i).toString();
+            }
+        }
 
         return temp;
     }
     // ======================    relacje    ==========================
-    public List<Adress> getAdresses() {
+    public List<Adress> getAdresses() {//6.1
         return Collections.unmodifiableList(adresses);
     }
-    public void addAdress(Adress adress) {
+    public void addAdress(Adress adress) {//6.2
         if(adress == null){
             throw new IllegalArgumentException("Adress cannot be null");
         }
@@ -76,7 +79,7 @@ public class Candidate implements Serializable {
         adresses.add(adress);
         adress.addCandidate(this);//referencja zwrotna
     }
-    public void removeAdress(Adress adress){
+    public void removeAdress(Adress adress){//6.3
         if(adress == null){
             throw new IllegalArgumentException("Adress cannot be null");
         }
@@ -90,7 +93,7 @@ public class Candidate implements Serializable {
             adress.removeCandidate(this);//referencja zwrotna
         }
     }
-    public void replaceAdress(Adress oldAdr, Adress newAdr){
+    public void replaceAdress(Adress oldAdr, Adress newAdr){//6.4
         if(oldAdr.equals(newAdr)){
             throw new IllegalArgumentException("You cannot replace adress by the same adress");
         }
@@ -98,10 +101,10 @@ public class Candidate implements Serializable {
         addAdress(newAdr);
     }
 
-    public Map<String, CV> getCvs() {
+    public Map<String, CV> getCvs() {//6.1
         return Collections.unmodifiableMap(cvs);
     }
-    public CV getByCvNumber(String cvNumber){
+    public CV getByCvNumber(String cvNumber){//6.1
         if (cvNumber == null || cvNumber.isBlank()){
             throw new IllegalArgumentException("CvNumber cannot be null or blank");
         }
@@ -111,12 +114,12 @@ public class Candidate implements Serializable {
 
         return cvs.get(cvNumber);
     }
-    public void addCv(CV cv){
+    public void addCv(CV cv){//6.2
         if(cv == null){
             throw new IllegalArgumentException("cv to add cannot be null");
         }
         if(this.cvs.containsKey(cv.getCvNumber())){
-            throw new IllegalArgumentException("this cv number already exists");
+            return; // zakonczenie referencji
         }
         if(!cv.getCvNumber().matches("^[^@\\s]+_[^@\\s]+_[0-9]+$")){
             throw new IllegalArgumentException("Invalid CvNumber format, expected: Name_Surname_Number");
@@ -125,7 +128,7 @@ public class Candidate implements Serializable {
         this.cvs.put(cv.getCvNumber(), cv);
         cv.setCandidate(this); //referencja
     }
-    public void removeCv(CV cv){
+    public void removeCv(CV cv){//6.3
         if(cv==null) {
             throw new IllegalArgumentException("Cv cannot be null");
         }
@@ -138,7 +141,7 @@ public class Candidate implements Serializable {
             cv.removeCandidate(this); // zamkniecie polaczenia
         }
     }
-    public void updateCvKey(String oldKey, String newKey){
+    public void updateCvKey(String oldKey, String newKey){//6.4
         if(oldKey == null || oldKey.isBlank()){
             throw new IllegalArgumentException("Old cvKey cannot be null or blank");
         }
@@ -244,17 +247,3 @@ public class Candidate implements Serializable {
         return Collections.unmodifiableList(Candidates);
     }
 }
-/*
-6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:
-todo 6.1. Pobranie powiązanego obiektu lub obiektów (getter). W przypadku kolekcji należy
-zapewnić, że nie będzie ona modyfikowana poza klasą, podobnie jak w przypadku ekstensji
-lub atrybutu powtarzalnego.
-todo 6.2. Utworzenie nowego powiązania. Metoda ta powinna automatycznie ustawić referencję
-zwrotną.
-todo 6.3. Usunięcie istniejącego powiązania. Metoda ta powinna automatycznie usunąć referencję
-zwrotną.
-todo 6.4. Jeżeli istnieje metoda do zastąpienia istniejącego powiązania z na inny obiekt, należy
-upewnić się, że obie referencje ze starego powiązania zostaną usunięte przed utworzeniem
-nowej relacji.
-
- */
