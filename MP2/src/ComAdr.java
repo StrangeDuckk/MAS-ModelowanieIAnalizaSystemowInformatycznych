@@ -1,11 +1,12 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 //todo doppytac czy wszystko jako private
 public class ComAdr {
     private Company company;
     private Adress adress;
-    private static List<ComAdr> ComAdr = new ArrayList<>();
+    private static List<ComAdr> comAdr = new ArrayList<>();
 
     private LocalDate from;
     private LocalDate to;// moze byc null
@@ -15,12 +16,12 @@ public class ComAdr {
         //todo konstruktor z setterow
         setCompany(com);
         setAdress(adr);
-
-        if(to.isAfter(from)){
-            throw new IllegalArgumentException("TO date has to be before FROM");
-        }
         setFromDate(from);
         setToDate(to);
+
+        comAdr.add(this);
+        com.addComAdr(this);
+        adr.addComAdr(this);
     }
 
     // ============= relacje ===============
@@ -37,9 +38,6 @@ public class ComAdr {
         this.company = company;
         company.addComAdr(this);
     }
-    private void removeCompany(){
-        //TODO
-    }
     private void setAdress(Adress adr) {
         if(adr == null){
             throw new IllegalArgumentException("Adress cannot be null");
@@ -51,7 +49,25 @@ public class ComAdr {
         adr.addComAdr(this);
     }
 
+    protected void removeAllConnections(){
+        //na raz z Company i Adress
+        if(this.company != null){
+            Company tempComp = this.company;
+            this.company = null;
+            tempComp.removeComAdr(this);
+        }
+        if(this.adress != null){
+            Adress tempAdr = this.adress;
+            this.adress = null;
+            tempAdr.removeComAdr(this);
+        }
+
+        comAdr.remove(this);
+    }
     // ============ gettery i settery ===============
+    public static List<ComAdr> getComAdr() {
+        return Collections.unmodifiableList(comAdr);
+    }
     public Company getCompany(){
         return this.company;
     }
@@ -74,7 +90,10 @@ public class ComAdr {
         return to;
     }
     private void setToDate(LocalDate to) {
-        this.to = to;//walidacja w konstruktorze
+        if(to.isBefore(this.from)){
+            throw new IllegalArgumentException("TO date has to be before FROM");
+        }
+        this.to = to;
     }
     // ============ funkcje =================
 

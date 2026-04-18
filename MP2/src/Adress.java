@@ -8,7 +8,7 @@ public class Adress implements Serializable {
     private Candidate Candidate;
     private List<ComAdr> comAdr = new ArrayList<>();
 
-    private static List<Adress> Addresses = new ArrayList<>();
+    private static List<Adress> addresses = new ArrayList<>();
     private String road;
     private int houseNumber;
     private int apartmentNumber;
@@ -32,7 +32,7 @@ public class Adress implements Serializable {
         setTown(town);
         setCountry(country);
 
-        Addresses.add(this);
+        addresses.add(this);
     }
 
     // ============== relacje =================
@@ -76,15 +76,26 @@ public class Adress implements Serializable {
             addComAdr(ca);
         }
     }
-    public void addComAdr(ComAdr comAdr){
+    protected void addComAdr(ComAdr comAdr){
         if(comAdr == null){
             throw new IllegalArgumentException("ComAdr cannot be null");
         }
-        if(comAdr.getAdress() == this){
+        if(comAdr.getAdress() == this || this.comAdr.contains(comAdr)){
             return; //zakonczenie
         }
         this.comAdr.add(comAdr);
-        //todo jak zrobic zwrotne
+    }
+    protected void removeComAdr(ComAdr comAdr) {
+        if(comAdr == null){
+            throw new IllegalArgumentException("Cannot remove null ComAdr connection");
+        }
+        if(this.comAdr == null || !this.comAdr.contains(comAdr)){
+            return;
+        }
+
+        ComAdr tempComAdr = comAdr;
+        this.comAdr.remove(comAdr);
+        tempComAdr.removeAllConnections();
     }
 
     // ================= gettery i settery =================
@@ -146,7 +157,7 @@ public class Adress implements Serializable {
     }
 
     public static List<Adress> getAddresses() {
-        return Collections.unmodifiableList(Addresses);
+        return Collections.unmodifiableList(addresses);
     }
     @Override
     public String toString() {
@@ -160,7 +171,6 @@ public class Adress implements Serializable {
 
         return temp;
     }
-
 }
 /*
 6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:

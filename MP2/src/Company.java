@@ -64,7 +64,7 @@ public class Company {
     public List<ComAdr> getComAdr(){
         return Collections.unmodifiableList(this.comAdr);
     }
-    public void setComAdr(List<ComAdr> comAdr) {
+    protected void setComAdr(List<ComAdr> comAdr) {
         if(comAdr == null){
             throw new IllegalArgumentException("ComAdr list cannot be null");
         }
@@ -73,15 +73,26 @@ public class Company {
         }
 
     }
-    public void addComAdr(ComAdr ca) {
+    protected void addComAdr(ComAdr ca) {
         if(ca == null){
             throw new IllegalArgumentException("ComAfr argument cannot be null");
         }
-        if(ca.getCompany() == this){
+        if(ca.getCompany() == this || this.comAdr.contains(ca)){
             return;// zakonczenie
         }
         this.comAdr.add(ca);
-        //todo zwrotne jak zrobic
+    }
+    protected void removeComAdr(ComAdr comAdr){
+        if(comAdr == null){
+            throw new IllegalArgumentException("Cannot remove null ComAdr connection");
+        }
+        if(this.comAdr == null || !this.comAdr.contains(comAdr)){
+            return;
+        }
+
+        ComAdr tempComAdr = comAdr;
+        this.comAdr.remove(comAdr);
+        tempComAdr.removeAllConnections();
     }
 
     // ============= gettery i settery ===========
