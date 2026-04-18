@@ -4,20 +4,62 @@ import java.util.List;
 
 public class JobOffer {
     private Company company;
-    private static List<JobOffer> JobOffers = new ArrayList<>();
+    private static List<JobOffer> jobOffers = new ArrayList<>();
 
     private String jobInfo;
     private Double salary;
-    private Integer experienceInYears;//todo dopytac czy integer
+    private int experienceInYears;//int bo 0 traktuje tu jak null
 
+    // ============== Konstruktor ==================
     public JobOffer(String jobInfo, Double salary, Integer experienceInYears, Company company){
-        //todo konstruktor setterowy
-        this.jobInfo = jobInfo;
-        this.salary = salary;
-        this.experienceInYears = experienceInYears;
+        setJobInfo(jobInfo);
+        setSalary(salary);
+        setExperienceInYears(experienceInYears);
+
+        jobOffers.add(this);
 
         //todo prawidlowo polaczenie przez metode
         this.company = company;
+    }
+    // ============= relacje ====================
+
+    // ========= gettery i settery ==============
+    public String getJobInfo() {
+        return jobInfo;
+    }
+    public void setJobInfo(String jobInfo){
+        if(jobInfo == null || jobInfo.isBlank()){
+            throw new IllegalArgumentException("JobInfo cannot be null or blank");
+        }
+        this.jobInfo = jobInfo;
+    }
+    public Double getSalary() {
+        return salary;
+    }
+    public void setSalary(Double salary){
+        if (salary == null){
+            throw new IllegalArgumentException("Salary cannot be null");
+        }
+        if(salary<0){
+            throw new IllegalArgumentException("Salary cannot be < 0");
+        }
+        this.salary=salary;
+    }
+    public int getExperienceInYears(){
+        return this.experienceInYears;
+    }
+    public void setExperienceInYears(int experience){
+        if(experience < 0){
+            throw new IllegalArgumentException("Experience in years cannot be < 0");
+        }
+        this.experienceInYears = experience;
+    }
+    // ============= funkcje ====================
+
+    @Override
+    public String toString() {
+        return "JobOffer: company:" + company +", \njobInfo='" + jobInfo + '\n' +
+                "salary=" + salary + ", experienceInYears=" + experienceInYears +'\n';
     }
 }
 /*

@@ -2,18 +2,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
+    private List<JobOffer> jobOffers = new ArrayList<>();//kompozycja
     private List<ComAdr> ComAdr = new ArrayList<>();
+    private static List<Adress> companies = new ArrayList<>();
 
-    private static List<Adress> Companies = new ArrayList<>();
     private String name;
     private String shortInfo;
 
-    public Company(String name, String si){
-        //todo zmienic na setterowy konstruktor
-        this.name = name;
-        this.shortInfo = si;
+    // ============= Konstruktor =============
 
-        //tworzenei przez metody i potem dolaczenie departamentu stworzonego
+    public Company(
+            String name,
+            String shortInfo
+    ){
+        setName(name);
+        setShortInfo(shortInfo);
+
+        companies.add(this);
+    }
+    // ============= relacje ==================
+
+    // ============= gettery i settery ===========
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        if(name == null || name.isBlank()){
+            throw new IllegalArgumentException("Organisation name cannot be null or blank");
+        }
+        this.name = name;
+    }
+    public String getShortInfo(){
+        return this.shortInfo;
+    }
+    public void setShortInfo(String shortInfo) {
+        if(shortInfo == null || shortInfo.isBlank()){
+            throw new IllegalArgumentException("Short info cannot be null");
+        }
+        this.shortInfo = shortInfo;
+    }
+
+    // ============= funkcje ================
+
+    @Override
+    public String toString() {
+        String temp = "Company: name:'" + name + '\n' +"shortInfo: " + shortInfo + '\n';
+        if(this.jobOffers != null){
+            for (JobOffer job: this.jobOffers) {
+                temp += job.toString();
+            }
+        }
+        //todo dopisac z drugiej relacji
+
+        return temp;
     }
 }
 /*
