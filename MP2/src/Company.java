@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Company {
-    private List<JobOffer> jobOffers = new ArrayList<>();//kompozycja
-    private List<ComAdr> ComAdr = new ArrayList<>();
-    private static List<Adress> companies = new ArrayList<>();
+    private List<JobOffer> jobOffers = new ArrayList<>();//kompozycja, company zarzadza lista
+    private List<ComAdr> comAdr = new ArrayList<>();
+    private static List<Company> companies = new ArrayList<>();
 
     private String name;
     private String shortInfo;
@@ -21,6 +22,44 @@ public class Company {
         companies.add(this);
     }
     // ============= relacje ==================
+    public List<JobOffer> getJobOffers(){ //6.1
+        return Collections.unmodifiableList(this.jobOffers);
+    }
+    public JobOffer createJobOffer(String jobInfo, Double salary, int experienceInYears){//10.1, 10.2
+        return new JobOffer(jobInfo,salary,experienceInYears,this);
+    }
+    protected void addJobOffer(JobOffer jobOffer){
+        if( jobOffer == null){
+            throw new IllegalArgumentException("Joboffer cannot be null");
+        }
+        if(jobOffer.getCompany() != null && jobOffer.getCompany() != this){//10.3
+            throw new IllegalArgumentException("JobOffer already belongs to a company: "+jobOffer.getCompany());
+        }
+        if(this.jobOffers.contains(jobOffer)){
+            return;//zakonczenie
+        }
+
+        jobOffer.setCompany(this);
+        this.jobOffers.add(jobOffer);
+    }
+    protected void removeJobOffer(JobOffer jobOffer){//10.4
+        if(jobOffer == null){
+            throw new IllegalArgumentException("Cannot remove null jobOffer");
+        }
+        if(!this.jobOffers.contains(jobOffer)){
+            return;//zakonczenie
+        }
+
+        this.jobOffers.remove(jobOffer);
+        jobOffer.removeCompany();
+    }
+    public void removeCompany(){
+        //usuniecie i company i JobOffer
+        for(JobOffer job: new ArrayList<>(this.jobOffers)){
+            job.removeCompany();
+        }
+        companies.remove(this);
+    }
 
     // ============= gettery i settery ===========
     public String getName(){

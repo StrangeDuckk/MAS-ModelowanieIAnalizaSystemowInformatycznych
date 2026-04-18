@@ -1,4 +1,3 @@
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,17 +10,41 @@ public class JobOffer {
     private int experienceInYears;//int bo 0 traktuje tu jak null
 
     // ============== Konstruktor ==================
-    public JobOffer(String jobInfo, Double salary, Integer experienceInYears, Company company){
+    protected JobOffer(String jobInfo, Double salary, Integer experienceInYears, Company company){
         setJobInfo(jobInfo);
         setSalary(salary);
         setExperienceInYears(experienceInYears);
 
-        jobOffers.add(this);
+        setCompany(company);
 
-        //todo prawidlowo polaczenie przez metode
-        this.company = company;
+        jobOffers.add(this);
     }
     // ============= relacje ====================
+    public Company getCompany(){
+        return this.company;
+    }
+    protected void setCompany(Company company){ //10.1, 10.3
+        if(company == null){
+            throw new IllegalArgumentException("Company cannot be null");
+        }
+        if(this.company != null && this.company!=company){
+            throw new IllegalArgumentException("offer already belongs to a company"+this.company.getName());
+        }
+
+        this.company = company;
+        company.addJobOffer(this);
+    }
+    protected void removeCompany(){
+        if(this.company == null){
+            return;//zakonczenie
+        }
+
+        Company oldCompany = this.company;
+        this.company = null;
+
+        oldCompany.removeJobOffer(this);
+        jobOffers.remove(this);
+    }
 
     // ========= gettery i settery ==============
     public String getJobInfo() {
