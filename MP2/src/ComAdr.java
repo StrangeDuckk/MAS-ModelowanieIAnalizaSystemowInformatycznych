@@ -1,21 +1,88 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 //todo doppytac czy wszystko jako private
 public class ComAdr {
     private Company company;
     private Adress adress;
+    private static List<ComAdr> ComAdr = new ArrayList<>();
 
-    private static List<Adress> Departments = new ArrayList<>();
-    private String name;
-    private int numberOfEmployees;
-    private String fields;//ex: It, Logistic, Accountancy, ...
+    private LocalDate from;
+    private LocalDate to;// moze byc null
 
-    private ComAdr(String name, int numberOfEmployees, String fields){
+    // ============== Konstruktor ===============
+    private ComAdr(Company com, Adress adr, LocalDate from, LocalDate to){
         //todo konstruktor z setterow
-        this.name = name;
-        this.numberOfEmployees = numberOfEmployees;
-        this.fields = fields;
+        setCompany(com);
+        setAdress(adr);
+
+        if(to.isAfter(from)){
+            throw new IllegalArgumentException("TO date has to be before FROM");
+        }
+        setFromDate(from);
+        setToDate(to);
     }
+
+    // ============= relacje ===============
+    public static ComAdr create(Company company, Adress adress, LocalDate from, LocalDate to){
+        return new ComAdr(company,adress,from,to);
+    }
+    private void setCompany(Company company){
+        if(company == null){
+            throw new IllegalArgumentException("Company cannot be null");
+        }
+        if(company.getComAdr().contains(this)){
+            return; // zakonczenie
+        }
+        this.company = company;
+        company.addComAdr(this);
+    }
+    private void removeCompany(){
+        //TODO
+    }
+    private void setAdress(Adress adr) {
+        if(adr == null){
+            throw new IllegalArgumentException("Adress cannot be null");
+        }
+        if(adr.getComAdr().contains(this)){
+            return;//zakonczenie
+        }
+        this.adress = adr;
+        adr.addComAdr(this);
+    }
+
+    // ============ gettery i settery ===============
+    public Company getCompany(){
+        return this.company;
+    }
+    public Adress getAdress(){
+        return this.adress;
+    }
+    public LocalDate getFromDate() {
+        return from;
+    }
+    private void setFromDate(LocalDate from) {
+        if(from == null){
+            throw new IllegalArgumentException("Date from cannot be null");
+        }
+        if(from.isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("Date has to be from past");
+        }
+        this.from=from;
+    }
+    public LocalDate getToDate() {
+        return to;
+    }
+    private void setToDate(LocalDate to) {
+        this.to = to;//walidacja w konstruktorze
+    }
+    // ============ funkcje =================
+
+    @Override
+    public String toString() {
+        return "From: "+this.from+ (this.to == null? "\n": (", to: " + this.to));
+    }
+
 
     //to metody prywatne (wykonywane z company albo adress):
     // todo metoda na remove all connections

@@ -61,6 +61,29 @@ public class Company {
         companies.remove(this);
     }
 
+    public List<ComAdr> getComAdr(){
+        return Collections.unmodifiableList(this.comAdr);
+    }
+    public void setComAdr(List<ComAdr> comAdr) {
+        if(comAdr == null){
+            throw new IllegalArgumentException("ComAdr list cannot be null");
+        }
+        for (ComAdr ca: comAdr) {
+            addComAdr(ca);
+        }
+
+    }
+    public void addComAdr(ComAdr ca) {
+        if(ca == null){
+            throw new IllegalArgumentException("ComAfr argument cannot be null");
+        }
+        if(ca.getCompany() == this){
+            return;// zakonczenie
+        }
+        this.comAdr.add(ca);
+        //todo zwrotne jak zrobic
+    }
+
     // ============= gettery i settery ===========
     public String getName(){
         return this.name;
@@ -95,6 +118,7 @@ public class Company {
 
         return temp;
     }
+
 }
 /*
 6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:

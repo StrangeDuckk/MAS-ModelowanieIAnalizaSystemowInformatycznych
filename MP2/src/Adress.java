@@ -6,7 +6,7 @@ import java.util.List;
 public class Adress implements Serializable {
     //todo zrobic zeby firma nie mogla byc w tym samym adresie co candidate
     private Candidate Candidate;
-    private List<ComAdr> ComAdr = new ArrayList<>();
+    private List<ComAdr> comAdr = new ArrayList<>();
 
     private static List<Adress> Addresses = new ArrayList<>();
     private String road;
@@ -64,6 +64,29 @@ public class Adress implements Serializable {
             candidate.removeAdress(this);//referencja zwrotna
         }
     }
+
+    public List<ComAdr> getComAdr(){
+        return Collections.unmodifiableList(this.comAdr);
+    }
+    public void setComAdr(List<ComAdr> comAdrs){
+        if(comAdrs == null){
+            throw new IllegalArgumentException("Cannot add null comAdr list");
+        }
+        for(ComAdr ca: comAdrs){
+            addComAdr(ca);
+        }
+    }
+    public void addComAdr(ComAdr comAdr){
+        if(comAdr == null){
+            throw new IllegalArgumentException("ComAdr cannot be null");
+        }
+        if(comAdr.getAdress() == this){
+            return; //zakonczenie
+        }
+        this.comAdr.add(comAdr);
+        //todo jak zrobic zwrotne
+    }
+
     // ================= gettery i settery =================
 
 
