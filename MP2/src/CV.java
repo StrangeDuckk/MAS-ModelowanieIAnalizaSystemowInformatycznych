@@ -3,8 +3,8 @@ import java.util.List;
 
 public class CV {
     private Candidate candidate;//1 candidate can have multiple cv's, 1 cv can have 1 candidate
+    private static List<CV> cvs = new ArrayList<>();
 
-    private static List<CV> Cvs = new ArrayList<>();
     private String cvNumber; //Name_Surname_number // 9.1
     private List<String> education = new ArrayList<>(); //only names
     private List<String> experience = new ArrayList<>();//short info
@@ -14,6 +14,8 @@ public class CV {
         setCvNumber(cvNumber);
         setEducation(education);
         setExperience(experience);
+
+        cvs.add(this);
 
         setCandidate(candidate);
     }
