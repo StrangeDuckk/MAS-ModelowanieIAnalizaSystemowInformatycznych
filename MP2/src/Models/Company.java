@@ -1,3 +1,4 @@
+package Models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,8 +40,8 @@ public class Company {
             return;//zakonczenie
         }
 
-        jobOffer.setCompany(this);
         this.jobOffers.add(jobOffer);
+//        jobOffer.setCompany(this);
     }
     protected void removeJobOffer(JobOffer jobOffer){//10.4
         if(jobOffer == null){
@@ -77,7 +78,7 @@ public class Company {
         if(ca == null){
             throw new IllegalArgumentException("ComAfr argument cannot be null");
         }
-        if(ca.getCompany() == this || this.comAdr.contains(ca)){
+        if(ca.getCompany() == this && this.comAdr.contains(ca)){
             return;// zakonczenie
         }
         this.comAdr.add(ca);
@@ -125,7 +126,11 @@ public class Company {
                 temp += job.toString();
             }
         }
-        //todo dopisac z drugiej relacji
+        if(this.comAdr != null){
+            for(ComAdr ca: this.comAdr){
+                temp+= ca.toString();
+            }
+        }
 
         return temp;
     }

@@ -1,10 +1,10 @@
+package Models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Adress implements Serializable {
-    //todo zrobic zeby firma nie mogla byc w tym samym adresie co candidate
     private Candidate Candidate;
     private List<ComAdr> comAdr = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class Adress implements Serializable {
         if(comAdr == null){
             throw new IllegalArgumentException("ComAdr cannot be null");
         }
-        if(comAdr.getAdress() == this || this.comAdr.contains(comAdr)){
+        if(comAdr.getAdress() == this && this.comAdr.contains(comAdr)){
             return; //zakonczenie
         }
         this.comAdr.add(comAdr);

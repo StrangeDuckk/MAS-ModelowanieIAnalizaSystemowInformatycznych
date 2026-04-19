@@ -1,3 +1,4 @@
+package Models;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,8 @@ public class JobOffer {
     private Double salary;
     private int experienceInYears;//int bo 0 traktuje tu jak null
 
-    // ============== Konstruktor ==================
-    protected JobOffer(String jobInfo, Double salary, Integer experienceInYears, Company company){
+    // ============== Konstruktor (package-private)==================
+    JobOffer(String jobInfo, Double salary, Integer experienceInYears, Company company){
         setJobInfo(jobInfo);
         setSalary(salary);
         setExperienceInYears(experienceInYears);
@@ -18,6 +19,7 @@ public class JobOffer {
         setCompany(company);
 
         jobOffers.add(this);
+        company.addJobOffer(this);
     }
     // ============= relacje ====================
     public Company getCompany(){
@@ -30,9 +32,12 @@ public class JobOffer {
         if(this.company != null && this.company!=company){
             throw new IllegalArgumentException("offer already belongs to a company"+this.company.getName());
         }
+        if(this.company !=null && this.company.getJobOffers().contains(this)){
+            return;//zakonczenie polaczenia
+        }
 
         this.company = company;
-        company.addJobOffer(this);
+//        company.addJobOffer(this);
     }
     protected void removeCompany(){
         if(this.company == null){
@@ -81,7 +86,7 @@ public class JobOffer {
 
     @Override
     public String toString() {
-        return "JobOffer: company:" + company +", \njobInfo='" + jobInfo + '\n' +
+        return "JobOffer: company:" + company.getName() +", \njobInfo='" + jobInfo + '\n' +
                 "salary=" + salary + ", experienceInYears=" + experienceInYears +'\n';
     }
 }

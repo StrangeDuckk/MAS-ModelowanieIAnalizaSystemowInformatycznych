@@ -1,8 +1,10 @@
+package Models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-//todo doppytac czy wszystko jako private
+import java.util.Objects;
+
 public class ComAdr {
     private Company company;
     private Adress adress;
@@ -13,7 +15,6 @@ public class ComAdr {
 
     // ============== Konstruktor ===============
     private ComAdr(Company com, Adress adr, LocalDate from, LocalDate to){
-        //todo konstruktor z setterow
         setCompany(com);
         setAdress(adr);
         setFromDate(from);
@@ -90,16 +91,21 @@ public class ComAdr {
         return to;
     }
     private void setToDate(LocalDate to) {
+        if(to == null){
+            this.to = LocalDate.of(9999,12,31);//data nei moze byc null ale moze byc niesamowicie odlegla
+            return;
+        }
         if(to.isBefore(this.from)){
             throw new IllegalArgumentException("TO date has to be before FROM");
         }
+
         this.to = to;
     }
     // ============ funkcje =================
 
     @Override
     public String toString() {
-        return "From: "+this.from+ (this.to == null? "\n": (", to: " + this.to));
+        return "From: "+this.from+ (Objects.equals(this.to, LocalDate.of(9999, 12, 31)) ? ", till today\n": (", to: " + this.to));
     }
 
 

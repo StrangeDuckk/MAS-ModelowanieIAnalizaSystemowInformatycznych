@@ -1,6 +1,39 @@
+import Models.*;
+import java.sql.SQLOutput;
+import java.time.LocalDate;
+
 
 public class Main {
     public static void main(String[] args) {
+        // ==============Asocjacja z atrybutem=============
+        System.out.println("==============Asocjacja z atrybutem=============");
+        // ------------- tworzenie Company -------------
+        Company company1 = new Company("Crayon", "Provider od Microsoft software");
+        Adress adress1 = new Adress("Domaniewska", 50, 16, "03-336", "Warszawa", "Polska");
+
+        // ------------- tworzenie relacji -------------
+        ComAdr ca1 = ComAdr.create(
+                company1,
+                adress1,
+                LocalDate.of(2020,1,1),
+                null
+        );
+
+        // ------------- sprawdzenie -------------
+        System.out.println(company1.getName()+": "+company1.getComAdr());
+        System.out.println(adress1.getRoad()+": "+adress1.getComAdr());
+        System.out.println("Polaczenie: "+ ca1+"\n");
+
+        // ============= Kompozycja =============
+        System.out.println("============= Kompozycja =============");
+
+        // ------------- Tworzenie relacji JobOffer -------------
+        company1.createJobOffer("Modern Work intern", 5000.0, 0);
+
+        // ------------- Sprawdzenie -------------
+        System.out.println(company1.getName()+": "+company1.getJobOffers());
+        System.out.println("Polaczenie: "+company1.getJobOffers().get(0).toString());
+
 
     }
 }
