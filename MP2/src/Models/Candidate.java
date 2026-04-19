@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Candidate implements Serializable {
     private List<Adress> adresses = new ArrayList<>();//Candidate -> wiele Adresses, Adress -> 1 Candidate
-    private Map<String, CV> cvs = new HashMap<>();//Name_Surname_number // 6.2
+    private Map<String, CV> cvs = new HashMap<>();//Name_Surname_number // 9.2
     private static List<Candidate> Candidates = new ArrayList<>();
 
     private ArrayList<String> name = new ArrayList<>();//list of names, from 1 to max 2 names per candidate
@@ -78,7 +78,7 @@ public class Candidate implements Serializable {
             return;//do zatrzymania referencji zwrotnej
 
         adresses.add(adress);
-        adress.addCandidate(this);//referencja zwrotna
+        adress.addCandidate(this);//referencja zwrotna 6.2
     }
     public void removeAdress(Adress adress){//6.3
         if(adress == null){

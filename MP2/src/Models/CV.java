@@ -103,7 +103,7 @@ public class CV {
         }
         this.education.remove(e);
     }
-    private void addEducation(String e) {
+    public void addEducation(String e) {
         if(e == null){//it can be null, but wont add it
             return;
         }
@@ -136,8 +136,9 @@ public class CV {
         this.experience.remove(e);
     }
 
-    private void addExperience(String e) {
-        if(e == null){ //can be null but wont add it
+    public void addExperience(String e) {
+        if(e == null){
+            this.experience = null;
             return;
         }
         if(e.isBlank()){

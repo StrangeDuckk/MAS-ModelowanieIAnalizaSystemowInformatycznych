@@ -1,4 +1,5 @@
 package Models;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,9 @@ public class Company {
         companies.add(this);
     }
     // ============= relacje ==================
+    public ComAdr createComAdr(Company company, Adress adress, LocalDate from, LocalDate to){
+        return new ComAdr(company, adress, from, to);
+    }
     public List<JobOffer> getJobOffers(){ //6.1
         return Collections.unmodifiableList(this.jobOffers);
     }
@@ -58,6 +62,12 @@ public class Company {
         //usuniecie i company i JobOffer
         for(JobOffer job: new ArrayList<>(this.jobOffers)){
             job.removeCompany();
+        }
+        //jesli sa asocjacje to usunac je
+        if(this.comAdr != null){
+            for(ComAdr ca: comAdr){
+                ca.removeAllConnections();
+            }
         }
         companies.remove(this);
     }
@@ -136,18 +146,3 @@ public class Company {
     }
 
 }
-/*
-6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:
-todo 6.1. Pobranie powiązanego obiektu lub obiektów (getter). W przypadku kolekcji należy
-zapewnić, że nie będzie ona modyfikowana poza klasą, podobnie jak w przypadku ekstensji
-lub atrybutu powtarzalnego.
-todo 6.2. Utworzenie nowego powiązania. Metoda ta powinna automatycznie ustawić referencję
-zwrotną.
-todo 6.3. Usunięcie istniejącego powiązania. Metoda ta powinna automatycznie usunąć referencję
-zwrotną.
-todo 6.4. Jeżeli istnieje metoda do zastąpienia istniejącego powiązania z na inny obiekt, należy
-upewnić się, że obie referencje ze starego powiązania zostaną usunięte przed utworzeniem
-nowej relacji.
-
-
- */

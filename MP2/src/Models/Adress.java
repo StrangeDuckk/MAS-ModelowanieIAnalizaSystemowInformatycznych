@@ -1,5 +1,6 @@
 package Models;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +37,9 @@ public class Adress implements Serializable {
     }
 
     // ============== relacje =================
+    public ComAdr createComAdr(Company company, Adress adress, LocalDate from, LocalDate to){
+        return new ComAdr(company, adress, from, to);
+    }
     public Candidate getCandidate(){
         return Candidate;
     }
@@ -51,7 +55,7 @@ public class Adress implements Serializable {
         }
 
         this.Candidate = candidate;
-        candidate.addAdress(this);//referencja zwrotna
+        candidate.addAdress(this);//referencja zwrotna 6.2
     }
 
     public void removeCandidate(Candidate candidate) {
@@ -61,7 +65,7 @@ public class Adress implements Serializable {
 
         this.Candidate = null;
         if(candidate.getAdresses().contains(this)){ //nie dopuszczenie do zapetlenia usuwania
-            candidate.removeAdress(this);//referencja zwrotna
+            candidate.removeAdress(this);//referencja zwrotna 6.3
         }
     }
 
@@ -76,16 +80,16 @@ public class Adress implements Serializable {
             addComAdr(ca);
         }
     }
-    protected void addComAdr(ComAdr comAdr){
+    public void addComAdr(ComAdr comAdr){
         if(comAdr == null){
             throw new IllegalArgumentException("ComAdr cannot be null");
         }
         if(comAdr.getAdress() == this && this.comAdr.contains(comAdr)){
             return; //zakonczenie
         }
-        this.comAdr.add(comAdr);
+        this.comAdr.add(comAdr);//6.2
     }
-    protected void removeComAdr(ComAdr comAdr) {
+    public void removeComAdr(ComAdr comAdr) {
         if(comAdr == null){
             throw new IllegalArgumentException("Cannot remove null ComAdr connection");
         }
@@ -95,12 +99,26 @@ public class Adress implements Serializable {
 
         ComAdr tempComAdr = comAdr;
         this.comAdr.remove(comAdr);
-        tempComAdr.removeAllConnections();
+        tempComAdr.removeAllConnections();//6.3
+    }
+    public void removeAdress(Adress adress){
+        if(adress == null){
+            throw new IllegalArgumentException("Cannot remove null adress");
+        }
+        if(!addresses.contains(adress)){
+            throw new IllegalArgumentException("Given adress is not in addresses table");
+        }
+        // usuniecie kazdej asocjacji dla tego adresu
+        if(this.comAdr != null){
+            for (ComAdr ca: new ArrayList<>(this.comAdr)){
+                this.comAdr.remove(ca);
+                ca.removeAllConnections();//6.3
+            }
+        }
+        addresses.remove(adress);
     }
 
-    // ================= gettery i settery =================
-
-
+    // ================= gettery i settery ================= 6.1(gettery)
     public String getRoad() {
         return road;
     }
@@ -172,19 +190,3 @@ public class Adress implements Serializable {
         return temp;
     }
 }
-/*
-6. Dla każdej asocjacji należy utworzyć metody w obu powiązanych klasach, które umożliwią:
-todo 6.1. Pobranie powiązanego obiektu lub obiektów (getter). W przypadku kolekcji należy
-zapewnić, że nie będzie ona modyfikowana poza klasą, podobnie jak w przypadku ekstensji
-lub atrybutu powtarzalnego.
-todo 6.2. Utworzenie nowego powiązania. Metoda ta powinna automatycznie ustawić referencję
-zwrotną.
-todo 6.3. Usunięcie istniejącego powiązania. Metoda ta powinna automatycznie usunąć referencję
-zwrotną.
-todo 6.4. Jeżeli istnieje metoda do zastąpienia istniejącego powiązania z na inny obiekt, należy
-upewnić się, że obie referencje ze starego powiązania zostaną usunięte przed utworzeniem
-nowej relacji.
-
-
-
- */
