@@ -116,7 +116,7 @@ public class Candidate implements Serializable {
         return cvs.get(cvNumber);
     }
     public void addCv(CV cv){//6.2
-        if(cv == null){
+        if(cv == null || cv.getCvNumber() == null){
             throw new IllegalArgumentException("cv to add cannot be null");
         }
         if(this.cvs.containsKey(cv.getCvNumber())){
