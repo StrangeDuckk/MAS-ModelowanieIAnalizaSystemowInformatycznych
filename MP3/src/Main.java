@@ -70,6 +70,7 @@ W momencie utworzenia person, trzeba tez utworzyc obiekt type
 Wyrzucenie calej asocjacji i zapakowanie do person, typ będzie bezposrednio zaimplementowany w klasie person
 Wtedy tez wchodza enumSety
 
+//todo dynamic przez splaszczenie
 Dynamiczne:
 Dziedziczenie zwykle z pewnymi metodami np. SmartObjectCopying. W mainie utworzony student może zostac studentem
 Można zrobic tak ze np. Student może przejsc tylko na pracownika ale pracownik nie zostanie już studentem nigdy, ale można tez cykliczne tylko musi być poprawne wszystko (usuwanie obiektow z ekstensji)
