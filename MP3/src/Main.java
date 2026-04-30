@@ -1,6 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
+        //todo uzycie JobOffer
     }
 }
 
@@ -34,12 +35,12 @@ nie trzeba serializacji
 przynajmniej dwie podklasy wszedzie
 
 uml help:
-disjoint:
+todo disjoint:
 Abstract w nadklasie
 Metoda w nasklasie tez abstract i przekazana do nizszych klas
 I ta metoda powinna cos tam obliczac a nie być tylko zwracajaca
 
-overlapping: -> ktos jest na raz obydwiema klasami np student i pracownik, ktore sa pod person
+todo overlapping: -> ktos jest na raz obydwiema klasami np student i pracownik, ktore sa pod person
 Splaszczenie hieerarchii, zaleca ze jeśli nie mamy za duzo asocjacji w podklasach
 Czyli bierzemy wszystkie podklasy i wrzucamy ja w jedna, rozroznienie które atrybuty sa ktorej roli i ktore metody sa ktorej roli, tutaj wpadaja ROLE
 - EnumSet:
@@ -49,7 +50,7 @@ Można ale nie trzeba metody która dodaje role, jeśli już by się ja robilo d
 przez asocjacje, od razu przy tworzeniu klasy macierzystej tworzy sie podklase
 Wazne żeby najpeirw tworzyc person a potem podklasy
 
-wielodziedziczenie:
+todo wielodziedziczenie:
 Zwykle dziedziczenie u gory (disjoint)
 I stworzenie dziedziczenia dla ponizszej klasy,
 Można z jednej klasy zrobic dziedziczenie i z drugiej jako interface tak jak nizej
@@ -61,7 +62,7 @@ i to dla bezposredniego dziedziczenie pol
 To się robi dla bezposredniego dziedziczenia pol i wtedy copy-paste atrybutow z boat albo pole boat
 Nadal robi się interface nawet jeśli robimy asocjacje 1-1
 
-Wieloaspektowe:
+todo Wieloaspektowe:
 podobne do wielodziedziczenia ale
 - 1 opcja -> kompozycja i 2 oddzielne dziedziczenia
 Dodanie klasy która będzie lacznikiem, można trzymac tam atrybuty ale nie trzeba
@@ -70,7 +71,6 @@ W momencie utworzenia person, trzeba tez utworzyc obiekt type
 Wyrzucenie calej asocjacji i zapakowanie do person, typ będzie bezposrednio zaimplementowany w klasie person
 Wtedy tez wchodza enumSety
 
-//todo dynamic przez splaszczenie
 Dynamiczne:
 Dziedziczenie zwykle z pewnymi metodami np. SmartObjectCopying. W mainie utworzony student może zostac studentem
 Można zrobic tak ze np. Student może przejsc tylko na pracownika ale pracownik nie zostanie już studentem nigdy, ale można tez cykliczne tylko musi być poprawne wszystko (usuwanie obiektow z ekstensji)

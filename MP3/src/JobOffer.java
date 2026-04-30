@@ -203,4 +203,14 @@ public class JobOffer {
 
         return this.candidateNumbers;
     }
+
+    // ===================== To String =======================
+    @Override
+    public String toString() {
+        return "JobOffer{ name: "+this.name+", field: "+this.field+", position: "+this.position+", \n"+
+                "TYPE: "+this.jobOfferTypeENUM.toString()+
+                ((this.jobOfferTypeENUM == ENUMS.JobOfferTypeEnum.ACTIVE)?
+                        "planned finish: "+this.plannedFinish+", answers from candidates in numbers: "+this.answersFromCandidates+"}":
+                        "end date: "+this.endDate+", candidates in numbers: "+this.candidateNumbers+"}");
+    }
 }
