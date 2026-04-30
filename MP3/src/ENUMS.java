@@ -5,4 +5,7 @@ public class ENUMS {
     public enum CandidateApplicationType{
         PRIORITY,NORMAL
     }
+    public enum ResultType {
+        FAILED,PASSED
+    }
 }
