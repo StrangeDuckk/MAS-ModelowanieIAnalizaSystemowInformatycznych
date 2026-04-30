@@ -90,7 +90,7 @@ public abstract class CandidateApplication {
     }
 
     // =========== GETTERY ===========
-    public List<CandidateApplication> getCandidateApplicationList() {
+    public static List<CandidateApplication> getCandidateApplicationList() {
         return Collections.unmodifiableList(candidateApplicationList);
     }
     public String getCvCandidate() {
@@ -127,6 +127,6 @@ public abstract class CandidateApplication {
         return "CandidateApplication{ CvCandidate: "+this.cvCandidate+", ApplicationType: "+this.applicationType.toString()+
                 ((this.applicationType== ENUMS.CandidateApplicationType.PRIORITY)?
                         "\nRecommending person: "+this.recommendingPerson+", acquaintance degree: "+this.acquaintanceDegree:
-                        "\nSkills: "+this.skills.toString()) + "}";
+                        "\nSkills: "+(this.skills.isEmpty()?" NONE": this.skills.toString())) + "}";
     }
 }
