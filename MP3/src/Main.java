@@ -1,3 +1,4 @@
+import Dynamic.JobOffer;
 import Normalne.B2BContract;
 import Normalne.Contract;
 import Normalne.FullTimeContract;
@@ -11,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         // ====================== Normalne dziedziczenie ======================
         {
-            // --------------  ----------------
+            System.out.println("\n====================== NORMALNE ======================\n");
             // -------------- Tworzenie obiektow ----------------
             Contract c1 = new B2BContract(
                     1,
@@ -32,6 +33,7 @@ public class Main {
                     7
             );
 
+            // -------------- Uzycie obiektow ----------------
             for (Contract c:  Contract.getContractList()) {
                 System.out.println("TYP: "+c.getContractType()+"\n" +
                         "Brutto: " +c.countBrutto() + "\n" +
@@ -40,12 +42,60 @@ public class Main {
         }
 
         // ====================== Dynamic ======================
+        {
+            System.out.println("\n====================== DYNAMIC ======================\n");
+            // -------------- Tworzenie obiektow ----------------
+            // ACTIVE
+            JobOffer o1 = JobOffer.createActiveJobOffer(
+                    "Java Developer",
+                    "IT",
+                    "Backend",
+                    LocalDate.now().plusMonths(1),
+                    5
+            );
+            // FINISHED
+            JobOffer o2 = JobOffer.createFinishedJobOffer(
+                    "HR Intern",
+                    "HR",
+                    "Recruiter",
+                    LocalDate.now().minusMonths(1),
+                    20
+            );
+
+            // -------------- Użycie obiektow ----------------
+            System.out.println("ACTIVE -> \n" +
+                    "Planned finish: " + o1.getPlannedFinish()+"\n" +
+                    "Answers: " + o1.getAnswersFromCandidates()+"\n");
+            System.out.println("Finished -> \n" +
+                    "End date: " + o2.getEndDate()+"\n" +
+                    "Candidates: " + o2.getCandidateNumbers()+"\n");
+
+            // Zmiana stanu
+            System.out.println("Before: "+o1.toString());
+            o1.changeToFinished(LocalDate.now(), 100);
+            System.out.println("AFTER: "+ o1.toString());
+        }
 
         // ====================== Overlapping ======================
+        {
+            System.out.println("\n====================== OVERLAPPING ======================\n");
+            // -------------- Tworzenie obiektow ----------------
+            // -------------- Użycie obiektow ----------------
+        }
 
         // ====================== Wieloaspektowe ======================
+        {
+            System.out.println("\n====================== WIELOAPEKTOWE ======================\n");
+            // -------------- Tworzenie obiektow ----------------
+            // -------------- Użycie obiektow ----------------
+        }
 
         // ====================== Wielodziedziczenie ======================
+        {
+            System.out.println("\n====================== WIELODZIEDZICZENIE ======================\n");
+            // -------------- Tworzenie obiektow ----------------
+            // -------------- Użycie obiektow ----------------
+        }
 
     }
 }

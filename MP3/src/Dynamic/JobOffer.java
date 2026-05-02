@@ -212,7 +212,7 @@ public class JobOffer {
         return "JobOffer{ name: "+this.name+", field: "+this.field+", position: "+this.position+", \n"+
                 "TYPE: "+this.jobOfferTypeENUM.toString()+
                 ((this.jobOfferTypeENUM == ENUMS.JobOfferTypeEnum.ACTIVE)?
-                        "planned finish: "+this.plannedFinish+", answers from candidates in numbers: "+this.answersFromCandidates+"}":
-                        "end date: "+this.endDate+", candidates in numbers: "+this.candidateNumbers+"}");
+                        ", planned finish: "+this.plannedFinish+", answers from candidates in numbers: "+this.answersFromCandidates+"}":
+                        ", end date: "+this.endDate+", candidates in numbers: "+this.candidateNumbers+"}");
     }
 }
