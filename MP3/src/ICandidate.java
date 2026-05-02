@@ -1,3 +1,5 @@
 public interface ICandidate {
-    //todo
+    //todo do sprawdzenia
+
+    public Candidate getCandidate();
 }
