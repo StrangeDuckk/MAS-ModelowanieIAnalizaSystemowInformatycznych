@@ -8,7 +8,7 @@ implements ICandidate{
     private String coverLetter;
 
     // ===================== KONSTRUKTOR =======================
-    protected OurCompanyCandidate(
+    public OurCompanyCandidate(
             List<String> name,
             String surname,
             String email,

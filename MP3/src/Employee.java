@@ -7,7 +7,7 @@ public class Employee extends Person{
     private String currentOccupationPosition;
 
     // ===================== KONSTRUKTOR =======================
-    protected Employee(
+    public Employee(
             List<String> name,
             String surname,
             String email,

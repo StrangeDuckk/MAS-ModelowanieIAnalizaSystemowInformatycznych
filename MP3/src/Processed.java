@@ -9,7 +9,7 @@ public class Processed extends CandidateApplication{
 
     // ============== KONSTRUKTORY ==============
     // -------------- PRIORITY -----------------
-    protected Processed(String cvCandidate,
+    public Processed(String cvCandidate,
                         ENUMS.CandidateApplicationType applicationType,
                         String recommendingPerson,
                         String acquaintanceDegree,
@@ -30,7 +30,7 @@ public class Processed extends CandidateApplication{
         setResultType(resultType);
     }
     // -------------- NORMAL -----------------
-    protected Processed(String cvCandidate,
+    public Processed(String cvCandidate,
                         ENUMS.CandidateApplicationType applicationType,
                         List<String> skills,
                         String whoProcessed,

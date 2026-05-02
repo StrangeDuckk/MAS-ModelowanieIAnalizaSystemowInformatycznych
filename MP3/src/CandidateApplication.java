@@ -16,7 +16,7 @@ public abstract class CandidateApplication {
     private List<String> skills = new ArrayList<>();
 
     // =========== KONSTRUKTOR ===========
-    protected CandidateApplication(String cvCandidate, ENUMS.CandidateApplicationType applicationType){
+    public CandidateApplication(String cvCandidate, ENUMS.CandidateApplicationType applicationType){
         setCvCandidate(cvCandidate);
         setApplicationType(applicationType);
 

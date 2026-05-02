@@ -14,7 +14,7 @@ public abstract class Person {
     private LocalDate dateOfBirth;
 
     // ===================== KONSTRUKTOR =======================
-    protected Person(List<String> name, String surname, String email, String phoneNumber, LocalDate dateOfBirth) {
+    public Person(List<String> name, String surname, String email, String phoneNumber, LocalDate dateOfBirth) {
         setName(name);
         setSurname(surname);
         setEmail(email);

@@ -8,7 +8,7 @@ implements ICandidate{
     private String currentOccupationStudyDirection;
 
     // ===================== KONSTRUKTOR =======================
-    protected Candidate(
+    public Candidate(
             List<String> name,
             String surname,
             String email,
