@@ -56,10 +56,9 @@ public class Employee extends Person{
     // ===================== TOSTRING =======================
     @Override
     public String toString() {
-        return "Employee{" +
+        return super.toString()+ "Employee{" +
                 "salary=" + salary +
                 ", currentOccupationPosition='" + currentOccupationPosition + '\'' +
                 '}';
-        //todo + informacje z person
     }
 }

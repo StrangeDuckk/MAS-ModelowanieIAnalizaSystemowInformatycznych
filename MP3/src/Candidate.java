@@ -59,10 +59,9 @@ implements ICandidate{
 
     @Override
     public String toString() {
-        return "Candidate{" +
+        return super.toString()+ "Candidate{" +
                 "cvNumber=" + cvNumber +
                 ", currentOccupationStudyDirection='" + currentOccupationStudyDirection + '\'' +
                 '}';
-        //todo ma tez zwracac info z person
     }
 }

@@ -53,10 +53,10 @@ implements ICandidate{
     // ===================== TOSTRING =======================
     @Override
     public String toString() {
-        return "OurCompanyCandidate{" +
+        return super.toString()+
+                "OurCompanyCandidate{" +
                 "candidate=" + candidate +
                 ", coverLetter='" + coverLetter + '\'' +
                 '}';
-        //todo + info z candidate + info z person
     }
 }
