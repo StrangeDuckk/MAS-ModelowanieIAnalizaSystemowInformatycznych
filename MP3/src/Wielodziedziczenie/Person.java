@@ -112,6 +112,6 @@ public abstract class Person {
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                '}';
+                "}\n";
     }
 }

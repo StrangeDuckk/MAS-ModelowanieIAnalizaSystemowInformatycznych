@@ -26,6 +26,7 @@ implements ICandidate {
         super(name, surname, email, phoneNumber, dateOfBirth, salary, currentOccupationPosition);
         setCandidate(candidate);
         setCoverLetter(coverLetter);
+        //todo tutaj tworzenie nowego kandydata
     }
 
     // ===================== METORY =======================

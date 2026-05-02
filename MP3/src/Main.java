@@ -11,9 +11,14 @@ import Overlapping.StateOffice;
 import Wieloaspektowe.Added;
 import Wieloaspektowe.CandidateApplication;
 import Wieloaspektowe.Processed;
+import Wielodziedziczenie.Candidate;
+import Wielodziedziczenie.Employee;
+import Wielodziedziczenie.OurCompanyCandidate;
+import Wielodziedziczenie.Person;
 
 import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
@@ -156,6 +161,7 @@ public class Main {
                     LocalDate.now().minusDays(1),
                     ResultType.FAILED
             );
+
             // -------------- Użycie obiektow ----------------
             System.out.println(CandidateApplication.getCandidateApplicationList());
         }
@@ -164,7 +170,41 @@ public class Main {
         {
             System.out.println("\n====================== WIELODZIEDZICZENIE ======================\n");
             // -------------- Tworzenie obiektow ----------------
+            // CANDIDATE
+            Candidate c1 = new Candidate(
+                    List.of("Jan"),
+                    "Kowalski",
+                    "J.k@gmai.com",
+                    "+48 888-888-888",
+                    LocalDate.of(2000,1,1),
+                    101,
+                    "Computer Science"
+            );
+            //Employee
+            Employee e1 = new Employee(
+                    List.of("Mirek", "Janusz"),
+                    "Marian",
+                    "mm@wp.pl",
+                    "+48 111-111-111",
+                    LocalDate.of(1959,12,12),
+                    8500.0,
+                    "HR manager"
+            );
+            //Our company candidate
+            OurCompanyCandidate o1 = new OurCompanyCandidate(
+                    c1.getName(),
+                    c1.getSurname(),
+                    c1.getEmail(),
+                    c1.getPhoneNumber(),
+                    c1.getDateOfBirth(),
+                    1200.0,
+                    "Junior Developer",
+                    c1.getCandidate(),
+                    "..."
+            );
+
             // -------------- Użycie obiektow ----------------
+            System.out.println(Person.getPersonList());
         }
 
     }
