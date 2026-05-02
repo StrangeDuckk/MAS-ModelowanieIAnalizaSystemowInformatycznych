@@ -1,8 +1,10 @@
+package Wielodziedziczenie;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class Candidate extends Person
-implements ICandidate{
+implements ICandidate {
     //todo do sprawdzenia
     private int cvNumber;
     private String currentOccupationStudyDirection;

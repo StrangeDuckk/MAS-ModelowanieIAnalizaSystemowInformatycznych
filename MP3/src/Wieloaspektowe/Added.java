@@ -1,7 +1,11 @@
+package Wieloaspektowe;
+
+import Wieloaspektowe.CandidateApplication;
+
 import java.time.LocalDate;
 import java.util.List;
 
-public class Added extends CandidateApplication{
+public class Added extends CandidateApplication {
     private LocalDate receivingDate;
 
     // ============== KONSTRUKTORY ==============

@@ -1,8 +1,13 @@
+package Wielodziedziczenie;
+
+import Wielodziedziczenie.Candidate;
+import Wielodziedziczenie.Employee;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class OurCompanyCandidate extends Employee
-implements ICandidate{
+implements ICandidate {
     //todo do sprawdzenia
     private Candidate candidate;
     private String coverLetter;

@@ -1,6 +1,10 @@
+package Normalne;
+
+import Normalne.Contract;
+
 import java.time.LocalDate;
 
-public class InternshipContract extends Contract{
+public class InternshipContract extends Contract {
     private String universityName;
     private int durationInSemesters;
 

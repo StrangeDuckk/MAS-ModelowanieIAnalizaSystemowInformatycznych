@@ -1,7 +1,11 @@
+package Wielodziedziczenie;
+
+import Wielodziedziczenie.Person;
+
 import java.time.LocalDate;
 import java.util.List;
 
-public class Employee extends Person{
+public class Employee extends Person {
     //todo do sprawdzenia
     private Double salary;
     private String currentOccupationPosition;

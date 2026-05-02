@@ -1,8 +1,11 @@
+package Wieloaspektowe;
+
+import Wieloaspektowe.CandidateApplication;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Processed extends CandidateApplication{
+public class Processed extends CandidateApplication {
     private String whoProcessed;
     private LocalDate processionDate;
     private ENUMS.ResultType resultType;

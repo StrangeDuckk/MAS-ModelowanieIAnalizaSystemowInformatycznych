@@ -1,6 +1,10 @@
+package Normalne;
+
+import Normalne.Contract;
+
 import java.time.LocalDate;
 
-public class FullTimeContract extends Contract{
+public class FullTimeContract extends Contract {
     private Double monthlySalary;
     private int vacationDays;
 

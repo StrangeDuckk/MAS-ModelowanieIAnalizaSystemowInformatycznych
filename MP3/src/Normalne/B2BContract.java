@@ -1,6 +1,10 @@
+package Normalne;
+
+import Normalne.Contract;
+
 import java.time.LocalDate;
 
-public class B2BContract extends Contract{
+public class B2BContract extends Contract {
     private Double hourlyRate;
     private String vatNumber;
 
