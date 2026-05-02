@@ -3,10 +3,14 @@ import Normalne.B2BContract;
 import Normalne.Contract;
 import Normalne.FullTimeContract;
 import Normalne.InternshipContract;
+import Overlapping.Company;
+import Overlapping.NormalOffice;
+import Overlapping.StateOffice;
 
 import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -80,7 +84,32 @@ public class Main {
         {
             System.out.println("\n====================== OVERLAPPING ======================\n");
             // -------------- Tworzenie obiektow ----------------
+            // Normal office
+            NormalOffice o1 = new NormalOffice(
+                    "IT",
+                    "Jan Nowakowski",
+                    10000.0
+            );
+            //State office
+            StateOffice s1 = new StateOffice(
+                    "Mazowieskie",
+                    "Poland",
+                    "Trusk",
+                    false
+            );
+            //Company na normal office
+            Company c1 = new Company(
+                    "TECHSTACK",
+                    "Warszawa",
+                    List.of("DevOps", "Network administrator"),
+                    o1,
+                    s1
+            );
+
             // -------------- Użycie obiektow ----------------
+            System.out.println("\n"+o1.toString());
+            System.out.println("\n"+s1.toString());
+            System.out.println("\n"+c1.toString());
         }
 
         // ====================== Wieloaspektowe ======================
