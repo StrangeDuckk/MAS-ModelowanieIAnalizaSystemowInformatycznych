@@ -1,4 +1,6 @@
 import Dynamic.JobOffer;
+import ENUMS.CandidateApplicationType;
+import ENUMS.ResultType;
 import Normalne.B2BContract;
 import Normalne.Contract;
 import Normalne.FullTimeContract;
@@ -6,6 +8,9 @@ import Normalne.InternshipContract;
 import Overlapping.Company;
 import Overlapping.NormalOffice;
 import Overlapping.StateOffice;
+import Wieloaspektowe.Added;
+import Wieloaspektowe.CandidateApplication;
+import Wieloaspektowe.Processed;
 
 import java.sql.SQLOutput;
 import java.time.LocalDate;
@@ -116,7 +121,43 @@ public class Main {
         {
             System.out.println("\n====================== WIELOAPEKTOWE ======================\n");
             // -------------- Tworzenie obiektow ----------------
+            // PRIORITY ADDED
+            Added a1 = new Added(
+                    "cv1",
+                    CandidateApplicationType.PRIORITY,
+                    LocalDate.now().minusDays(2),
+                    "Janusz Markowski",
+                    "SON"
+            );
+            // NORMAL ADDED
+            Added a2 = new Added(
+                    "c2",
+                    CandidateApplicationType.NORMAL,
+                    LocalDate.now().minusDays(15),
+                    List.of("Excel,SQL")
+            );
+
+            // PRIORITY PROCESSED
+            Processed p1 = new Processed(
+                    "c3",
+                    CandidateApplicationType.PRIORITY,
+                    "Joanna Mruczynska",
+                    "Friend",
+                    "Mariusz Marian",
+                    LocalDate.now().minusDays(1),
+                    ResultType.PASSED
+            );
+            // NORMAL PROCESSED
+            Processed p2 = new Processed(
+                    "c4",
+                    CandidateApplicationType.NORMAL,
+                    List.of("java","c++"),
+                    "Mariusz Marian",
+                    LocalDate.now().minusDays(1),
+                    ResultType.FAILED
+            );
             // -------------- Użycie obiektow ----------------
+            System.out.println(CandidateApplication.getCandidateApplicationList());
         }
 
         // ====================== Wielodziedziczenie ======================
