@@ -1,7 +1,5 @@
 package Normalne;
 
-import Normalne.Contract;
-
 import java.time.LocalDate;
 
 public class InternshipContract extends Contract {
