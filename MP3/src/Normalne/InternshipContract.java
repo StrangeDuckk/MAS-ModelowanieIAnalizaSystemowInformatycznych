@@ -21,6 +21,11 @@ public class InternshipContract extends Contract {
         return "INTERNSHIP";
     }
 
+    @Override
+    public Double countBrutto() {
+        return 0.00;//nie sa oplacani
+    }
+
     // ===================== SETTER =======================
     private void setUniversityName(String universityName) {
         if(universityName == null || universityName.isBlank()){

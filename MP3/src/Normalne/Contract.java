@@ -20,6 +20,7 @@ public abstract class Contract {
 
     // ===================== METODY =======================
     public abstract String getContractType();
+    public abstract Double countBrutto();
 
     // ===================== SETTERY =======================
     private void setContractNumber(int contractNumber) {

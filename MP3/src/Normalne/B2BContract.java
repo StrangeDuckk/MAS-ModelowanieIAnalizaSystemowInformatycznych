@@ -22,6 +22,11 @@ public class B2BContract extends Contract {
         return "B2B";
     }
 
+    @Override
+    public Double countBrutto() {
+        return hourlyRate*160;//brutto netto miesiecznie
+    }
+
     // ===================== SETTERY =======================
     private void setHourlyRate(Double hourlyRate) {
         if(hourlyRate == null || hourlyRate.isInfinite() || hourlyRate.isNaN()){

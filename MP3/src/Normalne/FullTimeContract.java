@@ -21,6 +21,11 @@ public class FullTimeContract extends Contract {
         return "FULL_TIME";
     }
 
+    @Override
+    public Double countBrutto() {
+        return monthlySalary*1.23;//miesiecznie brutto
+    }
+
     // ===================== SETTERY =======================
     private void setMonthlySalary(Double monthlySalary) {
         if(monthlySalary == null || monthlySalary.isInfinite() || monthlySalary.isNaN()){
