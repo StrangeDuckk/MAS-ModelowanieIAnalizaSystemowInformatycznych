@@ -16,11 +16,13 @@ implements ICandidate{
             LocalDate dateOfBirth,
             Double salary,
             String currentOccupationPosition,
+            Candidate candidate,
             String coverLetter) {
         super(name, surname, email, phoneNumber, dateOfBirth, salary, currentOccupationPosition);
-        this.candidate = getCandidate();//czy w ten sposob zostanie dodany candidate z klasy Candidate?
+        setCandidate(candidate);
         setCoverLetter(coverLetter);
     }
+
     // ===================== METORY =======================
     @Override
     public Candidate getCandidate() {
@@ -32,6 +34,15 @@ implements ICandidate{
         if(coverLetter == null || coverLetter.isBlank()){
             throw new IllegalArgumentException("cover letter cannot be null or blank");
         }
+        this.coverLetter = coverLetter;
+    }
+    private void setCandidate(Candidate candidate) {
+        if(candidate == null)
+        {
+            throw new IllegalArgumentException("Candidate cannot be null");
+        }
+        //todo dopytac czy sprawdzenei zgodnosci info z person
+        this.candidate = candidate;
     }
 
     // ===================== GETTERY =======================

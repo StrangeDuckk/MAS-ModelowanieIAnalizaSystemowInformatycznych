@@ -35,6 +35,7 @@ public abstract class Person {
         if(Aname.size()>2){
             throw new IllegalArgumentException("Maximum length for Candidates names table is 2");
         }
+        this.name = new ArrayList<>();
         for (String s : Aname) {
             addName(s);
         }
