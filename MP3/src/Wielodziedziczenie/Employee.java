@@ -1,12 +1,9 @@
 package Wielodziedziczenie;
 
-import Wielodziedziczenie.Person;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public class Employee extends Person {
-    //todo do sprawdzenia
     private Double salary;
     private String currentOccupationPosition;
 
@@ -60,7 +57,7 @@ public class Employee extends Person {
     // ===================== TOSTRING =======================
     @Override
     public String toString() {
-        return super.toString()+ "Employee{" +
+        return super.toString()+ "\nEmployee{" +
                 "salary=" + salary +
                 ", currentOccupationPosition='" + currentOccupationPosition + '\'' +
                 '}';

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//todo do sprawdzenia
 public abstract class Person {
     private static List<Person> personList = new ArrayList<>();
 
@@ -23,13 +22,18 @@ public abstract class Person {
         setPhoneNumber(phoneNumber);
         setDateOfBirth(dateOfBirth);
 
-        personList.add(this);
+        addNewPersonToPersonList();
     }
 
     // ===================== METODY =======================
     public abstract String getCurrentOccupation();
 
     // ===================== SETTERY =======================
+    private void addNewPersonToPersonList() {
+        //tylko jezeli takiej osoby jeszcze nie ma w tablicy
+        if(!personList.contains(this))
+            personList.add(this);
+    }
     public void setName(List<String> Aname) {
         if(Aname == null||Aname.isEmpty()){
             throw new IllegalArgumentException("Array can't be null or empty");
@@ -106,12 +110,12 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "\n\nPerson{" +
                 "name=" + name +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                "}\n";
+                "}";
     }
 }

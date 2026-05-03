@@ -191,15 +191,23 @@ public class Main {
                     "HR manager"
             );
             //Our company candidate
+            Candidate c2 = new Candidate(
+                    List.of("Jan","Pawel"),
+                    "Adamczewski",
+                    "JP1@wp.pl",
+                    "+48 555-111-111",
+                    LocalDate.of(1630,5,3),
+                    103,
+                    "Marketing"
+            );
             OurCompanyCandidate o1 = new OurCompanyCandidate(
-                    c1.getName(),
-                    c1.getSurname(),
-                    c1.getEmail(),
-                    c1.getPhoneNumber(),
-                    c1.getDateOfBirth(),
-                    1200.0,
+                    c2.getName(),
+                    c2.getSurname(),
+                    c2.getEmail(),
+                    c2.getPhoneNumber(),
+                    c2.getDateOfBirth(),
+                    22000.0,
                     "Junior Developer",
-                    c1.getCandidate(),
                     "..."
             );
 

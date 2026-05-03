@@ -1,14 +1,10 @@
 package Wielodziedziczenie;
 
-import Wielodziedziczenie.Candidate;
-import Wielodziedziczenie.Employee;
-
 import java.time.LocalDate;
 import java.util.List;
 
 public class OurCompanyCandidate extends Employee
 implements ICandidate {
-    //todo do sprawdzenia
     private Candidate candidate;
     private String coverLetter;
 
@@ -21,34 +17,42 @@ implements ICandidate {
             LocalDate dateOfBirth,
             Double salary,
             String currentOccupationPosition,
-            Candidate candidate,
             String coverLetter) {
         super(name, surname, email, phoneNumber, dateOfBirth, salary, currentOccupationPosition);
-        setCandidate(candidate);
+
+        setCandidate(name,surname,email);
         setCoverLetter(coverLetter);
-        //todo tutaj tworzenie nowego kandydata
     }
 
     // ===================== METORY =======================
     @Override
     public Candidate getCandidate() {
-        return candidate;
+        return this.candidate;
     }
 
     // ===================== SETTERY =======================
     private void setCoverLetter(String coverLetter) {
-        if(coverLetter == null || coverLetter.isBlank()){
+        if (coverLetter == null || coverLetter.isBlank()) {
             throw new IllegalArgumentException("cover letter cannot be null or blank");
         }
         this.coverLetter = coverLetter;
     }
-    private void setCandidate(Candidate candidate) {
-        if(candidate == null)
-        {
-            throw new IllegalArgumentException("Candidate cannot be null");
+    private void setCandidate(List<String> name, String surname, String email) {
+        for (Person p: Candidate.getPersonList()) {
+            if(p instanceof Candidate) {
+                Candidate c = (Candidate) p;
+
+                if (
+                        c.getName().equals(name)
+                        && c.getSurname().equals(surname)
+                        && c.getEmail().equals(email)
+                ){
+                    this.candidate = c;
+                    return;
+                }
+            }
         }
-        //todo dopytac czy sprawdzenei zgodnosci info z person
-        this.candidate = candidate;
+        throw new IllegalArgumentException("This candidate doesn't exist");
     }
 
     // ===================== GETTERY =======================
@@ -60,9 +64,9 @@ implements ICandidate {
     @Override
     public String toString() {
         return super.toString()+
-                "OurCompanyCandidate{" +
-                "candidate=" + candidate +
+                "\nOurCompanyCandidate{" +
+                "candidate=" + candidate.getName()+" "+candidate.getSurname() +
                 ", coverLetter='" + coverLetter + '\'' +
-                '}';
+                "}";
     }
 }

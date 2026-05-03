@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Candidate extends Person
 implements ICandidate {
-    //todo do sprawdzenia
     private int cvNumber;
     private String currentOccupationStudyDirection;
 
@@ -61,7 +60,7 @@ implements ICandidate {
 
     @Override
     public String toString() {
-        return super.toString()+ "Candidate{" +
+        return super.toString()+ "\nCandidate{" +
                 "cvNumber=" + cvNumber +
                 ", currentOccupationStudyDirection='" + currentOccupationStudyDirection + '\'' +
                 '}';
