@@ -16,11 +16,8 @@ import Wielodziedziczenie.Employee;
 import Wielodziedziczenie.OurCompanyCandidate;
 import Wielodziedziczenie.Person;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
-import java.util.concurrent.ConcurrentMap;
 
 public class Main {
     public static void main(String[] args) {
