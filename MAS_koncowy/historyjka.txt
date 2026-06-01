@@ -1,0 +1,24 @@
+Firma PreczBezrobocie, ogłoszenia o pracę ogłaszane przez zgłoszone do nich firmy.
+- Do systemu ma dostęp tylko pracownik i system (aktor czasowy), nie ma logowania, bo zabezpieczenia komputera są dalece uniemożliwiajace dostęp osobom postronnym, a jeśli ktoś da radę się włamać to ma prawo użyc aplikacji. 
+- Pracownik firmy przyjmuje zgłoszenia od firm ogłaszających i jeśli firma nie widnieje w bazie, zakłada jej rekord. 
+- Każdy zgłaszający się do PreczBezrobocie musi również podać adres (niezależnie czy jest to firma czy osoba fizyczna), który jest zapisywany oddzielnie i występuje jako klucz obcy w rekordzie firmy.
+- Każda firma może dodać nowe ogłoszenie o pracę w aplikacji, w przypadku kiedy ta firma jeszcze nie istnieje, pracownik dodaje ją.
+- Firmy mogą zmieniać adres. Wtedy wysylaja do pracownika taka informacje a on dodaje recznie nowy adres (jesli nie ma takiego adresu w bazie, dodane nowy). stary adres zapisuje sie w pamięci jako AdressHistory.
+- Ogloszenie zawiera w sobie date planowanego ukonczenia, system sprawdza przy kazdym uruchomieniu aplikacji czy ta data sie zgadza, w sytuacji gdy data plannedFinish nadeszla, ogloszenie zmienia swoj stan z Active na Finished.
+- Po upłynieciu roku od zamkniecia ogłoszenia o pracę (data endDate w JobOffer o stanie Finished) ogłoszenie zostaje usunięte a z nim wszystkie wysłane na nie aplikacje i CV kadydata.
+- Pracownik firmy otrzymuje od kandydatow zgłoszenia jako odpowiedzi na ofertę pracy (mailowo)
+- pracownik musi ręcznie uzupełnic dane kandydatów:
+	- jeśli kandydat nie widnieje w bazie, pracownik dodaje nowego kandydata oraz adres dla niego
+	- w sytuacji kiedy kandydat istnieje w bazie i wyslal zgloszenie, pracownik wprowadza jego aplikacje do systemu. Kandydat musi wysłać wtedy również CV z ktorego pracownik recznie przepisuje interesujące go informacje.
+- jesli firma PreczBezrobocie przyjmie do siebie nowego pracownika, pracownik ktory ma dostep do systemu wprowadza jego wszystkie informacje do systemu.
+- jeśli firma PreczBezrobocie prowadzi rekrutacje i pracownik otrzyma zgłoszenia kandydatów, sa oni zapisywani do tabeli OurCompanyCandidate i musza dostarczyc list motywacyjny, zwany dalej coverLetter
+- pracownik moze wylistowac wszystkie oferty ktore znajduja sie w systemie 
+- aplikacja przechodzi taka drogę (informacje do diagramu aktywnosci i stanu):
+	- Pracownik odbiera zgloszenie kandydata
+	- pracownik dodaje dane kandydata i adres do bazy jesli nie istnieje w bazie
+	- pracownik dodaje dane aplikacji i wypisuje wazne rzeczy z cv
+	- aplikacja zostaje wyslana do firmy w momencie kiedy ogloszenie zyskuje status Finished
+	- aplikacja zostaje oceniona przez pracownika firmy oglaszajacej (zyskuje status do kontaktu/odrzucona)
+	- aplikacja kandydata istnieje w bazie do momentu usuniecia oferty (po okresie 1 roku od zamkniecia)
+
+
