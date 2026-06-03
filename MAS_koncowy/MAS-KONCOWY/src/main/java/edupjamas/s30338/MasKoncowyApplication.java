@@ -23,4 +23,5 @@ todo hibernate
 todo postgres
 todo repozytoria i serwisy
 todo FX
+todo testy
  */
