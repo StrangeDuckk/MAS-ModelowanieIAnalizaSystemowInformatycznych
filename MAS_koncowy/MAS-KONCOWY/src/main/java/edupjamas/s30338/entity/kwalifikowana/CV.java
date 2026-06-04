@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class CV {
     @Id
-    @NotBlank
+    @NotBlank(message = "cvNumber is mandatory")
     @Pattern(
             regexp = "^[^@\\s]+_[^@\\s]+_[0-9]+$",
             message = "Format: Surname_Name_number"
