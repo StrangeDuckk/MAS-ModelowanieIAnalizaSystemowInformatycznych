@@ -8,6 +8,8 @@ public class MasKoncowyApplication {
     public static void main(String[] args) {
         SpringApplication.run(MasKoncowyApplication.class, args);
 
+        //todo ustawienie company.minCountrysalary
+
     }
 }
 
