@@ -1,9 +1,6 @@
 package edupjamas.s30338.entity.kompozycja;
 import edupjamas.s30338.ENUMS.*;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -15,7 +12,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class JobOffer {
     @Id
-    private int jobOfferId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long jobOfferId;//todo po dodaniu oferty: repository.save(offer)
 
     // ===================== POLA =======================
     @NotBlank(message = "name is mandatory")
