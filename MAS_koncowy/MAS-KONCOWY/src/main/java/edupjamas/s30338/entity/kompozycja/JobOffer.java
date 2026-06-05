@@ -51,13 +51,21 @@ public class JobOffer {
     @Past(message = "archive date has to be in past")
     private LocalDate archiveDate;
 
-    public static JobOffer createJobOfferActive(
+    // ===================== RELACJE =======================
+    @ManyToOne
+    @JoinColumn(name = "companyId")
+    @ToString.Exclude
+    private Company company;
+
+    // ===================== Fabrykatory =======================
+    protected static JobOffer createJobOfferActive(
             String name,
             String field,
             String position,
             int salary,
             LocalDate plannedFinish,
-            int expectedAnswersNumber
+            int expectedAnswersNumber,
+            Company company
     ){
         JobOffer offer = new JobOffer();
         offer.jobOfferTypeENUM = JobOfferTypeEnum.ACTIVE;
@@ -66,6 +74,7 @@ public class JobOffer {
         offer.setField(field);
         offer.setPosition(position);
         offer.setSalary(salary);
+        offer.setCompany(company);
 
         offer.setPlannedFinish(plannedFinish);
         offer.setExpectedAnswersFromCandidates(expectedAnswersNumber);
@@ -74,18 +83,16 @@ public class JobOffer {
         offer.candidateNumbers = 0;
         offer.archiveDate = null;
 
-        validateState(offer);//validacja dla zmiennych zaleznych od stanu
-
         return offer;
     }
-
-    public static JobOffer createJobOfferFinished(
+    protected static JobOffer createJobOfferFinished(
             String name,
             String field,
             String position,
             int salary,
             LocalDate endDate,
-            int candidateNumbers
+            int candidateNumbers,
+            Company company
     ){
         JobOffer offer = new JobOffer();
         offer.jobOfferTypeENUM = JobOfferTypeEnum.FINISHED;
@@ -94,6 +101,7 @@ public class JobOffer {
         offer.setField(field);
         offer.setPosition(position);
         offer.setSalary(salary);
+        offer.setCompany(company);
 
         offer.setEndDate(endDate);
         offer.setCandidateNumbers(candidateNumbers);
@@ -102,17 +110,15 @@ public class JobOffer {
         offer.expectedAnswersFromCandidates = 0;
         offer.archiveDate = null;
 
-        validateState(offer);
-
         return offer;
     }
-
-    public static JobOffer createJobOfferArchived(
+    protected static JobOffer createJobOfferArchived(
             String name,
             String field,
             String position,
             int salary,
-            LocalDate archideDate
+            LocalDate archideDate,
+            Company company
     ){
         JobOffer offer = new JobOffer();
         offer.jobOfferTypeENUM = JobOfferTypeEnum.ARCHIVED;
@@ -121,6 +127,7 @@ public class JobOffer {
         offer.setField(field);
         offer.setPosition(position);
         offer.setSalary(salary);
+        offer.setCompany(company);
 
         offer.setArchiveDate(archideDate);
         //czyszczenie wartosci nie przez settery
@@ -129,53 +136,56 @@ public class JobOffer {
         offer.endDate = null;
         offer.candidateNumbers = 0;
 
-        validateState(offer);
-
         return offer;
     }
     // ===================== walidacja zmiennych stnanu =======================
-    private static void validateState(JobOffer offer){
-        switch(offer.jobOfferTypeENUM){
+    @PrePersist
+    @PreUpdate
+    private void validateState(){
+        if(company == null){
+            throw new IllegalStateException("JobOffer must belong to Company");
+        }
+        switch(this.jobOfferTypeENUM){
             case ACTIVE -> {
-                if(offer.plannedFinish  == null || offer.plannedFinish.isBefore(LocalDate.now())){
-                    throw new IllegalStateException("Active offer has to have planned finish and it has to be after now");
+                if(this.plannedFinish  == null || this.plannedFinish.isBefore(LocalDate.now())){
+                    throw new IllegalStateException("Active this has to have planned finish and it has to be after now");
                 }
-                if(offer.expectedAnswersFromCandidates <0){
-                    throw new IllegalStateException("Active offer has to have expectedAnswersFromCandiates >=0");
+                if(this.expectedAnswersFromCandidates <0){
+                    throw new IllegalStateException("Active this has to have expectedAnswersFromCandiates >=0");
                 }
                 //null albo 0:
-                if(offer.endDate != null || offer.archiveDate != null){
-                    throw new IllegalStateException("Active offer has to have end date and archive date set to null");
+                if(this.endDate != null || this.archiveDate != null){
+                    throw new IllegalStateException("Active this has to have end date and archive date set to null");
                 }
-                if(offer.candidateNumbers != 0){
-                    throw new IllegalStateException("Active offer has to have candidates numbers set to 0");
+                if(this.candidateNumbers != 0){
+                    throw new IllegalStateException("Active this has to have candidates numbers set to 0");
                 }
             }
             case FINISHED -> {
-                if(offer.endDate  == null || offer.endDate.isAfter(LocalDate.now())){
-                    throw new IllegalStateException("Finished offer has to have end date and it has to be after now");
+                if(this.endDate  == null || this.endDate.isAfter(LocalDate.now())){
+                    throw new IllegalStateException("Finished this has to have end date and it has to be after now");
                 }
-                if(offer.candidateNumbers <0){
-                    throw new IllegalStateException("Finished offer has to have candidates numbers >=0");
+                if(this.candidateNumbers <0){
+                    throw new IllegalStateException("Finished this has to have candidates numbers >=0");
                 }
                 //null albo 0:
-                if(offer.plannedFinish != null || offer.archiveDate != null){
-                    throw new IllegalStateException("Finished offer has to have planned finish and archive date set to null");
+                if(this.plannedFinish != null || this.archiveDate != null){
+                    throw new IllegalStateException("Finished this has to have planned finish and archive date set to null");
                 }
-                if(offer.expectedAnswersFromCandidates != 0){
-                    throw new IllegalStateException("Finished offer has to have expected answers from candidates numbers set to 0");
+                if(this.expectedAnswersFromCandidates != 0){
+                    throw new IllegalStateException("Finished this has to have expected answers from candidates numbers set to 0");
                 }
             }
             case ARCHIVED -> {
-                if(offer.archiveDate  == null || offer.archiveDate.isAfter(LocalDate.now())){
-                    throw new IllegalStateException("Archived offer has to have end date and it has to be earlier than now");
+                if(this.archiveDate  == null || this.archiveDate.isAfter(LocalDate.now())){
+                    throw new IllegalStateException("Archived this has to have end date and it has to be earlier than now");
                 }
                 //null albo 0:
-                if(offer.plannedFinish != null || offer.endDate != null){
-                    throw new IllegalStateException("Finished offer has to have planned finish and archive date set to null");
+                if(this.plannedFinish != null || this.endDate != null){
+                    throw new IllegalStateException("Finished this has to have planned finish and archive date set to null");
                 }
-                if(offer.expectedAnswersFromCandidates != 0 || offer.candidateNumbers != 0){
-                    throw new IllegalStateException("Finished offer has to have expected answers from candidates and candidate numbers set to 0");
+                if(this.expectedAnswersFromCandidates != 0 || this.candidateNumbers != 0){
+                    throw new IllegalStateException("Finished this has to have expected answers from candidates and candidate numbers set to 0");
                 }
             }
         }
@@ -199,8 +209,6 @@ public class JobOffer {
         // nowe pola
         this.endDate = endDate;
         this.candidateNumbers = candidateNumbers;
-
-        validateState(this);
     }
     public void changeToArchived(
             LocalDate archiveDate
@@ -218,8 +226,6 @@ public class JobOffer {
         this.candidateNumbers = 0;
         // nowe pola
         this.archiveDate = archiveDate;
-
-        validateState(this);
     }
 
     // ===================== Settery =======================
@@ -246,6 +252,12 @@ public class JobOffer {
             throw new IllegalArgumentException("Salary cannot be <0");
         }
         this.salary = salary;
+    }
+    private void setCompany(Company company) {
+        if(company == null){
+            throw new IllegalStateException("Job offer has to be added to existing company");
+        }
+        this.company = company;
     }
     private void setPlannedFinish(LocalDate plannedFinish){
         if(plannedFinish == null){

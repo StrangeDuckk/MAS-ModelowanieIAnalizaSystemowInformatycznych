@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @ToString
@@ -12,7 +16,7 @@ import lombok.*;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int companyId; //todo relacja z jobOffer
+    private Long companyId;//todo relacja z Adress history
 
     @NotBlank(message = "field is mandatory")
     private String name;
@@ -23,17 +27,13 @@ public class Company {
     @PositiveOrZero
     private double minCompanySalary;// zawsze >= minCountrySalary
 
-
-    //klucz obcy do adressHistory // todo pozniej
-//    private int adressHistoryId;
-
+    // ===================== RELACJE =======================
     //kompozycja: company calosc 1 --- 0..1 NormalOffice czesc
     @OneToOne(
             mappedBy = "company",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "normalOfficeId")
     private NormalOffice normalOffice;
 
     //kompozycja: company calosc 1 --- 0..1 StateOffice czesc
@@ -42,9 +42,20 @@ public class Company {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "stateOfficeId")
     private StateOffice stateOffice;
 
+    //kompozycja: JobOffer (czesc, 0..*) ----- (calosc, 1) company
+    @OneToMany(
+            mappedBy = "company",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<JobOffer> jobOfferList = new ArrayList<>();
+
+    //klucz obcy do adressHistory // todo pozniej
+//    private int adressHistoryId;
+
+    // ===================== Fabrykatory =======================
     private Company(String name, Double salary) {
         setName(name);
         setMinCompanySalary(salary);
@@ -104,6 +115,23 @@ public class Company {
 
         return company;
     }
+    // ===================== Dodawanie oferty (po stronie calosci) =======================
+    public JobOffer addActiveJobOffer(String name, String field, String position, int salary, LocalDate plannedFinish, int expectedAnswersNumber, Company company){
+        JobOffer offer = JobOffer.createJobOfferActive(name, field, position, salary, plannedFinish, expectedAnswersNumber, this);
+        jobOfferList.add(offer);
+        return offer;
+    }
+    public JobOffer addFinishedJobOffer(String name, String field, String position, int salary, LocalDate endDate, int candidateNumbers, Company company){
+        JobOffer offer = JobOffer.createJobOfferFinished(name,field,position,salary,endDate,candidateNumbers,this);
+        jobOfferList.add(offer);
+        return offer;
+    }
+    public JobOffer addArchivedJobOffer(String name, String field, String position, int salary, LocalDate archideDate, Company company){
+        JobOffer offer = JobOffer.createJobOfferArchived(name,field,position,salary,archideDate,company);
+        jobOfferList.add(offer);
+        return offer;
+    }
+
     // ===================== Validacja =======================
     @PrePersist
     @PreUpdate
