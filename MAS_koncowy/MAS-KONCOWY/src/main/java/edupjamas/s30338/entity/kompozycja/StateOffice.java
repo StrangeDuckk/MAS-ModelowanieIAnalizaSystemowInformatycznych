@@ -13,7 +13,7 @@ import lombok.*;
 public class StateOffice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int stateOfficeId;
+    private Long stateOfficeId;
 
     @NotBlank
     private String state;

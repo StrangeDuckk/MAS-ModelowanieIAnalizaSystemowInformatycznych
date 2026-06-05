@@ -13,7 +13,7 @@ import lombok.*;
 public class NormalOffice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int normalOfficeId;
+    private Long normalOfficeId;
 
     @NotBlank
     private String field;

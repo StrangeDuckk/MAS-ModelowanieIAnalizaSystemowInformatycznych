@@ -9,7 +9,7 @@ public class MasKoncowyApplication {
         SpringApplication.run(MasKoncowyApplication.class, args);
 
         //todo ustawienie company.minCountrysalary
-
+        //todo zawsze przy zamykaniu zapisywanie stanu do bazy, przy przerwaniu tez
     }
 }
 

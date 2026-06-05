@@ -17,7 +17,7 @@ import java.util.Map;
 @ToString
 public class Application {
     @Id
-    private int applicationId;
+    private Long applicationId;
 
     @NotNull
     private LocalDate data;
