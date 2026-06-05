@@ -1,5 +1,7 @@
 package edupjamas.s30338.entity.kompozycja;
 
+import edupjamas.s30338.entity.zAtrybutem.Adress;
+import edupjamas.s30338.entity.zAtrybutem.AdressHistory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -52,51 +54,52 @@ public class Company {
     )
     private List<JobOffer> jobOfferList = new ArrayList<>();
 
-    //klucz obcy do adressHistory // todo pozniej
-//    private int adressHistoryId;
+    //Company 1 ---- 1..* AdressHistory (1..* ---- 1 Adress)
+    @OneToMany(
+            mappedBy = "company",
+            cascade = CascadeType.ALL, //history
+            orphanRemoval = true //usuwanie sierot
+    )
+    private List<AdressHistory> adressHistoryList = new ArrayList<>();
 
     // ===================== Fabrykatory =======================
-    private Company(String name, Double salary) {
+    private Company(String name, Double salary, Adress adress, LocalDate from, LocalDate to) {
         setName(name);
         setMinCompanySalary(salary);
+        addAdressHistory(adress,from,to);
     }
 
     public static Company createCompanyNormalOffice(
             String name,
-//            String adressHistoryId,
             Double minCompanySalary,
             String field,
             String ceo,
-            double capital
+            double capital,
+            Adress adress,
+            LocalDate from,
+            LocalDate to
     ) {
-        Company company = new Company(name,minCompanySalary);
-
-//        setAdress(adressHistoryId);
-
+        Company company = new Company(name,minCompanySalary, adress, from, to);
         company.normalOffice = new NormalOffice(field,ceo,capital,company);
-
         return company;
     }
     public static Company createCompanyStateOffice(
             String name,
-//            String adressHistoryId,
             Double minCompanySalary,
             String state,
             String country,
             String minister,
-            boolean military
+            boolean military,
+            Adress adress,
+            LocalDate from,
+            LocalDate to
     ) {
-        Company company = new Company(name,minCompanySalary);
-
-//        setAdress(adressHistoryId);
-
+        Company company = new Company(name,minCompanySalary,adress,from,to);
         company.stateOffice = new StateOffice(state,country,minister, military,company);
-
         return company;
     }
     public static Company createCompanyNormalAndStateOffice(
             String name,
-//            String adressHistoryId,
             Double minCompanySalary,
             String field,
             String ceo,
@@ -104,17 +107,31 @@ public class Company {
             String state,
             String country,
             String minister,
-            boolean military
+            boolean military,
+            Adress adress,
+            LocalDate from,
+            LocalDate to
     ) {
-        Company company = new Company(name,minCompanySalary);
-
-//        setAdress(adressHistoryId);
-
+        Company company = new Company(name,minCompanySalary,adress,from,to);
         company.normalOffice = new NormalOffice(field,ceo,capital,company);
         company.stateOffice = new StateOffice(state,country,minister, military,company);
-
         return company;
     }
+
+    // ===================== Dodanie nowego adresu =======================
+    public void addAdressHistory(Adress adress, LocalDate from, LocalDate to){
+        AdressHistory adressHistory = new AdressHistory(
+                from,
+                to,
+                this,
+                adress
+        );
+        if(!adressHistoryList.contains(adressHistory)){
+            adressHistoryList.add(adressHistory);
+        }
+        adress.getAdressHistoryList().add(adressHistory); //dodanie histori po stronie adresu, wiele firm moze byc ustawionych na ten sam adres
+    }
+
     // ===================== Dodawanie oferty (po stronie calosci) =======================
     public JobOffer addActiveJobOffer(String name, String field, String position, int salary, LocalDate plannedFinish, int expectedAnswersNumber, Company company){
         JobOffer offer = JobOffer.createJobOfferActive(name, field, position, salary, plannedFinish, expectedAnswersNumber, this);
