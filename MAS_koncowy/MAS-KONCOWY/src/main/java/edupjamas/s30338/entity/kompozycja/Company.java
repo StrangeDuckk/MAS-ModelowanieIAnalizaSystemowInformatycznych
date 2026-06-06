@@ -133,18 +133,21 @@ public class Company {
     }
 
     // ===================== Dodawanie oferty (po stronie calosci) =======================
-    public JobOffer addActiveJobOffer(String name, String field, String position, int salary, LocalDate plannedFinish, int expectedAnswersNumber, Company company){
+    public JobOffer addActiveJobOffer(String name, String field, String position, int salary, LocalDate plannedFinish, int expectedAnswersNumber){
+        //todo sprawdzanie czy min kwota w ofercie nie jest nizsza niz min firmy
         JobOffer offer = JobOffer.createJobOfferActive(name, field, position, salary, plannedFinish, expectedAnswersNumber, this);
         jobOfferList.add(offer);
         return offer;
     }
-    public JobOffer addFinishedJobOffer(String name, String field, String position, int salary, LocalDate endDate, int candidateNumbers, Company company){
+    public JobOffer addFinishedJobOffer(String name, String field, String position, int salary, LocalDate endDate, int candidateNumbers){
+        //todo sprawdzanie czy min kwota w ofercie nie jest nizsza niz min firmy
         JobOffer offer = JobOffer.createJobOfferFinished(name,field,position,salary,endDate,candidateNumbers,this);
         jobOfferList.add(offer);
         return offer;
     }
-    public JobOffer addArchivedJobOffer(String name, String field, String position, int salary, LocalDate archideDate, Company company){
-        JobOffer offer = JobOffer.createJobOfferArchived(name,field,position,salary,archideDate,company);
+    public JobOffer addArchivedJobOffer(String name, String field, String position, int salary, LocalDate archideDate){
+        //todo sprawdzanie czy min kwota w ofercie nie jest nizsza niz min firmy
+        JobOffer offer = JobOffer.createJobOfferArchived(name,field,position,salary,archideDate,this);
         jobOfferList.add(offer);
         return offer;
     }

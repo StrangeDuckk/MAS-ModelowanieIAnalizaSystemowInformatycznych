@@ -55,4 +55,14 @@ public class Adress {
     @JoinColumn(name = "personId")
     @ToString.Exclude
     private Person person;
+
+    public Adress(
+            String road, int houseNumber, int apartmentNumber, String postalCode, String town, String country) {
+        this.setRoad(road);
+        this.setHouseNumber(houseNumber);
+        this.setApartmentNumber(apartmentNumber);
+        this.setPostalCode(postalCode);
+        this.setTown(town);
+        this.setCountry(country);
+    }
 }
