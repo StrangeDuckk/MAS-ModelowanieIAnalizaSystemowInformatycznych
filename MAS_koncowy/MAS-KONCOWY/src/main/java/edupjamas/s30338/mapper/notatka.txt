@@ -1,0 +1,1 @@
+konwersja entity -> dto i dto -> entity
