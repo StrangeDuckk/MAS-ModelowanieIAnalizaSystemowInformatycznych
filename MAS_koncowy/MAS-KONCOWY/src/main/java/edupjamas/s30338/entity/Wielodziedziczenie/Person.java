@@ -1,5 +1,6 @@
 package edupjamas.s30338.entity.Wielodziedziczenie;
 
+import edupjamas.s30338.entity.zAtrybutem.Adress;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -13,7 +14,6 @@ import java.util.List;
 @Entity
 @SuperBuilder
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -49,6 +49,13 @@ public abstract class Person {
     @NotNull
     private LocalDate dateOfBirth;
 
+    // ===================== RELACJE =======================
+    @OneToMany(
+            mappedBy = "person",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Adress> adress = new ArrayList<>();
 
     // ===================== METODY =======================
     public abstract String getCurrentOccupation();
@@ -58,5 +65,4 @@ public abstract class Person {
                         LocalDate.now())
                 .getYears();
     }
-
 }
