@@ -1,24 +1,66 @@
 package edupjamas.s30338.gui;
 
+import edupjamas.s30338.gui.view.HomeView;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class START extends Application {
     @Override
     public void start(Stage stage) {
 
-        Label label = new Label("Hello JavaFX 👋");
+        // ============================ tlo aplikacji ============================
+        BorderPane root = new BorderPane();
+        root.setStyle("-fx-background-color: #aaf1be;");
 
-        VBox root = new VBox(label);
+        ViewManager viewManager = new ViewManager(root);
 
-        Scene scene = new Scene(root, 400, 300);
+        // ============================ gorny pasek ============================
+        HBox gornyPasek = new HBox();
+        gornyPasek.setPadding(new Insets(10));
+        gornyPasek.setSpacing(20);
+        gornyPasek.setAlignment(Pos.CENTER_LEFT);
+        gornyPasek.setStyle("-fx-background-color: #144d2a;");
 
-        stage.setTitle("MAS - JavaFX Start");
+        Button homeButton = new Button("HOME");
+        homeButton.setPrefSize(120,40);
+        homeButton.setDisable(true);
+
+        Label title = new Label("PreczBezrobocie");
+        title.setStyle(
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 26px;" +
+                        "-fx-font-weight: bold;"
+        );
+
+        Region spacerLeft = new Region();
+        Region spacerRight = new Region();
+        HBox.setHgrow(spacerLeft, Priority.ALWAYS);
+        HBox.setHgrow(spacerRight, Priority.ALWAYS);
+
+        gornyPasek.getChildren().addAll(
+                homeButton,
+                spacerLeft,
+                title,
+                spacerRight
+        );
+
+        // ============================ srodek - przyciski ============================
+        HomeView homeView = new HomeView(viewManager);
+
+        // ============================ ustawienie wszystkiego ============================
+        root.setTop(gornyPasek);
+        root.setCenter(homeView.getViwe());
+
+        Scene scene = new Scene(root, 1000,650);
+
+        stage.setTitle("PreczBezrobocie");
         stage.setScene(scene);
-
         stage.show();
     }
 }
