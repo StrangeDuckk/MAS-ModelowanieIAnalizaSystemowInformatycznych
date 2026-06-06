@@ -200,6 +200,7 @@ public class JobOffer {
                     throw new IllegalStateException("Finished this has to have expected answers from candidates and candidate numbers set to 0");
                 }
             }
+            default -> throw new IllegalStateException("Unknown state");
         }
     }
 
