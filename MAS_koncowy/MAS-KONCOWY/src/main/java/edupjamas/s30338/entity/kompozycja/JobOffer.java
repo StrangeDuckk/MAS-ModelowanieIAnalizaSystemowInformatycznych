@@ -1,10 +1,13 @@
 package edupjamas.s30338.entity.kompozycja;
 import edupjamas.s30338.ENUMS.*;
+import edupjamas.s30338.entity.kwalifikowana.Application;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -52,10 +55,19 @@ public class JobOffer {
     private LocalDate archiveDate;
 
     // ===================== RELACJE =======================
+    //kompozycja JobOffer0..* --- 1 Company
     @ManyToOne
     @JoinColumn(name = "companyId")
     @ToString.Exclude
     private Company company;
+
+    //jobOffer 1 ---- 1..* Application( 1..* ---- 1 Person)
+    @OneToMany(
+            mappedBy = "jobOffer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Application> applications = new ArrayList<>();
 
     // ===================== Fabrykatory =======================
     protected static JobOffer createJobOfferActive(

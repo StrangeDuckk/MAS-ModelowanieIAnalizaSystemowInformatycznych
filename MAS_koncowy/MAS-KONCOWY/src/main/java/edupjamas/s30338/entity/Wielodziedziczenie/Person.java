@@ -1,5 +1,6 @@
 package edupjamas.s30338.entity.Wielodziedziczenie;
 
+import edupjamas.s30338.entity.kwalifikowana.Application;
 import edupjamas.s30338.entity.zAtrybutem.Adress;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -56,6 +57,14 @@ public abstract class Person {
             orphanRemoval = true
     )
     private List<Adress> adress = new ArrayList<>();
+
+    //(jobOffer 1 ---- 1..*) Application 1..* ---- 1 Person
+    @OneToMany(
+            mappedBy = "person",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Application> applications = new ArrayList<>();
 
     // ===================== METODY =======================
     public abstract String getCurrentOccupation();
