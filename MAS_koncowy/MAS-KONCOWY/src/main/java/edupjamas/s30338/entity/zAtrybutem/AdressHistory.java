@@ -20,9 +20,9 @@ public class AdressHistory {
 
     @NotNull
     @PastOrPresent
-    private LocalDate from;
+    private LocalDate dateFrom;
 
-    private LocalDate to;
+    private LocalDate dateTo;
 
     // ===================== RELACJE =======================
     // Company 1 --- 1..* AdressHistory
@@ -38,23 +38,23 @@ public class AdressHistory {
     private Adress adress;
 
     public AdressHistory(LocalDate from, LocalDate to, Company company, Adress adress) {
-        this.setFrom( from);
-        this.setTo(to);
+        this.setDateFrom( from);
+        this.setDateTo(to);
         this.setCompany(company);
         this.setAdress(adress);
     }
 
-    private void setFrom(LocalDate from) {
+    private void setDateFrom(LocalDate from) {
         if(from == null){
             throw new IllegalArgumentException("date from in adress history for company cannot be null");
         }
-        this.from = from;
+        this.dateFrom = from;
     }
-    private void setTo(LocalDate to) {
-        if(to != null && this.from != null && to.isBefore(this.from)){
+    private void setDateTo(LocalDate to) {
+        if(to != null && this.dateFrom != null && to.isBefore(this.dateFrom)){
             throw new IllegalArgumentException("date to is exist has to be after from date");
         }
-        this.to = to;
+        this.dateTo = to;
     }
     private void setCompany(Company company) {
         if(company == null){
