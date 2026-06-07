@@ -9,9 +9,9 @@ import edupjamas.s30338.entity.zAtrybutem.Adress;
 import edupjamas.s30338.gui.START;
 import edupjamas.s30338.repository.*;
 import javafx.application.Application;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
@@ -20,13 +20,27 @@ import java.util.List;
 @SpringBootApplication
 public class MasKoncowyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MasKoncowyApplication.class, args);
+        var context = SpringApplication.run(MasKoncowyApplication.class, args);
 
         Company.setMinCountrySalary(4000.0);
+
+        // ======== wylistowanie wszystkich ofert ==========
+        wylistowanieWszystkichOfert(context);
+
+        // ======== wylistowanie wszystkich firm ==========
+        wylistowanieWszystkichFirm(context);
+
+        // ======== wylistowanie wszystkich kandydatow ==========
+        wylistowanieWszystkichKandydatow(context);
+
+        // ======== wylistowanie aplikacji konkretnego kandydata, po person_id ==========
+        wylistowanieKandydataPoId(context,2);
 
         Application.launch(START.class, args);
 
     }
+
+
 
     // ==================== dodanie podstawowych danych do bazy JEDNOKROTNIE==============================
 //    @Bean
@@ -233,6 +247,46 @@ public class MasKoncowyApplication {
 //    }
         //todo zawsze przy zamykaniu zapisywanie stanu do bazy, przy przerwaniu tez
     //todo zawsze po zapisaniu formularza uaktualinienie do bazy
+
+    private static void wylistowanieWszystkichOfert(ConfigurableApplicationContext context) {
+        System.out.println("======== wylistowanie wszystkich ofert ==========");
+
+        JobOfferRepository repo = context.getBean(JobOfferRepository.class);
+
+        repo.findAll().forEach(System.out::println);
+        System.out.println("======== ============================ ==========");
+    }
+    private static void wylistowanieWszystkichFirm(ConfigurableApplicationContext context) {
+        System.out.println("======== wylistowanie wszystkich firm ==========");
+
+        CompanyRepository repo = context.getBean(CompanyRepository.class);
+
+        repo.findAll().forEach(System.out::println);
+        System.out.println("======== ============================ ==========");
+    }
+    private static void wylistowanieWszystkichKandydatow(ConfigurableApplicationContext context) {
+        System.out.println("======== wylistowanie wszystkich kandydatow ==========");
+
+        CandidateRepository repo = context.getBean(CandidateRepository.class);
+
+        repo.findAll().forEach(System.out::println);
+        System.out.println("======== ============================ ==========");
+
+    }
+    private static void wylistowanieKandydataPoId(ConfigurableApplicationContext context, long person_id) {
+        System.out.println("======== wylistowanie kandydata po ID:"+ person_id +" ==========");
+
+        CandidateRepository repo = context.getBean(CandidateRepository.class);
+
+        repo.findById(person_id)
+                        .ifPresentOrElse(
+                                System.out::println,
+                                ()-> System.out.println("Nie znalezniono kandydata o Id: "+person_id)
+                        );
+        System.out.println("======== ============================ ==========");
+
+    }
+
 }
 
 

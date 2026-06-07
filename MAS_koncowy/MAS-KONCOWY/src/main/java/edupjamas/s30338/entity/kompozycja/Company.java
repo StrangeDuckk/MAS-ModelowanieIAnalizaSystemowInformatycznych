@@ -37,6 +37,7 @@ public class Company {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private NormalOffice normalOffice;
 
     //kompozycja: company calosc 1 --- 0..1 StateOffice czesc
@@ -45,6 +46,7 @@ public class Company {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private StateOffice stateOffice;
 
     //kompozycja: JobOffer (czesc, 0..*) ----- (calosc, 1) company
@@ -53,6 +55,7 @@ public class Company {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private List<JobOffer> jobOfferList = new ArrayList<>();
 
     //Company 1 ---- 1..* AdressHistory (1..* ---- 1 Adress)
@@ -61,6 +64,7 @@ public class Company {
             cascade = CascadeType.ALL, //history
             orphanRemoval = true //usuwanie sierot
     )
+    @ToString.Exclude
     private List<AdressHistory> adressHistoryList = new ArrayList<>();
 
     // ===================== Fabrykatory =======================

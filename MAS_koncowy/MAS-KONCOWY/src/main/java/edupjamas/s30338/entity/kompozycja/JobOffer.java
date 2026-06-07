@@ -67,6 +67,7 @@ public class JobOffer {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private List<Application> applications = new ArrayList<>();
 
     // ===================== Fabrykatory =======================

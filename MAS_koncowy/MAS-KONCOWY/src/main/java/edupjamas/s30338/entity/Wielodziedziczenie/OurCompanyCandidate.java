@@ -27,6 +27,7 @@ implements ICandidate{
 
     @OneToOne
     @JoinColumn(name = "candidate_person_id")
+    @ToString.Exclude
     private Candidate candidate;
 
     public OurCompanyCandidate(
