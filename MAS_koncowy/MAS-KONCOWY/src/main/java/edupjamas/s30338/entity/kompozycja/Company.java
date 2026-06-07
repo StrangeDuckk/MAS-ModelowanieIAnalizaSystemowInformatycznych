@@ -129,24 +129,30 @@ public class Company {
         if(!adressHistoryList.contains(adressHistory)){
             adressHistoryList.add(adressHistory);
         }
-        adress.getAdressHistoryList().add(adressHistory); //dodanie histori po stronie adresu, wiele firm moze byc ustawionych na ten sam adres
+        adress.getAdressHistoryList().add(adressHistory); //dodanie histori po stronie adresu
     }
 
     // ===================== Dodawanie oferty (po stronie calosci) =======================
     public JobOffer addActiveJobOffer(String name, String field, String position, int salary, LocalDate plannedFinish, int expectedAnswersNumber){
-        //todo sprawdzanie czy min kwota w ofercie nie jest nizsza niz min firmy
+        if(salary < minCompanySalary){
+            throw new IllegalArgumentException("salary cannot be < minCompanySalary");
+        }
         JobOffer offer = JobOffer.createJobOfferActive(name, field, position, salary, plannedFinish, expectedAnswersNumber, this);
         jobOfferList.add(offer);
         return offer;
     }
     public JobOffer addFinishedJobOffer(String name, String field, String position, int salary, LocalDate endDate, int candidateNumbers){
-        //todo sprawdzanie czy min kwota w ofercie nie jest nizsza niz min firmy
+        if(salary < minCompanySalary){
+            throw new IllegalArgumentException("salary cannot be < minCompanySalary");
+        }
         JobOffer offer = JobOffer.createJobOfferFinished(name,field,position,salary,endDate,candidateNumbers,this);
         jobOfferList.add(offer);
         return offer;
     }
     public JobOffer addArchivedJobOffer(String name, String field, String position, int salary, LocalDate archideDate){
-        //todo sprawdzanie czy min kwota w ofercie nie jest nizsza niz min firmy
+        if(salary < minCompanySalary){
+            throw new IllegalArgumentException("salary cannot be < minCompanySalary");
+        }
         JobOffer offer = JobOffer.createJobOfferArchived(name,field,position,salary,archideDate,this);
         jobOfferList.add(offer);
         return offer;
