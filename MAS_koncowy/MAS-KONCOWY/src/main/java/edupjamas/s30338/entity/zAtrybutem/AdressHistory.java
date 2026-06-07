@@ -50,7 +50,7 @@ public class AdressHistory {
         }
         this.dateFrom = from;
     }
-    private void setDateTo(LocalDate to) {
+    public void setDateTo(LocalDate to) {
         if(to != null && this.dateFrom != null && to.isBefore(this.dateFrom)){
             throw new IllegalArgumentException("date to is exist has to be after from date");
         }

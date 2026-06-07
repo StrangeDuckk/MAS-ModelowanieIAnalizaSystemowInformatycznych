@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -130,6 +131,42 @@ public class Company {
             adressHistoryList.add(adressHistory);
         }
         adress.getAdressHistoryList().add(adressHistory); //dodanie histori po stronie adresu
+    }
+
+    // ===================== Zmiana adresu adresu =======================
+    public void changeAdress(Adress newAdress, LocalDate changeDate) {
+        if (newAdress == null) {
+            throw new IllegalArgumentException("New adress cannot be null");
+        }
+        if (changeDate == null) {
+            throw new IllegalArgumentException("Change date cannot be null");
+        }
+
+        // 1. zamknij poprzedni adres (ostatni w historii)
+        AdressHistory lastHistory = null;
+
+        if (!adressHistoryList.isEmpty()) {
+            lastHistory = adressHistoryList.get(adressHistoryList.size() - 1);
+
+            // ustaw dateTo tylko jeśli jeszcze nie jest ustawiona
+            if (lastHistory.getDateTo() == null) {
+                lastHistory.setDateTo(changeDate);
+            }
+        }
+
+        // 2. utwórz nowy wpis historii
+        AdressHistory newHistory = new AdressHistory(
+                changeDate,
+                null,
+                this,
+                newAdress
+        );
+
+        // 3. dodaj do listy company
+        adressHistoryList.add(newHistory);
+
+        // 4. dodaj do adresu (druga strona relacji)
+        newAdress.getAdressHistoryList().add(newHistory);
     }
 
     // ===================== Dodawanie oferty (po stronie calosci) =======================
