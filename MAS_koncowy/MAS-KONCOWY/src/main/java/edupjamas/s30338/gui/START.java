@@ -45,12 +45,7 @@ public class START extends Application {
                         "-fx-font-weight: bold;"
         );
 
-        Button homeButton = new Button("HOME");
-        homeButton.setPrefSize(120,40);
-        homeButton.setDisable(true);
-
         gornyPasek.getChildren().addAll(
-                homeButton,
                 spacerLeft,
                 title,
                 spacerRight

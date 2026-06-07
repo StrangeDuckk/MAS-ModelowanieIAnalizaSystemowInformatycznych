@@ -46,6 +46,12 @@ public class HomeView {
         Button button2 = createMenuButton("Wprowadzenie nowego adresu");
         Button button3 = createMenuButton("Dodane nowego ogłoszenia o pracę");
         Button button4 = createMenuButton("Dodanie nowego kandydata");
+        button4.setOnAction(e ->{
+            button4.setStyle(buttorClickedStyle);
+            viewManager.setView(
+                    new AddCandidateView(viewManager).getView()
+            );
+        });
         Button button5 = createMenuButton("Wylistowanie wszystkich kandydatow");
         button5.setOnAction(e -> {
             button5.setStyle(buttorClickedStyle);

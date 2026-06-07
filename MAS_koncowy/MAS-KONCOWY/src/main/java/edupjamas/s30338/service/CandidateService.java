@@ -16,4 +16,9 @@ public class CandidateService {
     public List<Candidate> getAllCandidatesWithApplications() {
         return candidateRepository.findAllWithApplications();
     }
+
+    @Transactional
+    public Candidate saveCandidate(Candidate candidate) {
+        return candidateRepository.save(candidate);
+    }
 }

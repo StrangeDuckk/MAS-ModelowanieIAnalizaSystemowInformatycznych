@@ -69,10 +69,9 @@ public class CandidatesView {
 
         Button addCandidateButton = new Button("Dodanie nowego kandydata");
         addCandidateButton.setStyle(buttorClickedStyle);
-//        addCandidateButton.setOnAction(e -> {
-//            // TODO: przejście do widoku dodawania kandydata (na razie placeholder)
-//            viewManager.setView(new AddCandidateView(viewManager).getView());
-//        });
+        addCandidateButton.setOnAction(e -> {
+            viewManager.setView(new AddCandidateView(viewManager).getView());
+        });
 
         Button addApplicationButton = new Button("Dodanie nowej aplikacji");
         addApplicationButton.setStyle(buttorClickedStyle);
