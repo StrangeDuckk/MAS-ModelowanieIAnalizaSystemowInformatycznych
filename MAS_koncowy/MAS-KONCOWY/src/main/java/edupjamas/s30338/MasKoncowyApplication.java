@@ -1,5 +1,6 @@
 package edupjamas.s30338;
 
+import edupjamas.s30338.ENUMS.JobOfferTypeEnum;
 import edupjamas.s30338.entity.Wielodziedziczenie.Candidate;
 import edupjamas.s30338.entity.Wielodziedziczenie.Employee;
 import edupjamas.s30338.entity.Wielodziedziczenie.OurCompanyCandidate;
@@ -9,13 +10,16 @@ import edupjamas.s30338.entity.zAtrybutem.Adress;
 import edupjamas.s30338.gui.START;
 import edupjamas.s30338.repository.*;
 import javafx.application.Application;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cglib.core.Local;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 @SpringBootApplication
 public class MasKoncowyApplication {
@@ -285,6 +289,36 @@ public class MasKoncowyApplication {
                         );
         System.out.println("======== ============================ ==========");
 
+    }
+
+    // ============= zmiana stanu oferty pracy z Active na Finished ===============
+    @Bean
+    CommandLineRunner jobOfferStatusUpdater(JobOfferRepository jobOfferRepository){
+        return args -> {
+            LocalDate today = LocalDate.now();
+
+            List<JobOffer> offers = jobOfferRepository.findAllWithApplications();
+
+            for (JobOffer offer: offers) {
+                // ----------- Finished ----------------
+                if(offer.getJobOfferTypeENUM() == JobOfferTypeEnum.ACTIVE){
+                    int liczbaOdpowiedziOdKandydatow = offer.getApplications().size();
+
+                    if(offer.getPlannedFinish().isBefore(today)){
+                        offer.changeToFinished(today, liczbaOdpowiedziOdKandydatow);
+                    }
+                }
+
+                // ----------- Archived ----------------
+                if(offer.getJobOfferTypeENUM() == JobOfferTypeEnum.FINISHED){
+                    if(offer.getEndDate().plusYears(1).isBefore(today)){
+                        offer.changeToArchived(today);
+                    }
+                }
+            }
+
+            jobOfferRepository.saveAll(offers);
+        };
     }
 
 }
