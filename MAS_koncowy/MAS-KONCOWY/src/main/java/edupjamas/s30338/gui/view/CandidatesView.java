@@ -1,14 +1,21 @@
 package edupjamas.s30338.gui.view;
 
+import edupjamas.s30338.entity.Wielodziedziczenie.Candidate;
+import edupjamas.s30338.entity.kwalifikowana.Application;
 import edupjamas.s30338.gui.ViewManager;
+import edupjamas.s30338.service.CandidateService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+
+import java.util.List;
 
 public class CandidatesView {
     private final ViewManager viewManager;
+    private final CandidateService candidateService;
     private String buttorNormalStyle =
             "-fx-background-color: #027d34;"+
                     "-fx-text-fill: white;"+
@@ -20,8 +27,9 @@ public class CandidatesView {
                     "-fx-font-size: 20px;"+
                     "-fx-font-weight: bold";
 
-    public CandidatesView(ViewManager viewManager) {
+    public CandidatesView(ViewManager viewManager, CandidateService candidateService) {
         this.viewManager = viewManager;
+        this.candidateService = candidateService;
     }
 
     public BorderPane getView(){
@@ -43,7 +51,7 @@ public class CandidatesView {
 
         home.setOnAction(e ->
                 viewManager.setView(
-                        new HomeView(viewManager).getView()
+                        new HomeView(viewManager,candidateService).getView()
                 )
         );
 
@@ -65,28 +73,32 @@ public class CandidatesView {
         right.setStyle("-fx-background-color: #63a57e;");
 
         // ============ DANE ==============
-        for (int i = 1; i <= 7; i++) {
+        List<Candidate> candidateList = candidateService.getAllCandidatesWithApplications();//pobranie danych
 
-            String name = "Kandydat " + i;
-
-            Button b = new Button(name);
+        for(Candidate candidate: candidateList){
+            Button b = new Button(
+                    candidate.getSurname()+": "+candidate.getEmail()
+            );
             b.setMaxWidth(Double.MAX_VALUE);
             b.setStyle(buttorNormalStyle);
 
-            b.setOnAction(e -> {
-
-                // zmiana koloru na klikniecie
-                left.getChildren().forEach(node -> node.setStyle(buttorNormalStyle));
+            b.setOnAction(e ->{
+                left.getChildren()
+                        .forEach(node -> node.setStyle(buttorNormalStyle));
                 b.setStyle(buttorClickedStyle);
-
-                loadOffers(right, name);
+                loadOffers(right,candidate);
             });
 
             left.getChildren().add(b);
         }
 
+        ScrollPane leftScroll = new ScrollPane(left);
+        leftScroll.setFitToHeight(true);
+        leftScroll.setStyle("-fx-background: #63a57e; -fx-background-color: #63a57e;");
+
         // ========== zlozenie wszystkiego =============
         main.getChildren().addAll(left, right);
+        HBox.setHgrow(right, Priority.ALWAYS);
 
         root.setTop(topBar);
         root.setCenter(main);
@@ -95,22 +107,50 @@ public class CandidatesView {
         return root;
     }
 
-    private void loadOffers(VBox right, String candidateName) {
+    private void loadOffers(VBox right, Candidate candidate) {
         right.getChildren().clear();
 
-        Label header = new Label("Oferty dla: " + candidateName);
+        Label header = new Label("Aplikacja kandydata: " +candidate.getName().get(0)+" "+ candidate.getSurname());
         header.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
 
         right.getChildren().add(header);
 
-        // mock danych (tu później repozytorium + Hibernate)
-        for (int i = 1; i <= 4; i++) {
+        List<Application> applications = candidate.getApplications();
 
-            Button offer = new Button("Aplikacja " + i);
-            offer.setMaxWidth(Double.MAX_VALUE);
-            offer.setStyle("-fx-background-color: #bfffd1;");
+//        if(applications.isEmpty()){
+//            Label empty = new Label("Brak zlozonych aplikacji");
+//
+//            right.getChildren().add(empty);
+//            return;
+//        }
+        if (applications == null || applications.isEmpty()) {
+            Label empty = new Label("Brak złożonych aplikacji");
+            empty.setStyle("-fx-text-fill: #dddddd; -fx-font-size: 14px;");
+            right.getChildren().add(empty);
+            return;
+        }
 
-            right.getChildren().add(offer);
+
+//        for (Application app: applications){
+//            Button appButt = new Button(
+//                    app.getJobOffer().getName()
+//            );
+//            appButt.setMaxWidth(Double.MAX_VALUE);
+//            appButt.setDisable(true);
+//            right.getChildren().add(appButt);
+//        }
+        for (Application app : applications) {
+            // Wyświetlamy szczegóły aplikacji – np. nazwę oferty, datę, proponowane wynagrodzenie
+            String offerName = (app.getJobOffer() != null) ? app.getJobOffer().getName() : "Brak oferty";
+            String details = String.format("%s | Data: %s | Wynagrodzenie: %.2f",
+                    offerName, app.getData(), app.getCandidatesSalaryProposition());
+
+            Button appButton = new Button(details);
+            appButton.setMaxWidth(Double.MAX_VALUE);
+            appButton.setStyle("-fx-background-color: #bfffd1; -fx-text-fill: #144d2a;");
+            appButton.setWrapText(true);
+            appButton.setDisable(true);
+            right.getChildren().add(appButton);
         }
     }
 }

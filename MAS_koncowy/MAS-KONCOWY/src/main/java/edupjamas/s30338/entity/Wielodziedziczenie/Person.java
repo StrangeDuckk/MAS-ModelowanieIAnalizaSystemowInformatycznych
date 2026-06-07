@@ -54,6 +54,7 @@ public abstract class Person {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private List<Adress> adress = new ArrayList<>();
 
     //(jobOffer 1 ---- 1..*) Application 1..* ---- 1 Person
@@ -62,6 +63,7 @@ public abstract class Person {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @ToString.Exclude
     private List<Application> applications = new ArrayList<>();
 
     public Person(List<String> name, String surname, String email, String phoneNumber, LocalDate dateOfBirth, List<Adress> adress, List<Application> applications) {

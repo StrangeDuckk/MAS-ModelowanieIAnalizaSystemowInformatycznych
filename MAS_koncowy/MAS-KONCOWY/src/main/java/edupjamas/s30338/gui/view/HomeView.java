@@ -1,6 +1,8 @@
 package edupjamas.s30338.gui.view;
 
+import edupjamas.s30338.gui.START;
 import edupjamas.s30338.gui.ViewManager;
+import edupjamas.s30338.service.CandidateService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,9 +21,11 @@ public class HomeView {
             "-fx-text-fill: white;"+
             "-fx-font-size: 20px;"+
             "-fx-font-weight: bold";
+    private CandidateService candidateService;//todo co z tym
 
-    public HomeView(ViewManager viewManager) {
+    public HomeView(ViewManager viewManager, CandidateService candidateService) {
         this.viewManager = viewManager;
+        this.candidateService = candidateService;
     }
 
     public GridPane getViwe(){
@@ -45,8 +49,9 @@ public class HomeView {
         Button button5 = createMenuButton("Wylistowanie wszystkich kandydatow");
         button5.setOnAction(e -> {
             button5.setStyle(buttorClickedStyle);
+            candidateService = START.context.getBean(CandidateService.class);
             viewManager.setView(
-                    new CandidatesView(viewManager).getView()
+                    new CandidatesView(viewManager, candidateService).getView()
             );
         });
         Button button6 = createMenuButton("Dodanie nowej firmy");

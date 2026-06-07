@@ -1,6 +1,8 @@
 package edupjamas.s30338.gui;
 
+import edupjamas.s30338.MasKoncowyApplication;
 import edupjamas.s30338.gui.view.HomeView;
+import edupjamas.s30338.service.CandidateService;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,8 +11,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 public class START extends Application {
+    public static ConfigurableApplicationContext context;
+
     @Override
     public void start(Stage stage) {
 
@@ -51,7 +57,9 @@ public class START extends Application {
         );
 
         // ============================ srodek - przyciski ============================
-        HomeView homeView = new HomeView(viewManager);
+        CandidateService candidateService = context.getBean(CandidateService.class);
+
+        HomeView homeView = new HomeView(viewManager, candidateService);
 
         // ============================ ustawienie wszystkiego ============================
         root.setTop(gornyPasek);
