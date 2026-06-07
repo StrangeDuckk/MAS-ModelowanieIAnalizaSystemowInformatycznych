@@ -18,7 +18,7 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long companyId;//todo relacja z Adress history
+    private Long companyId;
 
     @NotBlank(message = "field is mandatory")
     private String name;

@@ -188,7 +188,6 @@ public class MasKoncowyApplication {
             adressRepository.save(cadr2);
             adressRepository.save(empadr1);
             adressRepository.save(canadr1);
-//            adressRepository.save(canadr2);
 
             companyRepository.save(company1);
             companyRepository.save(company2);
@@ -203,11 +202,8 @@ public class MasKoncowyApplication {
         };
 
     }
-
-        //todo wypisac wszystko
-
-        //todo zdecydowac co z usuwaniem, czy tworzyc metody czy nie wgl
         //todo zawsze przy zamykaniu zapisywanie stanu do bazy, przy przerwaniu tez
+    //todo zawsze po zapisaniu formularza uaktualinienie do bazy
 }
 
 
@@ -215,12 +211,5 @@ public class MasKoncowyApplication {
 todo
 zmienic na koniec z ustawien w application.properties create-drop na cos innego zeby miec dane
 
-todo klasy- encje -> pola + ID
-todo relacje
-
-todo hibernate
-todo postgres
-todo repozytoria i serwisy
 todo FX
-todo testy
  */

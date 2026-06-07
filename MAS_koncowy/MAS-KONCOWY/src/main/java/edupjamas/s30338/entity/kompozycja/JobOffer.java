@@ -16,7 +16,7 @@ import java.util.List;
 public class JobOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long jobOfferId;//todo po dodaniu oferty: repository.save(offer)
+    private Long jobOfferId;
 
     // ===================== POLA =======================
     @NotBlank(message = "name is mandatory")
