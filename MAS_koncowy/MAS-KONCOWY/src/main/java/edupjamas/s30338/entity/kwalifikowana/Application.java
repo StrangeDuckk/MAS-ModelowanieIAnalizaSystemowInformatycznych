@@ -112,15 +112,15 @@ public class Application {
         Map<String, CV> tempCV = new HashMap<>();
 
 
-        String cvName = person.getName().get(0)+"_"+person.getSurname()+"_";
+        String cvName = person.getSurname()+"_"+System.currentTimeMillis();//nr jako timestamp
 
-        if(person.getApplications().isEmpty() || person.getApplications().get(person.getApplications().size()-1).getCvs().isEmpty())
-            cvName+="0";
-        else
-            cvName+= String.valueOf(person.getApplications()
-                    .stream()
-                    .mapToInt(app -> app.getCvs().size())
-                    .sum()); //index o 1 wiekszy od ostatniego
+//        if(person.getApplications().isEmpty() || person.getApplications().get(person.getApplications().size()-1).getCvs().isEmpty())
+//            cvName+="0";
+//        else
+//            cvName+= String.valueOf(person.getApplications()
+//                    .stream()
+//                    .mapToInt(app -> app.getCvs().size())
+//                    .sum()); //index o 1 wiekszy od ostatniego
 //                    .getLast().getCvs().size()+1);
 
         CV cv = new CV(

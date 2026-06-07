@@ -7,12 +7,9 @@ import edupjamas.s30338.gui.ViewManager;
 import edupjamas.s30338.service.CandidateService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

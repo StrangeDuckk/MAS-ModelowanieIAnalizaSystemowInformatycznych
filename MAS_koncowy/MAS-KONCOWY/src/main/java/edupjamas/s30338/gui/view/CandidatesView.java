@@ -6,6 +6,7 @@ import edupjamas.s30338.gui.ViewManager;
 import edupjamas.s30338.service.CandidateService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,6 +17,7 @@ import java.util.List;
 public class CandidatesView {
     private final ViewManager viewManager;
     private final CandidateService candidateService;
+    private Candidate obecnieWybranyKandydat = null;
     private String buttorNormalStyle =
             "-fx-background-color: #027d34;"+
                     "-fx-text-fill: white;"+
@@ -70,15 +72,18 @@ public class CandidatesView {
         Button addCandidateButton = new Button("Dodanie nowego kandydata");
         addCandidateButton.setStyle(buttorClickedStyle);
         addCandidateButton.setOnAction(e -> {
+            addCandidateButton.setStyle(buttorClickedStyle);
             viewManager.setView(new AddCandidateView(viewManager).getView());
         });
 
         Button addApplicationButton = new Button("Dodanie nowej aplikacji");
         addApplicationButton.setStyle(buttorClickedStyle);
-//        addApplicationButton.setOnAction(e -> {
-//            // TODO: przejście do widoku dodawania aplikacji (na razie placeholder)
-//            viewManager.setView(new AddApplicationView(viewManager).getView());
-//        });
+        addApplicationButton.setOnAction(e -> {
+            if(obecnieWybranyKandydat == null){
+                showAlert("Brak wyboru", "Wybierz kandydata z lewej listy aby kontynułowac");
+            }
+            viewManager.setView(new AddApplicationView(viewManager, obecnieWybranyKandydat).getView());
+        });
 
         actionBar.getChildren().addAll(searchButton, addCandidateButton, addApplicationButton);
 
@@ -116,6 +121,7 @@ public class CandidatesView {
                 left.getChildren()
                         .forEach(node -> node.setStyle(buttorNormalStyle));
                 b.setStyle(buttorClickedStyle);
+                obecnieWybranyKandydat = candidate;
                 loadOffers(right,candidate);
             });
 
@@ -167,5 +173,13 @@ public class CandidatesView {
             appButton.setDisable(true);
             right.getChildren().add(appButton);
         }
+    }
+    private void showAlert(String blas, String s) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(blas);
+        alert.setHeaderText(null);
+        alert.setContentText(s);
+        alert.showAndWait();
+        return;
     }
 }

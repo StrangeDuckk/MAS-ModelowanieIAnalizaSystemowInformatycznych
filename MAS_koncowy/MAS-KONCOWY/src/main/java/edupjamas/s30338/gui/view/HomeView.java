@@ -36,13 +36,12 @@ public class HomeView {
         gridPane.setAlignment(Pos.CENTER);
 
         Button button1 = createMenuButton("Dodanie nowej aplikacji");
-//        button1.setOnAction(event -> {
-//            button1.setStyle(buttorClickedStyle);
-//            viewManager.setView(
-//                    new AddCandidateView(viewManager)
-//                            .getView()
-//            );
-//        });
+        button1.setOnAction(event -> {
+            button1.setStyle(buttorClickedStyle);
+            viewManager.setView(
+                    new CandidatesView(viewManager, candidateService).getView()
+            );//bo potrzeba wybrania kandydata z listy
+        });
         Button button2 = createMenuButton("Wprowadzenie nowego adresu");
         Button button3 = createMenuButton("Dodane nowego ogłoszenia o pracę");
         Button button4 = createMenuButton("Dodanie nowego kandydata");

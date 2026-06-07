@@ -19,8 +19,8 @@ public class CV {
     @Id
     @NotBlank(message = "cvNumber is mandatory")
     @Pattern(
-            regexp = "^[^@\\s]+_[^@\\s]+_[0-9]+$",
-            message = "Format: Surname_Name_number"
+            regexp = "^[^@\\s]+_[0-9]+$",
+            message = "Format: Surname_number"
     )
     @Setter(AccessLevel.NONE)//uniemozliwienie zmiany atrybutu po utworzeniu obiektu
     @Column(updatable = false)
@@ -57,9 +57,9 @@ public class CV {
             );
         }
 
-        if (!cvNumber.matches("^[^@\\s]+_[^@\\s]+_[0-9]+$")) {
+        if (!cvNumber.matches("^[^@\\s]+_[0-9]+$")) {
             throw new IllegalArgumentException(
-                    "CV number must have format Surname_Name_number"
+                    "CV number must have format Surname_number"
             );
         }
 
