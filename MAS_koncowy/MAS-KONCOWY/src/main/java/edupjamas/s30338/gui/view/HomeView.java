@@ -28,7 +28,7 @@ public class HomeView {
         this.candidateService = candidateService;
     }
 
-    public GridPane getViwe(){
+    public GridPane getView(){
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(30));
         gridPane.setHgap(35);
@@ -82,9 +82,5 @@ public class HomeView {
         button.setStyle(buttorNormalStyle);
 
         return button;
-    }
-
-    public Node getView() {
-        return getView().getStyleableNode();
     }
 }

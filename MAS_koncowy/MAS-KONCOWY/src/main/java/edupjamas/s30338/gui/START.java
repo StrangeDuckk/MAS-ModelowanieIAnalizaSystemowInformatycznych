@@ -63,7 +63,7 @@ public class START extends Application {
 
         // ============================ ustawienie wszystkiego ============================
         root.setTop(gornyPasek);
-        root.setCenter(homeView.getViwe());
+        root.setCenter(homeView.getView());
 
         Scene scene = new Scene(root, 1000,650);
 

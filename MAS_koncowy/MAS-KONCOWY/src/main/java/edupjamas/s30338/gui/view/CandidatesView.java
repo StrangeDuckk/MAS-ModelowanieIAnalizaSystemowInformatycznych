@@ -57,6 +57,37 @@ public class CandidatesView {
 
         topBar.getChildren().addAll(title, spacer, home);
 
+        // ============ przyciski nawigacyjne ================
+        HBox actionBar = new HBox(20);
+        actionBar.setPadding(new Insets(10));
+        actionBar.setAlignment(Pos.CENTER);
+        actionBar.setStyle("-fx-background-color: #2c5a3e;");
+
+        Button searchButton = new Button("Wyszukiwanie nowego kandydata");
+        searchButton.setStyle(buttorNormalStyle);
+        searchButton.setDisable(true); // nieklikalny
+
+        Button addCandidateButton = new Button("Dodanie nowego kandydata");
+        addCandidateButton.setStyle(buttorClickedStyle);
+//        addCandidateButton.setOnAction(e -> {
+//            // TODO: przejście do widoku dodawania kandydata (na razie placeholder)
+//            viewManager.setView(new AddCandidateView(viewManager).getView());
+//        });
+
+        Button addApplicationButton = new Button("Dodanie nowej aplikacji");
+        addApplicationButton.setStyle(buttorClickedStyle);
+//        addApplicationButton.setOnAction(e -> {
+//            // TODO: przejście do widoku dodawania aplikacji (na razie placeholder)
+//            viewManager.setView(new AddApplicationView(viewManager).getView());
+//        });
+
+        actionBar.getChildren().addAll(searchButton, addCandidateButton, addApplicationButton);
+
+        // Łączymy oba paski w VBox
+        VBox topContainer = new VBox();
+        topContainer.getChildren().addAll(topBar, actionBar);
+
+
 
         // ============ rozdzielenie srodka ==============
         HBox main = new HBox();
@@ -100,7 +131,7 @@ public class CandidatesView {
         main.getChildren().addAll(left, right);
         HBox.setHgrow(right, Priority.ALWAYS);
 
-        root.setTop(topBar);
+        root.setTop(topContainer);
         root.setCenter(main);
 
 
@@ -110,44 +141,29 @@ public class CandidatesView {
     private void loadOffers(VBox right, Candidate candidate) {
         right.getChildren().clear();
 
-        Label header = new Label("Aplikacja kandydata: " +candidate.getName().get(0)+" "+ candidate.getSurname());
+        Label header = new Label("Aplikacja kandydata: "+ candidate.getSurname());
         header.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
 
         right.getChildren().add(header);
 
         List<Application> applications = candidate.getApplications();
 
-//        if(applications.isEmpty()){
-//            Label empty = new Label("Brak zlozonych aplikacji");
-//
-//            right.getChildren().add(empty);
-//            return;
-//        }
         if (applications == null || applications.isEmpty()) {
             Label empty = new Label("Brak złożonych aplikacji");
-            empty.setStyle("-fx-text-fill: #dddddd; -fx-font-size: 14px;");
+            empty.setStyle("-fx-text-fill: #000000; -fx-font-size: 14px;");
             right.getChildren().add(empty);
             return;
         }
 
-
-//        for (Application app: applications){
-//            Button appButt = new Button(
-//                    app.getJobOffer().getName()
-//            );
-//            appButt.setMaxWidth(Double.MAX_VALUE);
-//            appButt.setDisable(true);
-//            right.getChildren().add(appButt);
-//        }
         for (Application app : applications) {
-            // Wyświetlamy szczegóły aplikacji – np. nazwę oferty, datę, proponowane wynagrodzenie
             String offerName = (app.getJobOffer() != null) ? app.getJobOffer().getName() : "Brak oferty";
+
             String details = String.format("%s | Data: %s | Wynagrodzenie: %.2f",
                     offerName, app.getData(), app.getCandidatesSalaryProposition());
 
             Button appButton = new Button(details);
             appButton.setMaxWidth(Double.MAX_VALUE);
-            appButton.setStyle("-fx-background-color: #bfffd1; -fx-text-fill: #144d2a;");
+            appButton.setStyle("-fx-background-color: #bfffd1; -fx-text-fill: #000000;");
             appButton.setWrapText(true);
             appButton.setDisable(true);
             right.getChildren().add(appButton);
