@@ -5,7 +5,6 @@ import edupjamas.s30338.entity.Wielodziedziczenie.Employee;
 import edupjamas.s30338.entity.Wielodziedziczenie.OurCompanyCandidate;
 import edupjamas.s30338.entity.kompozycja.Company;
 import edupjamas.s30338.entity.kompozycja.JobOffer;
-import edupjamas.s30338.entity.kwalifikowana.CV;
 import edupjamas.s30338.entity.zAtrybutem.Adress;
 import edupjamas.s30338.gui.START;
 import edupjamas.s30338.repository.*;
@@ -13,6 +12,7 @@ import javafx.application.Application;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
@@ -38,7 +38,8 @@ public class MasKoncowyApplication {
             CompanyRepository companyRepository,
             EmployeeRepository employeeRepository,
             AdressRepository adressRepository,
-            OurCompanyCandidateRepository ourCompanyCandidateRepository
+            OurCompanyCandidateRepository ourCompanyCandidateRepository,
+            ApplicationRepository applicationRepository
     ) {
         return args -> {
             Adress cadr1 = new Adress(
@@ -183,6 +184,35 @@ public class MasKoncowyApplication {
             );
             canadr2.setPerson(ourCompanyCandidate1);
 
+            // Aplikacje kandydatow
+            edupjamas.s30338.entity.kwalifikowana.Application application1 = new edupjamas.s30338.entity.kwalifikowana.Application(
+                    LocalDate.of(2026,1,6),
+                    17000.0,
+                    candidate1,
+                    jobOffer1,
+                    List.of("PJATK"),
+                    List.of("1 rok jako google cloud administrator"),
+                    null
+            );
+            edupjamas.s30338.entity.kwalifikowana.Application application2 = new edupjamas.s30338.entity.kwalifikowana.Application(
+                    LocalDate.of(2026,5,2),
+                    12000.0,
+                    ourCompanyCandidate1,
+                    jobOffer1,
+                    List.of("PW"),
+                    null,
+                    null
+            );
+            edupjamas.s30338.entity.kwalifikowana.Application application3 = new edupjamas.s30338.entity.kwalifikowana.Application(
+                    LocalDate.of(2026,6,6),
+                    5000.0,
+                    ourCompanyCandidate1,
+                    jobOffer4,
+                    List.of("PW"),
+                    List.of("praca wakacyjna jako brukarz"),
+                    null
+            );
+
             // =========== zapis do bazy ===============
             adressRepository.save(cadr1);
             adressRepository.save(cadr2);
@@ -199,6 +229,9 @@ public class MasKoncowyApplication {
 
             ourCompanyCandidateRepository.save(ourCompanyCandidate1);
 
+            applicationRepository.save(application1);
+            applicationRepository.save(application2);
+            applicationRepository.save(application3);
         };
 
     }
