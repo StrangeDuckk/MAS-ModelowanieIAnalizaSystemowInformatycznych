@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Random;
 
 @SpringBootApplication
 public class MasKoncowyApplication {
@@ -325,8 +324,5 @@ public class MasKoncowyApplication {
 
 
 /*
-todo
-zmienic na koniec z ustawien w application.properties create-drop na cos innego zeby miec dane
-
 todo FX
  */
