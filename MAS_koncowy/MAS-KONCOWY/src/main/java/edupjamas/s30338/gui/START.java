@@ -27,9 +27,10 @@ public class START extends Application {
         gornyPasek.setAlignment(Pos.CENTER_LEFT);
         gornyPasek.setStyle("-fx-background-color: #144d2a;");
 
-        Button homeButton = new Button("HOME");
-        homeButton.setPrefSize(120,40);
-        homeButton.setDisable(true);
+        Region spacerLeft = new Region();
+        Region spacerRight = new Region();
+        HBox.setHgrow(spacerLeft, Priority.ALWAYS);
+        HBox.setHgrow(spacerRight, Priority.ALWAYS);
 
         Label title = new Label("PreczBezrobocie");
         title.setStyle(
@@ -38,10 +39,9 @@ public class START extends Application {
                         "-fx-font-weight: bold;"
         );
 
-        Region spacerLeft = new Region();
-        Region spacerRight = new Region();
-        HBox.setHgrow(spacerLeft, Priority.ALWAYS);
-        HBox.setHgrow(spacerRight, Priority.ALWAYS);
+        Button homeButton = new Button("HOME");
+        homeButton.setPrefSize(120,40);
+        homeButton.setDisable(true);
 
         gornyPasek.getChildren().addAll(
                 homeButton,

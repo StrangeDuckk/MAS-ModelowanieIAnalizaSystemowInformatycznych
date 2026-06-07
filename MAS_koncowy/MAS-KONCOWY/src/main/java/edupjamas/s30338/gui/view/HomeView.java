@@ -3,6 +3,7 @@ package edupjamas.s30338.gui.view;
 import edupjamas.s30338.gui.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
@@ -42,6 +43,12 @@ public class HomeView {
         Button button3 = createMenuButton("Dodane nowego ogłoszenia o pracę");
         Button button4 = createMenuButton("Dodanie nowego kandydata");
         Button button5 = createMenuButton("Wylistowanie wszystkich kandydatow");
+        button5.setOnAction(e -> {
+            button5.setStyle(buttorClickedStyle);
+            viewManager.setView(
+                    new CandidatesView(viewManager).getView()
+            );
+        });
         Button button6 = createMenuButton("Dodanie nowej firmy");
         Button button7 = createMenuButton("Dodanie nowego pracownika agencji");
         Button button8 = createMenuButton("Wylistowanie wszystkich ofert pracy");
@@ -70,5 +77,9 @@ public class HomeView {
         button.setStyle(buttorNormalStyle);
 
         return button;
+    }
+
+    public Node getView() {
+        return getView().getStyleableNode();
     }
 }
