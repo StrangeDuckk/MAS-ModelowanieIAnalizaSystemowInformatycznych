@@ -24,7 +24,7 @@ public class CandidatesView {
                     "-fx-font-size: 20px;"+
                     "-fx-font-weight: bold";
     private String buttorClickedStyle =
-            "-fx-background-color: #027d34;"+
+            "-fx-background-color: #18452b;"+
                     "-fx-text-fill: white;"+
                     "-fx-font-size: 20px;"+
                     "-fx-font-weight: bold";
@@ -63,22 +63,23 @@ public class CandidatesView {
         HBox actionBar = new HBox(20);
         actionBar.setPadding(new Insets(10));
         actionBar.setAlignment(Pos.CENTER);
-        actionBar.setStyle("-fx-background-color: #2c5a3e;");
+        actionBar.setStyle("-fx-background-color: #027d34;");
 
         Button searchButton = new Button("Wyszukiwanie nowego kandydata");
         searchButton.setStyle(buttorNormalStyle);
         searchButton.setDisable(true); // nieklikalny
 
         Button addCandidateButton = new Button("Dodanie nowego kandydata");
-        addCandidateButton.setStyle(buttorClickedStyle);
+        addCandidateButton.setStyle(buttorNormalStyle);
         addCandidateButton.setOnAction(e -> {
             addCandidateButton.setStyle(buttorClickedStyle);
             viewManager.setView(new AddCandidateView(viewManager).getView());
         });
 
         Button addApplicationButton = new Button("Dodanie nowej aplikacji");
-        addApplicationButton.setStyle(buttorClickedStyle);
+        addApplicationButton.setStyle(buttorNormalStyle);
         addApplicationButton.setOnAction(e -> {
+            addApplicationButton.setStyle(buttorClickedStyle);
             if(obecnieWybranyKandydat == null){
                 showAlert("Brak wyboru", "Wybierz kandydata z lewej listy aby kontynułowac");
             }

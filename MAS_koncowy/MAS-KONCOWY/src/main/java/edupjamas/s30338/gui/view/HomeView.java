@@ -17,7 +17,7 @@ public class HomeView {
             "-fx-font-size: 20px;"+
             "-fx-font-weight: bold";
     private String buttorClickedStyle =
-            "-fx-background-color: #027d34;"+
+            "-fx-background-color: #18452b;"+
             "-fx-text-fill: white;"+
             "-fx-font-size: 20px;"+
             "-fx-font-weight: bold";
